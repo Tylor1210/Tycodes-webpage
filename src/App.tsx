@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import HeroTile from "./components/ui/HeroTile";
 import Navbar from "./components/ui/Navbar";
 import Footer from "./components/ui/Footer";
-import { Newspaper, Users, Share2, Bot, Activity, FolderOpen, ExternalLink, Zap, TrendingUp, ShieldCheck, Rocket, Database, Package } from "lucide-react";
+import { Newspaper, Share2, Bot, FolderOpen, ExternalLink, Zap, TrendingUp, ShieldCheck, Rocket, Database, Package } from "lucide-react";
 
 function App() {
   const [news, setNews] = useState<{ title: string, url: string }[]>([]);
   const [market] = useState({ price: "5,130.42", change: "+0.45%" });
   const [isMarketOpen, setIsMarketOpen] = useState(false);
-  const [visitorCount] = useState(1240);
+  const [visitorCount, setVisitorCount] = useState(1240);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -34,8 +34,21 @@ function App() {
       setIsMarketOpen(day !== "Sat" && day !== "Sun" && hour >= 9 && hour < 16);
     };
 
+    const fetchVisitorCount = async () => {
+      try {
+        const response = await fetch("https://api.counterapi.dev/v1/tycodes/tycodes-site-visits/up");
+        const data = await response.json();
+        if (data && typeof data.count === 'number') {
+          setVisitorCount(0 + data.count);
+        }
+      } catch (err) {
+        console.error("Failed to fetch visitor count", err);
+      }
+    };
+
     fetchNews();
     checkMarket();
+    fetchVisitorCount();
   }, []);
 
   return (
