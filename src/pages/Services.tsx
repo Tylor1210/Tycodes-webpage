@@ -20,17 +20,17 @@ export default function ServicesPage() {
       </h1>
 
       <p className="text-slate-400 text-base leading-relaxed mb-10 max-w-2xl">
-        Stop paying the "Platform Tax." Custom React/Vite infrastructure eliminates bloated subscription fees, 
+        Stop paying the "Platform Tax." Custom React/Vite infrastructure eliminates bloated subscription fees,
         third-party app costs, and transaction margin loss. These are our transparent pricing models.
       </p>
 
       {/* Pricing Tiers Overview */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
         {[
-          { name: "Startup Package", setup: "$500–$750", mo: "$0/mo" },
-          { name: "Small E-com", setup: "$2,500", mo: "$99/mo" },
+          { name: "Startup Package", setup: "$500", mo: "N/A" },
+          { name: "Small E-com", setup: "$2,500", mo: "N/A" },
           { name: "Large E-com", setup: "$5,000", mo: "$199/mo" },
-          { name: "Contract", setup: "$25k–$50k", mo: "$2,500/mo" },
+          { name: "Contract", setup: "$25k+", mo: "$2,500/mo" },
         ].map((tier) => (
           <div key={tier.name} className="rounded-2xl bg-[#0a0a0a] border border-white/10 p-5 hover:border-blue-600/40 transition-colors">
             <h3 className="text-sm font-bold text-white mb-3">{tier.name}</h3>
@@ -159,7 +159,7 @@ export default function ServicesPage() {
               </thead>
               <tbody>
                 {[
-                  ["Platform Subscription", "$468 ($39/mo)", "$1,188 ($99/mo Managed Fee)"],
+                  ["Platform Subscription", "$468 ($39/mo)", "$1,188 ($120/yr Managed Fee)"],
                   ["Transaction Tax", "2.0% (3rd party gateway fee)", "0% (Direct Stripe Integration)"],
                   ["Essential Apps", "$600 (Reviews, Upsells, SEO)", "$0 (Hard-coded Features)"],
                   ["Year 1 Setup Fee", "$0", "$2,500 (Your Fee)"],
@@ -179,7 +179,7 @@ export default function ServicesPage() {
             </table>
           </div>
         </div>
-        
+
         {/* Large E-com comp */}
         <div className="rounded-2xl border border-white/10 overflow-hidden">
           <div className="bg-[#0a0a0a] p-5 border-b border-white/10">
@@ -197,7 +197,7 @@ export default function ServicesPage() {
               </thead>
               <tbody>
                 {[
-                  ["Platform Subscription", "$1,260 ($105/mo)", "$2,388 ($199/mo Managed Fee)"],
+                  ["Platform Subscription", "$1,260 ($105/mo)", "$2,388 ($120/yr Managed Fee)"],
                   ["Transaction Tax", "1.0% (approx. $5,000 on $500k)", "0% (Direct Stripe Integration)"],
                   ["App Stack 'Tax'", "$1,800 (Inventory, Filter, Search)", "$0 (Integrated API Logic)"],
                   ["Infrastructure Costs", "Included", "$300 (Supabase Pro)"],

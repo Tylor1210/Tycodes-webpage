@@ -57,6 +57,26 @@ export default function StartupPackagePage() {
         </p>
       </div>
 
+      {/* Pricing Tiers Overview */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        {[
+          { name: "Startup Package", setup: "$999", mo: "N/A" },
+          { name: "Small E-com", setup: "$2,500+", mo: "N/A" },
+          { name: "Large E-com", setup: "$4,999+", mo: "$199/mo" },
+          { name: "Contract", setup: "$25k+", mo: "$2,500/mo" },
+        ].map((tier) => (
+          <div key={tier.name} className="rounded-2xl bg-[#0a0a0a] border border-white/10 p-5 hover:border-blue-600/40 transition-colors">
+            <h3 className="text-sm font-bold text-white mb-3">{tier.name}</h3>
+            <p className="text-2xl font-black text-blue-500 tracking-tighter mb-1">{tier.setup}</p>
+            <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Setup Fee</p>
+            <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-center">
+              <span className="text-[10px] text-slate-400 font-mono">Management</span>
+              <span className="text-xs font-bold text-slate-300">{tier.mo}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <a
         href="mailto:contact@tycodes.dev"
         className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-[11px] px-8 py-4 rounded-2xl transition-all hover:scale-105 shadow-lg shadow-blue-600/20"

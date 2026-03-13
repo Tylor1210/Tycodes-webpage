@@ -87,12 +87,12 @@ function App() {
                 <div className="bg-blue-600/15 p-2 rounded-lg">
                   <Rocket className="text-blue-500" size={14} />
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-blue-500/80">The Startup Package</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-blue-500/80">The Startup Package</span>
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight leading-snug mb-2">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight leading-snug mb-2">
                 Eliminate the <span className="text-blue-500">Platform Tax.</span>
               </h3>
-              <p className="text-[10px] text-slate-600 dark:text-slate-500 leading-relaxed mb-4">
+              <p className="text-xs text-slate-600 dark:text-slate-500 leading-relaxed mb-4">
                 Platforms like Shopify &amp; Wix lock you into $30–$100/mo before you make a single sale. We deploy a Vite-based architecture that improves your net profit margins from day one reducing annual costs by 50% or more.
               </p>
               <div className="space-y-2">
@@ -106,14 +106,14 @@ function App() {
                       <Icon size={10} className="text-blue-500" />
                     </div>
                     <div>
-                      <span className="text-[10px] font-semibold text-slate-700 dark:text-slate-300">{label}</span>
-                      <span className="text-[10px] text-slate-500 dark:text-slate-600 ml-1.5 font-mono">{sub}</span>
+                      <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">{label}</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-600 ml-1.5 font-mono">{sub}</span>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            <button className="mt-4 w-full py-2.5 bg-blue-600 group-hover:bg-blue-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all group-hover:scale-[1.02] shadow-lg shadow-blue-600/20">
+            <button className="mt-4 w-full py-2.5 bg-blue-600 group-hover:bg-blue-500 text-white text-xs font-black uppercase tracking-widest rounded-xl transition-all group-hover:scale-[1.02] shadow-lg shadow-blue-600/20">
               Get the Package
             </button>
           </Link>
@@ -190,7 +190,7 @@ function App() {
                     <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 transition-colors">{p.name}</p>
                     <p className="text-[9px] text-slate-500 dark:text-slate-600 font-mono mt-0.5">{p.desc}</p>
                   </div>
-                  <span className="text-[11px] font-black tracking-tight text-blue-600 dark:text-blue-400 border border-blue-500/20 bg-blue-500/5 px-2 py-0.5 rounded flex-shrink-0 ml-2">{p.tag}</span>
+                  <span className="text-[18px] font-black tracking-tight text-blue-600 dark:text-blue-400 border border-blue-500/20 bg-blue-500/5 px-2 py-0.5 rounded flex-shrink-0 ml-2">{p.tag}</span>
                 </div>
               ))}
             </div>
