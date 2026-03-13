@@ -127,10 +127,17 @@ function App() {
             <div className="space-y-3">
               {news.length > 0 ? (
                 <>
-                  <p className="text-[11px] text-slate-400 line-clamp-2 tracking-tight hover:text-blue-400 cursor-pointer transition-colors">• {news[0]?.title}</p>
-                  <p className="text-[11px] text-slate-400 line-clamp-2 tracking-tight hover:text-blue-400 cursor-pointer transition-colors">• {news[1]?.title}</p>
-                  <p className="text-[11px] text-slate-400 line-clamp-2 tracking-tight hover:text-blue-400 cursor-pointer transition-colors">• {news[2]?.title}</p>
-                  <p className="text-[11px] text-slate-400 line-clamp-2 tracking-tight hover:text-blue-400 cursor-pointer transition-colors">• {news[3]?.title}</p>
+                  {news.slice(0, 4).map((item, index) => (
+                    <a
+                      key={index}
+                      href={item?.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-[11px] text-slate-400 line-clamp-2 tracking-tight hover:text-blue-400 cursor-pointer transition-colors"
+                    >
+                      • {item?.title}
+                    </a>
+                  ))}
                 </>
               ) : (
                 <div className="space-y-2">
@@ -162,7 +169,7 @@ function App() {
             <div className="flex items-center justify-between mb-2 relative z-10">
               <div className="flex items-center gap-2">
                 <Database size={14} className="text-blue-600" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Web Arch & Dev</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Web Architecture & Development</span>
               </div>
               <div className="text-[9px] font-bold uppercase tracking-widest text-slate-600 group-hover/tile:text-blue-500 transition-colors flex items-center gap-1 z-10 relative">
                 View Pricing <ExternalLink size={9} />
