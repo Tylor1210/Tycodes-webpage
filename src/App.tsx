@@ -207,7 +207,7 @@ function App() {
             </div>
           </Link>
 
-          {/* SHIP-COM PACKAGE — cols 4-6, row 3 */}
+          {/* SHIP-COM PACKAGE — cols 4-6, row 3
           <Link to="/ship-com" className="sm:col-span-2 lg:col-start-4 lg:col-span-3 lg:row-start-3 rounded-3xl bg-[#0a0a0a] border border-white/10 p-5 md:p-6 hover:border-orange-500/30 transition-all outline-none focus-visible:ring-2 focus-visible:ring-orange-500 flex flex-col group/tile relative overflow-hidden">
             <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-orange-600/5 rounded-full blur-2xl pointer-events-none" />
             <div className="flex items-center justify-between mb-2">
@@ -232,7 +232,7 @@ function App() {
                 <span className="text-[9px] font-mono text-slate-600">Replaces Shopify/Plus</span>
               </div>
             </div>
-          </Link>
+          </Link> */}
 
         </div>
 
