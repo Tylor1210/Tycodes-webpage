@@ -156,8 +156,10 @@ function App() {
           </Link>
 
           {/* WEB ARCHITECTURE & DEVELOPMENT — cols 4-6, row 2 */}
-          <Link to="/services" className="sm:col-span-2 lg:col-start-4 lg:col-span-3 lg:row-start-2 rounded-3xl bg-[#0a0a0a] border border-white/10 p-5 md:p-6 hover:border-blue-600/30 transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 flex flex-col group/tile">
-            <div className="flex items-center justify-between mb-2">
+          <Link to="/services" className="sm:col-span-2 lg:col-start-4 lg:col-span-3 lg:row-start-2 rounded-3xl bg-[#0a0a0a] border border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.15)] p-5 md:p-6 hover:border-blue-500/60 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 flex flex-col group/tile relative overflow-hidden">
+            {/* Subtle glow */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-600/10 rounded-full blur-2xl pointer-events-none" />
+            <div className="flex items-center justify-between mb-2 relative z-10">
               <div className="flex items-center gap-2">
                 <Database size={14} className="text-blue-600" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Web Arch & Dev</span>
