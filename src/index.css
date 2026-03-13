@@ -35,9 +35,14 @@
 }
 
 .blueprint-grid {
-  background-color: #020202;
+  background-image:
+    linear-gradient(to right, rgba(128, 128, 128, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(128, 128, 128, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.dark .blueprint-grid {
   background-image:
     linear-gradient(to right, rgba(128, 128, 128, 0.07) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(128, 128, 128, 0.07) 1px, transparent 1px);
-  background-size: 40px 40px;
 }

@@ -8,18 +8,21 @@ import Brand from './pages/Brand.tsx'
 import Projects from './pages/Projects.tsx'
 import Services from './pages/Services.tsx'
 import ShipComPage from './pages/ShipCom.tsx'
+import { ThemeProvider } from './components/theme-provider.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/startup-package" element={<StartupPackage />} />
-        <Route path="/brand" element={<Brand />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/ship-com" element={<ShipComPage />} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider defaultTheme="dark">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/startup-package" element={<StartupPackage />} />
+          <Route path="/brand" element={<Brand />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/ship-com" element={<ShipComPage />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   </StrictMode>,
 )

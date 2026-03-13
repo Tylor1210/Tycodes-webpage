@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Mail, Activity, Users } from "lucide-react";
+import { Menu, X, Mail, Activity, Users, Sun, Moon } from "lucide-react";
+import { useTheme } from "../theme-provider";
 
 const navLinks = [
   { label: "Home", to: "/" },
@@ -20,17 +21,35 @@ interface NavbarProps {
 export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
 
   return (
     <>
       <header className="flex justify-between items-center mb-6 md:mb-8 border-b border-white/5 pb-5 flex-shrink-0">
         {/* Left: Logo + tagline */}
-        <div className="flex items-baseline gap-3 md:gap-4">
-          <Link to="/" className="text-3xl md:text-4xl font-black tracking-tighter leading-none hover:opacity-80 transition-opacity">
-            Tycodes <span className="text-blue-600">LLC</span>
+        <div className="flex items-center gap-3 md:gap-4">
+          <Link to="/" className="hover:opacity-80 transition-opacity flex-shrink-0 block mt-1">
+            <svg viewBox="0 0 380 140" className="h-[90px] md:h-[110px] w-auto" xmlns="http://www.w3.org/2000/svg">
+              {/* Icon */}
+              <g transform="translate(40,40)">
+                <rect x="0" y="0" width="60" height="60" rx="12" fill="#111827" />
+                <text x="30" y="40" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontSize="28" fill="#3B82F6">
+                  &lt;/&gt;
+                </text>
+              </g>
+
+              {/* Text */}
+              <text x="105" y="78" fontFamily="JetBrains Mono, monospace" fontSize="42" className="fill-slate-900 dark:fill-white" letterSpacing="1">
+                Tycodes
+              </text>
+
+              <text x="270" y="78" fontFamily="JetBrains Mono, monospace" fontSize="42" fill="#3B82F6">
+                .dev
+              </text>
+            </svg>
           </Link>
-          <div className="hidden md:block h-4 w-[1px] bg-white/10" />
-          <p className="hidden md:block text-[10px] font-mono text-slate-500 uppercase tracking-[0.4em]">
+          <div className="hidden md:block h-4 w-[1px] bg-white/10 relative top-1" />
+          <p className="hidden md:block text-[10px] font-mono text-slate-500 dark:text-slate-500 uppercase tracking-[0.4em] relative top-1">
             Web Architecture, AI, &amp; Automation Solutions
           </p>
         </div>
@@ -38,18 +57,18 @@ export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarPro
         {/* Right: stats + contact + hamburger */}
         <div className="flex items-center gap-2 md:gap-3">
           {/* S&P 500 */}
-          <div className="hidden sm:flex items-center gap-2 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
+          <div className="hidden sm:flex items-center gap-2 bg-slate-100 dark:bg-white/5 px-3 py-2 rounded-xl border border-slate-200 dark:border-white/10">
             <Activity size={12} className="text-blue-600" />
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">
-              S&P 500: <span className="text-white">{market.price}</span>
+            <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-mono">
+              S&P 500: <span className="text-slate-900 dark:text-white">{market.price}</span>
             </span>
           </div>
 
           {/* Traffic */}
-          <div className="hidden sm:flex items-center gap-2 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
+          <div className="hidden sm:flex items-center gap-2 bg-slate-100 dark:bg-white/5 px-3 py-2 rounded-xl border border-slate-200 dark:border-white/10">
             <Users size={11} className="text-emerald-500" />
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">
-              Traffic: <span className="text-white">{visitorCount.toLocaleString()}</span>
+            <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest font-mono">
+              Traffic: <span className="text-slate-900 dark:text-white">{visitorCount.toLocaleString()}</span>
             </span>
           </div>
 
@@ -67,13 +86,22 @@ export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarPro
             <span className="hidden sm:inline">Contact</span>
           </a>
 
+          {/* Theme Toggle */}
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="flex items-center justify-center w-9 h-9 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 transition-all text-slate-600 dark:text-slate-400"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+
           {/* Hamburger */}
           <button
             onClick={() => setOpen(true)}
-            className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+            className="flex items-center justify-center w-9 h-9 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 transition-all"
             aria-label="Open menu"
           >
-            <Menu size={16} className="text-slate-400" />
+            <Menu size={16} className="text-slate-600 dark:text-slate-400" />
           </button>
         </div>
       </header>
@@ -87,16 +115,16 @@ export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarPro
       )}
 
       {/* Drawer panel */}
-      <div className={`fixed top-0 right-0 h-full w-72 z-50 bg-[#0a0a0a] border-l border-white/10 flex flex-col transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}>
+      <div className={`fixed top-0 right-0 h-full w-72 z-50 bg-white dark:bg-[#0a0a0a] border-l border-slate-200 dark:border-white/10 flex flex-col transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}>
         {/* Drawer header */}
-        <div className="flex items-center justify-between p-6 border-b border-white/5">
-          <span className="text-sm font-black uppercase tracking-widest">Menu</span>
+        <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-white/5">
+          <span className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-widest">Menu</span>
           <button
             onClick={() => setOpen(false)}
-            className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 transition-all"
+            className="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition-all"
             aria-label="Close menu"
           >
-            <X size={14} className="text-slate-400" />
+            <X size={14} className="text-slate-500 dark:text-slate-400" />
           </button>
         </div>
 
@@ -107,7 +135,7 @@ export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarPro
               key={to}
               to={to}
               onClick={() => setOpen(false)}
-              className={`px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-widest transition-all ${location.pathname === to ? "bg-blue-600 text-white" : "text-slate-400 hover:text-white hover:bg-white/5"}`}
+              className={`px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-widest transition-all ${location.pathname === to ? "bg-blue-600 text-white" : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/5"}`}
             >
               {label}
             </Link>
@@ -115,7 +143,7 @@ export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarPro
         </nav>
 
         {/* Drawer footer */}
-        <div className="p-6 border-t border-white/5">
+        <div className="p-6 border-t border-slate-100 dark:border-white/5">
           <a
             href="mailto:contact@tycodes.dev"
             onClick={() => setOpen(false)}

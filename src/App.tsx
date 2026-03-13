@@ -52,7 +52,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#020202] text-white selection:bg-blue-600/40 font-sans tracking-tight overflow-x-hidden flex flex-col">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#020202] text-slate-900 dark:text-white selection:bg-blue-600/40 font-sans tracking-tight overflow-x-hidden flex flex-col transition-colors duration-300">
       {/* Dynamic Background Pattern */}
       <div className="fixed inset-0 blueprint-grid pointer-events-none" />
 
@@ -79,20 +79,20 @@ function App() {
           </div>
 
           {/* STARTUP PACKAGE — cols 4-5, row 1 */}
-          <Link to="/startup-package" className="lg:col-start-4 lg:col-span-2 lg:row-start-1 group rounded-3xl bg-[#0a0a0a] border border-white/10 p-5 md:p-6 flex flex-col justify-between hover:border-blue-600/40 transition-all cursor-pointer overflow-hidden relative outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-3xl block">
+          <Link to="/startup-package" className="lg:col-start-4 lg:col-span-2 lg:row-start-1 group rounded-3xl bg-white dark:bg-[#0a0a0a] border border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.15)] p-5 md:p-6 flex flex-col justify-between hover:border-blue-500/60 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] transition-all cursor-pointer overflow-hidden relative outline-none focus-visible:ring-2 focus-visible:ring-blue-600 block">
             {/* Subtle glow */}
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-600/5 rounded-full blur-2xl pointer-events-none" />
-            <div>
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-600/10 rounded-full blur-2xl pointer-events-none" />
+            <div className="relative z-10">
               <div className="flex items-center gap-2 mb-3">
                 <div className="bg-blue-600/15 p-2 rounded-lg">
                   <Rocket className="text-blue-500" size={14} />
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-blue-500/80">The Startup Package</span>
               </div>
-              <h3 className="text-lg font-bold text-white tracking-tight leading-snug mb-2">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight leading-snug mb-2">
                 Eliminate the <span className="text-blue-500">Platform Tax.</span>
               </h3>
-              <p className="text-[10px] text-slate-500 leading-relaxed mb-4">
+              <p className="text-[10px] text-slate-600 dark:text-slate-500 leading-relaxed mb-4">
                 Platforms like Shopify &amp; Wix lock you into $30–$100/mo before you make a single sale. We deploy a Vite-based architecture that improves your net profit margins from day one reducing annual costs by 50% or more.
               </p>
               <div className="space-y-2">
@@ -106,8 +106,8 @@ function App() {
                       <Icon size={10} className="text-blue-500" />
                     </div>
                     <div>
-                      <span className="text-[10px] font-semibold text-slate-300">{label}</span>
-                      <span className="text-[10px] text-slate-600 ml-1.5 font-mono">{sub}</span>
+                      <span className="text-[10px] font-semibold text-slate-700 dark:text-slate-300">{label}</span>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-600 ml-1.5 font-mono">{sub}</span>
                     </div>
                   </div>
                 ))}
@@ -119,8 +119,8 @@ function App() {
           </Link>
 
           {/* DATA STREAM / NEWS — col 6, row 1 */}
-          <div className="lg:col-start-6 lg:col-span-1 lg:row-start-1 rounded-3xl bg-[#0a0a0a] border border-white/5 p-5 md:p-6 overflow-hidden">
-            <div className="flex items-center gap-2 mb-4 text-slate-500">
+          <div className="lg:col-start-6 lg:col-span-1 lg:row-start-1 rounded-3xl bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 p-5 md:p-6 overflow-hidden">
+            <div className="flex items-center gap-2 mb-4 text-slate-500 dark:text-slate-500">
               <Newspaper size={14} />
               <span className="text-[10px] font-bold uppercase tracking-widest">Live Data Stream</span>
             </div>
@@ -133,7 +133,7 @@ function App() {
                       href={item?.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block text-[11px] text-slate-400 line-clamp-2 tracking-tight hover:text-blue-400 cursor-pointer transition-colors"
+                      className="block text-[11px] text-slate-600 dark:text-slate-400 line-clamp-2 tracking-tight hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer transition-colors"
                     >
                       • {item?.title}
                     </a>
@@ -141,8 +141,8 @@ function App() {
                 </>
               ) : (
                 <div className="space-y-2">
-                  <div className="h-3 w-full bg-white/5 animate-pulse rounded" />
-                  <div className="h-3 w-3/4 bg-white/5 animate-pulse rounded" />
+                  <div className="h-3 w-full bg-slate-200 dark:bg-white/5 animate-pulse rounded" />
+                  <div className="h-3 w-3/4 bg-slate-200 dark:bg-white/5 animate-pulse rounded" />
                 </div>
               )}
             </div>
@@ -150,20 +150,20 @@ function App() {
 
 
           {/* AUTOMATED BRAND INFRASTRUCTURE — cols 1-3, row 2 (directly under HeroTile) */}
-          <Link to="/brand" className="sm:col-span-2 lg:col-start-1 lg:col-span-3 lg:row-start-2 group rounded-3xl bg-[#0a0a0a] border border-white/10 p-5 md:p-6 flex items-center justify-between hover:border-blue-600/50 transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-3xl block">
+          <Link to="/brand" className="sm:col-span-2 lg:col-start-1 lg:col-span-3 lg:row-start-2 group rounded-3xl bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 p-5 md:p-6 flex items-center justify-between hover:border-blue-500/50 dark:hover:border-blue-600/50 transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 block">
             <div className="max-w-[75%]">
               <div className="flex items-center gap-2 mb-2">
                 <Bot size={14} className="text-blue-600" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Auto-Growth</span>
               </div>
-              <h3 className="text-sm md:text-base font-bold text-white uppercase tracking-tighter mb-1 leading-tight">Automated Brand Infrastructure</h3>
-              <p className="text-[10px] text-slate-500">Autonomous content orchestration for YT, Twitch, and TikTok.</p>
+              <h3 className="text-sm md:text-base font-bold text-slate-900 dark:text-white uppercase tracking-tighter mb-1 leading-tight">Automated Brand Infrastructure</h3>
+              <p className="text-[10px] text-slate-600 dark:text-slate-500">Autonomous content orchestration for YT, Twitch, and TikTok.</p>
             </div>
-            <Share2 className="text-slate-800 group-hover:text-blue-600 transition-colors flex-shrink-0 ml-4" size={36} />
+            <Share2 className="text-slate-300 dark:text-slate-800 group-hover:text-blue-600 dark:group-hover:text-blue-600 transition-colors flex-shrink-0 ml-4" size={36} />
           </Link>
 
           {/* WEB ARCHITECTURE & DEVELOPMENT — cols 4-6, row 2 */}
-          <Link to="/services" className="sm:col-span-2 lg:col-start-4 lg:col-span-3 lg:row-start-2 rounded-3xl bg-[#0a0a0a] border border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.15)] p-5 md:p-6 hover:border-blue-500/60 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 flex flex-col group/tile relative overflow-hidden">
+          <Link to="/services" className="sm:col-span-2 lg:col-start-4 lg:col-span-3 lg:row-start-2 rounded-3xl bg-white dark:bg-[#0a0a0a] border border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.15)] p-5 md:p-6 hover:border-blue-500/60 hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 flex flex-col group/tile relative overflow-hidden">
             {/* Subtle glow */}
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-600/10 rounded-full blur-2xl pointer-events-none" />
             <div className="flex items-center justify-between mb-2 relative z-10">
@@ -171,14 +171,14 @@ function App() {
                 <Database size={14} className="text-blue-600" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Web Architecture & Development</span>
               </div>
-              <div className="text-[9px] font-bold uppercase tracking-widest text-slate-600 group-hover/tile:text-blue-500 transition-colors flex items-center gap-1 z-10 relative">
+              <div className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-600 group-hover/tile:text-blue-600 dark:group-hover/tile:text-blue-500 transition-colors flex items-center gap-1 z-10 relative">
                 View Pricing <ExternalLink size={9} />
               </div>
             </div>
-            <p className="text-[10px] text-slate-500 mb-4 leading-relaxed max-w-sm">
+            <p className="text-[10px] text-slate-600 dark:text-slate-500 mb-4 leading-relaxed max-w-sm relative z-10">
               Custom Vite + React infrastructure. Eliminate platform taxes and keep your margins.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 flex-1 relative z-10">
               {[
                 { name: "Startup Package", tag: "$500+", desc: "Vite + React. Replaces Wix/Shopify." },
                 { name: "Small E-com", tag: "$2.5k+", desc: "Custom Stripe e-commerce build." },
@@ -187,17 +187,17 @@ function App() {
               ].map((p, i) => (
                 <div key={i} className="flex items-center justify-between group/item py-0.5 pointer-events-none">
                   <div>
-                    <p className="text-[11px] font-semibold text-slate-300 transition-colors">{p.name}</p>
-                    <p className="text-[9px] text-slate-600 font-mono mt-0.5">{p.desc}</p>
+                    <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 transition-colors">{p.name}</p>
+                    <p className="text-[9px] text-slate-500 dark:text-slate-600 font-mono mt-0.5">{p.desc}</p>
                   </div>
-                  <span className="text-[11px] font-black tracking-tight text-blue-400 border border-blue-500/20 bg-blue-500/5 px-2 py-0.5 rounded flex-shrink-0 ml-2">{p.tag}</span>
+                  <span className="text-[11px] font-black tracking-tight text-blue-600 dark:text-blue-400 border border-blue-500/20 bg-blue-500/5 px-2 py-0.5 rounded flex-shrink-0 ml-2">{p.tag}</span>
                 </div>
               ))}
             </div>
           </Link>
 
           {/* RECENT PROJECTS — cols 1-3, row 3 (moved to the left) */}
-          <Link to="/projects" className="sm:col-span-2 lg:col-start-1 lg:col-span-3 lg:row-start-3 rounded-3xl bg-[#0a0a0a] border border-white/5 p-5 md:p-6 hover:border-blue-600/30 transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 flex flex-col group/tile">
+          <Link to="/projects" className="sm:col-span-2 lg:col-start-1 lg:col-span-3 lg:row-start-3 rounded-3xl bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 p-5 md:p-6 hover:border-blue-500/30 dark:hover:border-blue-600/30 transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 flex flex-col group/tile">
             <div className="flex items-center gap-2 mb-4">
               <FolderOpen size={14} className="text-blue-600" />
               <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Projects</span>
@@ -209,8 +209,8 @@ function App() {
                 { name: "2026spring-c-projects" },
               ].map((p, i) => (
                 <div key={i} className="flex items-center justify-between group/item py-0.5">
-                  <p className="text-[11px] font-semibold text-slate-400 group-hover/item:text-blue-400 transition-colors">{p.name}</p>
-                  <ExternalLink size={10} className="text-slate-700 group-hover/tile:text-blue-500 transition-colors flex-shrink-0 ml-2 pointer-events-none" />
+                  <p className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400 transition-colors">{p.name}</p>
+                  <ExternalLink size={10} className="text-slate-300 dark:text-slate-700 group-hover/tile:text-blue-600 dark:group-hover/tile:text-blue-500 transition-colors flex-shrink-0 ml-2 pointer-events-none" />
                 </div>
               ))}
             </div>

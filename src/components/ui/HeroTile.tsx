@@ -12,18 +12,18 @@ export default function HeroTile() {
       animate={{ opacity: 1, scale: 1 }}
       className="md:col-span-2 md:row-span-2"
     >
-      <Card className="h-full border-blue-500/20 bg-slate-900/50 backdrop-blur-md overflow-hidden">
+      <Card className="h-full border-blue-500/20 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md overflow-hidden">
         <CardHeader>
           <div className="flex items-center gap-2 text-blue-400 mb-2">
             <Sparkles size={16} />
             <span className="text-xs font-bold uppercase tracking-widest italic">Florida Tech Partner</span>
           </div>
-          <CardTitle className="text-4xl font-extrabold text-white">
+          <CardTitle className="text-4xl font-extrabold text-slate-900 dark:text-white">
             Automation that <span className="text-blue-500 underline decoration-2">scales</span>.
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-slate-400 mb-6 max-w-sm">
+          <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-sm">
             Stop wasting hours on manual data entry. Get custom Python & AI workflows for your specific business needs.
           </p>
 
@@ -33,10 +33,10 @@ export default function HeroTile() {
                 Get Your Free Audit
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="bg-slate-950 border-slate-800 w-[400px] sm:w-[540px]">
+            <SheetContent side="right" className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 w-[400px] sm:w-[540px]">
               <SheetHeader>
-                <SheetTitle className="text-2xl text-white">Workflow Audit</SheetTitle>
-                <SheetDescription className="text-slate-400">
+                <SheetTitle className="text-2xl text-slate-900 dark:text-white">Workflow Audit</SheetTitle>
+                <SheetDescription className="text-slate-500 dark:text-slate-400">
                   I'll analyze your current stack and find 3 things we can automate this week.
                 </SheetDescription>
               </SheetHeader>
