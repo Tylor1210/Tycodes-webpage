@@ -18,18 +18,18 @@ export default function HeroTile() {
             <Sparkles size={16} />
             <span className="text-xs font-bold uppercase tracking-widest italic">Florida Tech Partner</span>
           </div>
-          <CardTitle className="text-4xl font-extrabold text-slate-900 dark:text-white">
+          <CardTitle className="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight">
             Automation that <span className="text-blue-500 underline decoration-2">scales</span>.
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-sm">
+          <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 mb-6 max-w-sm">
             Stop wasting hours on manual data entry. Get custom Python & AI workflows for your specific business needs.
           </p>
 
           <Sheet>
             <SheetTrigger asChild>
-              <Button className="bg-blue-600 hover:bg-blue-700 rounded-full px-10 py-6 text-lg shadow-lg shadow-blue-500/20">
+              <Button className="bg-blue-600 hover:bg-blue-700 rounded-full px-6 py-4 md:px-10 md:py-6 text-base md:text-lg shadow-lg shadow-blue-500/20">
                 Automate workflows
               </Button>
             </SheetTrigger>
