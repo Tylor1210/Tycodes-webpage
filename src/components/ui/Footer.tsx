@@ -22,7 +22,7 @@ export default function Footer() {
                 Tycodes
               </text>
 
-              <text x="270" y="78" fontFamily="JetBrains Mono, monospace" fontSize="42" fill="#3B82F6">
+              <text x="285" y="78" fontFamily="JetBrains Mono, monospace" fontSize="42" fill="#3B82F6">
                 .dev
               </text>
             </svg>
