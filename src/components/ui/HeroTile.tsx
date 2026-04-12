@@ -30,7 +30,7 @@ export default function HeroTile() {
           <Sheet>
             <SheetTrigger asChild>
               <Button className="bg-blue-600 hover:bg-blue-700 rounded-full px-10 py-6 text-lg shadow-lg shadow-blue-500/20">
-                Get Your Free Audit
+                Automate workflows
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 w-[400px] sm:w-[540px]">

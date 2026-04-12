@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Mail, Activity, Users, Sun, Moon } from "lucide-react";
+import { Menu, X, Mail, Activity, Users, Sun, Moon, Calculator } from "lucide-react";
 import { useTheme } from "../theme-provider";
 
 const navLinks = [
@@ -11,6 +11,11 @@ const navLinks = [
   { label: "Brand Infrastructure", to: "/brand" },
   { label: "Projects", to: "/projects" },
 ];
+
+function scrollToCalculator() {
+  const el = document.getElementById("savings-calculator");
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 interface NavbarProps {
   market: { price: string };
@@ -43,7 +48,7 @@ export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarPro
                 Tycodes
               </text>
 
-              <text x="270" y="78" fontFamily="JetBrains Mono, monospace" fontSize="42" fill="#3B82F6">
+              <text x="280" y="78" fontFamily="JetBrains Mono, monospace" fontSize="42" fill="#3B82F6">
                 .dev
               </text>
             </svg>
@@ -76,6 +81,15 @@ export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarPro
           <span className={`hidden sm:inline text-[9px] font-mono uppercase px-3 py-1.5 rounded-lg border ${isMarketOpen ? "text-emerald-500 border-emerald-500/20 bg-emerald-500/5" : "text-amber-500 border-amber-500/20 bg-amber-500/5"}`}>
             {isMarketOpen ? "Open" : "Closed"}
           </span>
+
+          {/* Calculate Savings CTA */}
+          <button
+            onClick={scrollToCalculator}
+            className="hidden md:flex items-center gap-1.5 bg-emerald-600/15 hover:bg-emerald-600/25 text-emerald-400 border border-emerald-500/30 hover:border-emerald-500/60 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl transition-all hover:scale-105"
+          >
+            <Calculator size={11} />
+            <span>Calculate Savings</span>
+          </button>
 
           {/* Contact CTA */}
           <a
@@ -130,6 +144,14 @@ export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarPro
 
         {/* Nav links */}
         <nav className="flex flex-col p-6 gap-1 flex-1">
+          {/* Calculate Savings — prominent scroll CTA */}
+          <button
+            onClick={() => { setOpen(false); scrollToCalculator(); }}
+            className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all bg-emerald-600/10 border border-emerald-500/25 text-emerald-500 hover:bg-emerald-600/20 hover:border-emerald-500/50 mb-1"
+          >
+            <Calculator size={14} />
+            Calculate Savings
+          </button>
           {navLinks.map(({ label, to }) => (
             <Link
               key={to}
