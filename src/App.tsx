@@ -116,25 +116,28 @@ function App() {
               <p className="text-[10px] text-slate-500 mb-4 leading-relaxed relative z-10">
                 Custom Vite + React infrastructure. Eliminate platform taxes and keep your margins.
               </p>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2 relative z-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 relative z-10">
                 {[
-                  { name: "Startup Package", tag: "$500+", desc: "Vite + React. Replaces Wix/Shopify." },
-                  { name: "Small E-com", tag: "$2.5k+", desc: "Custom Stripe e-commerce build." },
-                  { name: "Large E-com", tag: "$5k+", desc: "High-SKU Supabase architecture." },
-                  { name: "Enterprise Contract", tag: "$25k+", desc: "Custom infra for millions in GMV." },
+                  { name: "Digital Presence", tag: "$799", desc: "High-Conversion Landing Page. Lightning-fast Vite + React architecture. Built for lead capture and local SEO to turn browsers into clients." },
+                  { name: "Vite-com", tag: "$1,500+", desc: "Custom Storefront Engine. Replace Shopify/Wix with a high-margin Stripe build. Zero platform fees and total ownership of your checkout." },
+                  { name: "High-Velocity E-com", tag: "$3,500+", desc: "Enterprise-Grade Scale. Optimized for massive SKU catalogs and heavy traffic. Built on Supabase for real-time inventory and sub-second performance." },
+                  { name: "Enterprise Contract", tag: "$25k+", desc: "Strategic Systems Architect. Full-scale custom infrastructure and autonomous workflows for businesses doing millions in GMV." },
                 ].map((p) => (
-                  <div key={p.name} className="flex items-center justify-between py-0.5 pointer-events-none">
-                    <div className="min-w-0 flex-1">
-                      <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 truncate">{p.name}</p>
-                      <p className="text-[9px] text-slate-500 font-mono mt-0.5">{p.desc}</p>
+                  <div key={p.name} className="flex flex-col py-1 pointer-events-none border-b border-slate-100 dark:border-white/5 last:border-0 pb-3 md:pb-1">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">{p.name}</p>
+                      <span className="text-[10px] font-black text-blue-500 border border-blue-500/20 bg-blue-500/5 px-2 py-0.5 rounded flex-shrink-0">
+                        {p.tag}
+                      </span>
                     </div>
-                    <span className="text-sm font-black text-blue-500 border border-blue-500/20 bg-blue-500/5 px-1.5 py-0.5 rounded flex-shrink-0 ml-2">
-                      {p.tag}
-                    </span>
+                    <p className="text-[9px] text-slate-500 leading-relaxed max-w-[90%]">{p.desc}</p>
                   </div>
                 ))}
               </div>
             </Link>
+
+            {/* AUTONOMOUS SYSTEMS */}
+            <HeroTile />
 
             {/* 2-col grid: all remaining cards */}
             <div className="grid grid-cols-2 gap-4">
@@ -151,6 +154,8 @@ function App() {
                 </div>
                 <div className="space-y-2.5 flex-1">
                   {[
+                    { name: "Tycodes-webpage", lang: "TypeScript" },
+                    { name: "tycodes-small-ecom1", lang: "TypeScript" },
                     { name: "confirmAutomation", lang: "Python" },
                     { name: "Data-Structures-and-Algos", lang: "C/C++" },
                     { name: "2026spring-c-projects", lang: "C" },
@@ -173,14 +178,9 @@ function App() {
                 </div>
               </Link>
 
-              {/* HERO TILE */}
-              <div className="min-h-[180px]">
-                <HeroTile />
-              </div>
-
               {/* STARTUP PACKAGE */}
               <Link
-                to="/startup-package"
+                to="/digital-presence"
                 className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-blue-500/30 hover:border-blue-500/60 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] p-4 flex flex-col justify-between transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 relative overflow-hidden"
               >
                 <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-600/10 rounded-full blur-2xl pointer-events-none" />
@@ -189,10 +189,10 @@ function App() {
                     <div className="bg-blue-600/15 p-1.5 rounded-lg">
                       <Rocket size={11} className="text-blue-500" />
                     </div>
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-blue-500/80">Startup Package</span>
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-blue-500/80">Digital Presence</span>
                   </div>
                   <h3 className="text-xs font-bold text-slate-900 dark:text-white tracking-tight mb-1.5">
-                    Eliminate the <span className="text-blue-500">Platform Tax.</span>
+                    Premium <span className="text-blue-500">Landing Pages.</span>
                   </h3>
                   <div className="space-y-1">
                     {[

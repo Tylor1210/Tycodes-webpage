@@ -5,8 +5,9 @@ import { useTheme } from "../theme-provider";
 
 const navLinks = [
   { label: "Home", to: "/" },
-  { label: "Services", to: "/services" },
-  { label: "Startup Package", to: "/startup-package" },
+  { label: "Vite-com", to: "/services" },
+  { label: "Digital Presence", to: "/digital-presence" },
+  { label: "Automation", to: "/automation" },
   { label: "Web Architecture & Development", to: "/web-architecture-development" },
   { label: "Brand Infrastructure", to: "/brand" },
   { label: "Projects", to: "/projects" },

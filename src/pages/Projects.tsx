@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import { FolderOpen, ArrowLeft, ExternalLink, Github } from "lucide-react";
 
 const projects = [
+  { name: "Tycodes-webpage", tag: "TypeScript · Agency Site", url: "https://github.com/Tylor1210/Tycodes-webpage", desc: "The official Tycodes agency website. Built with React, Vite, and tailwind CSS." },
+  { name: "tycodes-small-ecom1", tag: "TypeScript · E-com Engine", url: "https://github.com/Tylor1210/tycodes-small-ecom1", desc: "A high-performance custom storefront template replacing platform-locked solutions with direct Stripe integration." },
   { name: "confirmAutomation", tag: "HTML · Email Automation", url: "https://github.com/Tylor1210/confirmAutomation", desc: "Automated confirmation email system with customizable templates and trigger workflows." },
   { name: "Data-Structures-and-Algos", tag: "C++ · Spring '26", url: "https://github.com/Tylor1210/Data-Structures-and-Algos---Spring26", desc: "Spring 2026 data structures and algorithm implementations in C++." },
   { name: "2026spring-c-projects", tag: "C# · Spring Projects", url: "https://github.com/Tylor1210/2026spring-c-projects", desc: "Collection of C# projects from Spring 2026 coursework." },
-  { name: "csharpspring2026", tag: "C# · Spring '26", url: "https://github.com/Tylor1210/csharpspring2026", desc: "C# Spring 2026 semester project repository." },
 ];
 
 export default function ProjectsPage() {

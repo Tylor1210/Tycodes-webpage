@@ -27,10 +27,10 @@ export default function ServicesPage() {
       {/* Pricing Tiers Overview */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
         {[
-          { name: "Startup Package", setup: "$500", mo: "N/A" },
-          { name: "Small E-com", setup: "$2,500", mo: "N/A" },
-          { name: "Large E-com", setup: "$5,000", mo: "$199/mo" },
-          { name: "Contract", setup: "$25k+", mo: "$2,500/mo" },
+          { name: "Digital Presence", setup: "$799", mo: "N/A" },
+          { name: "Vite-com", setup: "$1,500+", mo: "N/A" },
+          { name: "High-Velocity E-com", setup: "$3,500+", mo: "$199/mo" },
+          { name: "Enterprise Contract", setup: "$25k+", mo: "$2,500/mo" },
         ].map((tier) => (
           <div key={tier.name} className="rounded-2xl bg-[#0a0a0a] border border-white/10 p-5 hover:border-blue-600/40 transition-colors">
             <h3 className="text-sm font-bold text-white mb-3">{tier.name}</h3>
@@ -65,28 +65,28 @@ export default function ServicesPage() {
           </thead>
           <tbody className="text-sm font-medium">
             <tr className="border-b border-white/5 group hover:bg-white/5 transition-colors">
-              <td className="py-4 text-white font-bold group-hover:text-blue-400">Startup Package</td>
-              <td className="py-4 text-emerald-400">+$9</td>
-              <td className="py-4 text-emerald-400">+$553</td>
+              <td className="py-4 text-white font-bold group-hover:text-blue-400">Digital Presence</td>
+              <td className="py-4 text-emerald-400">-$213</td>
+              <td className="py-4 text-emerald-400">+$340</td>
               <td className="py-4 text-emerald-400">+$603</td>
-              <td className="py-4 text-emerald-500 font-black">+$1,165</td>
+              <td className="py-4 text-emerald-500 font-black">+$730</td>
             </tr>
             <tr className="border-b border-white/5 group hover:bg-white/5 transition-colors">
-              <td className="py-4 text-white font-bold group-hover:text-blue-400">Small E-com</td>
-              <td className="py-4 text-emerald-400">+$652</td>
-              <td className="py-4 text-emerald-400">+$3,412</td>
-              <td className="py-4 text-emerald-400">+$3,912</td>
-              <td className="py-4 text-emerald-500 font-black">+$7,976</td>
-            </tr>
-            <tr className="border-b border-white/5 group hover:bg-white/5 transition-colors">
-              <td className="py-4 text-white font-bold group-hover:text-blue-400">Large E-com</td>
-              <td className="py-4 text-emerald-400">+$1,272</td>
+              <td className="py-4 text-white font-bold group-hover:text-blue-400">Vite-com</td>
+              <td className="py-4 text-emerald-400">+$1,652</td>
               <td className="py-4 text-emerald-400">+$4,412</td>
-              <td className="py-4 text-emerald-400">+$5,112</td>
-              <td className="py-4 text-emerald-500 font-black">+$10,796</td>
+              <td className="py-4 text-emerald-400">+$4,912</td>
+              <td className="py-4 text-emerald-500 font-black">+$10,976</td>
+            </tr>
+            <tr className="border-b border-white/5 group hover:bg-white/5 transition-colors">
+              <td className="py-4 text-white font-bold group-hover:text-blue-400">High-Velocity E-com</td>
+              <td className="py-4 text-emerald-400">+$2,772</td>
+              <td className="py-4 text-emerald-400">+$5,412</td>
+              <td className="py-4 text-emerald-400">+$6,112</td>
+              <td className="py-4 text-emerald-500 font-black">+$14,296</td>
             </tr>
             <tr className="group hover:bg-white/5 transition-colors">
-              <td className="py-4 text-white font-bold group-hover:text-blue-400">Contract</td>
+              <td className="py-4 text-white font-bold group-hover:text-blue-400">Enterprise Contract</td>
               <td className="py-4 text-emerald-400">+$118,000</td>
               <td className="py-4 text-emerald-400">+$160,000</td>
               <td className="py-4 text-emerald-400">+$190,000</td>
@@ -102,10 +102,10 @@ export default function ServicesPage() {
       </h2>
 
       <div className="space-y-8 mb-12">
-        {/* Startup Package comp */}
+        {/* Digital Presence comp */}
         <div className="rounded-2xl border border-white/10 overflow-hidden">
           <div className="bg-[#0a0a0a] p-5 border-b border-white/10">
-            <h3 className="text-lg font-bold text-white mb-1 tracking-tight">1. Startup Package (Non-Ecommerce)</h3>
+            <h3 className="text-lg font-bold text-white mb-1 tracking-tight">1. Digital Presence (Landing Page)</h3>
             <p className="text-xs text-slate-500 font-mono">Target: Service professionals replacing Wix or Squarespace.</p>
           </div>
           <div className="bg-[#050505] p-5 overflow-x-auto">
@@ -124,7 +124,7 @@ export default function ServicesPage() {
                   ["Email Hosting", "$84 ($7/mo)", "$12 (Zoho Mail)"],
                   ["Domain Renewal", "$20", "$15 (Cloudflare)"],
                   ["Hidden 'Bloat' Fees", "$50 (Template/Plugin renewals)", "$0 (Custom Built)"],
-                  ["Year 1 Setup Fee", "$0", "$500 (Your Fee)"],
+                  ["Year 1 Setup Fee", "$0", "$799 (Your Fee)"],
                 ].map((row, i) => (
                   <tr key={i} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                     <td className="py-3 text-slate-300 font-medium">{row[0]}</td>
@@ -135,17 +135,17 @@ export default function ServicesPage() {
                 <tr className="bg-white/5 font-bold">
                   <td className="py-3 px-3 rounded-l-lg">TOTAL (Year 1)</td>
                   <td className="py-3 text-red-400 font-mono text-xs">$586</td>
-                  <td className="py-3 rounded-r-lg text-emerald-500 font-mono text-xs">$527</td>
+                  <td className="py-3 rounded-r-lg text-emerald-500 font-mono text-xs">$826</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        {/* Small E-com comp */}
+        {/* E-Commerce Pivot comp */}
         <div className="rounded-2xl border border-white/10 overflow-hidden">
           <div className="bg-[#0a0a0a] p-5 border-b border-white/10">
-            <h3 className="text-lg font-bold text-white mb-1 tracking-tight">2. Small E-com (&lt;100 Products)</h3>
+            <h3 className="text-lg font-bold text-white mb-1 tracking-tight">2. Vite-com (Custom Storefront)</h3>
             <p className="text-xs text-slate-500 font-mono">Target: Emerging brands replacing Shopify Basic.</p>
           </div>
           <div className="bg-[#050505] p-5 overflow-x-auto">
@@ -159,10 +159,10 @@ export default function ServicesPage() {
               </thead>
               <tbody>
                 {[
-                  ["Platform Subscription", "$468 ($39/mo)", "$1,188 ($120/yr Managed Fee)"],
+                  ["Platform Subscription", "$468 ($39/mo)", "$0 (Serverless)"],
                   ["Transaction Tax", "2.0% (3rd party gateway fee)", "0% (Direct Stripe Integration)"],
                   ["Essential Apps", "$600 (Reviews, Upsells, SEO)", "$0 (Hard-coded Features)"],
-                  ["Year 1 Setup Fee", "$0", "$2,500 (Your Fee)"],
+                  ["Year 1 Setup Fee", "$0", "$1,500 (Your Fee)"],
                 ].map((row, i) => (
                   <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                     <td className="py-3 text-slate-300 font-medium">{row[0]}</td>
@@ -180,10 +180,10 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        {/* Large E-com comp */}
+        {/* High-Velocity E-com comp */}
         <div className="rounded-2xl border border-white/10 overflow-hidden">
           <div className="bg-[#0a0a0a] p-5 border-b border-white/10">
-            <h3 className="text-lg font-bold text-white mb-1 tracking-tight">3. Large E-com (High-SKU / High-Traffic)</h3>
+            <h3 className="text-lg font-bold text-white mb-1 tracking-tight">3. High-Velocity E-com (Enterprise Scale)</h3>
             <p className="text-xs text-slate-500 font-mono">Target: Established retailers replacing Shopify "Growth" or "Pro".</p>
           </div>
           <div className="bg-[#050505] p-5 overflow-x-auto">
@@ -197,11 +197,11 @@ export default function ServicesPage() {
               </thead>
               <tbody>
                 {[
-                  ["Platform Subscription", "$1,260 ($105/mo)", "$2,388 ($120/yr Managed Fee)"],
+                  ["Platform Subscription", "$1,260 ($105/mo)", "$300 (Supabase/Edge)"],
                   ["Transaction Tax", "1.0% (approx. $5,000 on $500k)", "0% (Direct Stripe Integration)"],
                   ["App Stack 'Tax'", "$1,800 (Inventory, Filter, Search)", "$0 (Integrated API Logic)"],
-                  ["Infrastructure Costs", "Included", "$300 (Supabase Pro)"],
-                  ["Year 1 Setup Fee", "$0", "$5,000 (Your Fee)"],
+                  ["Infrastructure Costs", "Included", "$0 (Edge architecture)"],
+                  ["Year 1 Setup Fee", "$0", "$3,500 (Your Fee)"],
                 ].map((row, i) => (
                   <tr key={i} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                     <td className="py-3 text-slate-300 font-medium">{row[0]}</td>
@@ -263,10 +263,10 @@ export default function ServicesPage() {
           </thead>
           <tbody className="text-sm font-medium">
             {[
-              ["Startup Package", "$500–$750", "$0", "Monthly Hosting Subscriptions"],
-              ["Small E-com", "$2,500", "$99", "App Fees & Third-Party Transaction Fees"],
-              ["Large E-com", "$5,000", "$199", "High-SKU Management Fees & API Limits"],
-              ["Contract", "$25k–$50k", "$2,500", "Enterprise Revenue Sharing & Variable Fees"],
+              ["Digital Presence", "$799", "$0", "Monthly Hosting Subscriptions"],
+              ["Vite-com", "$1,500+", "$0", "App Fees & Third-Party Transaction Fees"],
+              ["High-Velocity E-com", "$3,500+", "$199", "High-SKU Management Fees & API Limits"],
+              ["Enterprise Contract", "$25k+", "$2,500", "Enterprise Revenue Sharing & Variable Fees"],
             ].map((row, i) => (
               <tr key={i} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                 <td className="py-4 text-white font-bold">{row[0]}</td>

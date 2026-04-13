@@ -1,50 +1,49 @@
-import { motion } from "motion/react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import AuditForm from "./AuditForm";
+import { Link } from "react-router-dom";
+import { Bot, ExternalLink, Zap, Layout } from "lucide-react";
 
 export default function HeroTile() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="md:col-span-2 md:row-span-2"
-    >
-      <Card className="h-full border-blue-500/20 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md overflow-hidden">
-        <CardHeader>
-          <div className="flex items-center gap-2 text-blue-400 mb-2">
-            <Sparkles size={16} />
-            <span className="text-xs font-bold uppercase tracking-widest italic">Florida Tech Partner</span>
-          </div>
-          <CardTitle className="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight">
-            Automation that <span className="text-blue-500 underline decoration-2">scales</span>.
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 mb-6 max-w-sm">
-            Stop wasting hours on manual data entry. Get custom Python & AI workflows for your specific business needs.
-          </p>
+  const tiers = [
+    { name: "The Connector", tag: "$2,500 – $7.5k", desc: "API & Middleware. Custom bridges between CRM, Email, and Project Management tools." },
+    { name: "The Agent", tag: "$5,000 – $15k+", desc: "Autonomous AI Agents. Deploy 24/7 digital employees for support and document analysis." },
+    { name: "The Architect", tag: "$15,000 – $50k+", desc: "Custom ERP & Internal Tools. Private dashboards and strategic systems for your business." },
+  ];
 
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button className="bg-blue-600 hover:bg-blue-700 rounded-full px-6 py-4 md:px-10 md:py-6 text-base md:text-lg shadow-lg shadow-blue-500/20">
-                Automate workflows
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 w-[400px] sm:w-[540px]">
-              <SheetHeader>
-                <SheetTitle className="text-2xl text-slate-900 dark:text-white">Workflow Audit</SheetTitle>
-                <SheetDescription className="text-slate-500 dark:text-slate-400">
-                  I'll analyze your current stack and find 3 things we can automate this week.
-                </SheetDescription>
-              </SheetHeader>
-              <AuditForm />
-            </SheetContent>
-          </Sheet>
-        </CardContent>
-      </Card>
-    </motion.div>
+  return (
+    <Link
+      to="/automation"
+      className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.12)] p-5 transition-all outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 flex flex-col relative overflow-hidden"
+    >
+      <div className="absolute -top-8 -right-8 w-32 h-32 bg-emerald-600/8 rounded-full blur-2xl pointer-events-none" />
+      <div className="flex items-center justify-between mb-3 relative z-10">
+        <div className="flex items-center gap-2">
+          <Bot size={13} className="text-emerald-500" />
+          <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500">Autonomous Systems</span>
+        </div>
+        <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-600 group-hover:text-emerald-500 transition-colors flex items-center gap-1">
+          View Systems <ExternalLink size={9} />
+        </span>
+      </div>
+
+      <h3 className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight mb-1 relative z-10">
+        Automation that <span className="text-emerald-500">scales</span>
+      </h3>
+      <p className="text-[10px] text-slate-500 mb-4 leading-relaxed relative z-10">
+        Stop fighting your software. Deploy custom AI employees and API bridges built for absolute efficiency.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 relative z-10">
+        {tiers.map((p) => (
+          <div key={p.name} className="flex flex-col py-1 pointer-events-none border-b border-slate-100 dark:border-white/5 last:border-0 pb-3 md:pb-1">
+            <div className="flex items-center justify-between mb-1">
+              <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">{p.name}</p>
+              <span className="text-[10px] font-black text-emerald-500 border border-emerald-500/20 bg-emerald-500/5 px-2 py-0.5 rounded flex-shrink-0">
+                {p.tag}
+              </span>
+            </div>
+            <p className="text-[9px] text-slate-500 leading-relaxed max-w-[90%] line-clamp-2">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </Link>
   );
 }

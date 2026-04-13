@@ -43,9 +43,9 @@ export default function Footer() {
             {[
               { label: "Home", to: "/" },
               { label: "Services", to: "/services" },
-              { label: "Startup Package", to: "/startup-package" },
+              { label: "Digital Presence", to: "/digital-presence" },
+              { label: "Automation", to: "/automation" },
               { label: "Brand Infrastructure", to: "/brand" },
-              { label: "Ship-com Package", to: "/ship-com" },
               { label: "Projects", to: "/projects" },
             ].map(({ label, to }) => (
               <Link key={to} to={to} className="text-[11px] text-slate-600 dark:text-slate-500 hover:text-blue-600 dark:hover:text-white transition-colors font-medium">

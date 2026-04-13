@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import {
   Calculator,
-  CheckCircle2,
   TrendingUp,
   Info,
   ChevronDown,
@@ -37,8 +36,9 @@ const STRIPE_RATE = 0.029;   // 2.9 % — identical pass-through on both sides
 const STRIPE_FIXED = 0.30;    // $0.30 per transaction
 const AVG_ORDER = 75;      // assumed average order value for tx-count math
 const DOMAIN_ANNUAL = 15;      // $15/yr domain — pass-through
-const TY_BASE_FEE = 1250;    // Tycodes base professional fee
-const TY_VALUE_PCT = 0.15;    // 15 % of Year-1 savings added to fee
+const TY_DP_FEE = 799;     // Digital Presence (< $2.5k)
+const TY_VC_FEE = 1499;    // Vite-com ($2.5k - $10k)
+const TY_HV_FEE = 3499;    // High-Velocity (> $10k)
 
 const usd = (n: number, dec = 0) =>
   "$" + n.toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec });
@@ -65,8 +65,10 @@ export default function SavingsCalculator() {
     const stripe = stripeMonth(revenue);
     const domainMo = DOMAIN_ANNUAL / 12;
 
-    // Competitor monthly
-    const subscription = plan.monthly;
+    // Hidden App Bloat (Competitors only)
+    const appBloatMo = revenue < 5000 ? 35 : (revenue < 15000 ? 75 : 150);
+    const subscription = plan.monthly + appBloatMo;
+    
     const penalty = revenue * plan.penaltyRate;          // 3rd-party gateway penalty
     const currentMo = subscription + penalty + stripe + domainMo;
     const currentYr = currentMo * 12;
@@ -75,24 +77,25 @@ export default function SavingsCalculator() {
     const tycodesMo = stripe + domainMo;
     const tycodesYr = tycodesMo * 12;
 
-    // True savings = only what we eliminate
-    const savedSub = subscription * 12;
+    // Long-term savings
+    const savedSub = (plan.monthly + appBloatMo) * 12;
     const savedPenalty = penalty * 12;
     const annualSaving = savedSub + savedPenalty;
-
-    // Value-based professional fee
-    const proFee = TY_BASE_FEE + TY_VALUE_PCT * annualSaving;
+    
+    // Volume-based professional fee
+    const proFee = revenue < 2500 ? TY_DP_FEE : (revenue <= 10000 ? TY_VC_FEE : TY_HV_FEE);
     const yr1Net = annualSaving - proFee;
+    const yr3Net = (annualSaving * 3) - proFee;
     const breakEven = annualSaving > 0
       ? Math.ceil((proFee / (annualSaving / 12)) * 10) / 10
       : Infinity;
 
     return {
       stripe, domainMo,
-      subscription, penalty, currentMo, currentYr,
+      subscription, penalty, currentMo, currentYr, appBloatMo,
       tycodesMo, tycodesYr,
       savedSub, savedPenalty, annualSaving,
-      proFee, yr1Net, breakEven,
+      proFee, yr1Net, yr3Net, breakEven,
     };
   }, [platform, planIdx, revenue, plan]);
 
@@ -159,8 +162,8 @@ export default function SavingsCalculator() {
                       key={p}
                       onClick={() => switchPlatform(p)}
                       className={`flex-1 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg border transition-all ${platform === p
-                          ? "bg-rose-500/12 border-rose-500/40 text-rose-400"
-                          : "bg-slate-900 border-slate-700 text-slate-500 hover:border-slate-600 hover:text-slate-400"
+                        ? "bg-rose-500/12 border-rose-500/40 text-rose-400"
+                        : "bg-slate-900 border-slate-700 text-slate-500 hover:border-slate-600 hover:text-slate-400"
                         }`}
                     >
                       {PLATFORMS[p].label}
@@ -172,10 +175,12 @@ export default function SavingsCalculator() {
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <FieldLabel>Monthly Revenue</FieldLabel>
-                  <span className="text-[10px] font-black text-white font-mono">{usd(revenue)}</span>
+                  <span className="text-[10px] font-black text-white font-mono">
+                    {revenue >= 20000 ? "$20,000+" : usd(revenue)}
+                  </span>
                 </div>
                 <input
-                  type="range" min={500} max={100000} step={500}
+                  type="range" min={0} max={20000} step={250}
                   value={revenue}
                   onChange={(e) => setRevenue(Number(e.target.value))}
                   className="w-full h-1.5 appearance-none cursor-pointer rounded-full bg-slate-800 accent-emerald-500"
@@ -186,31 +191,27 @@ export default function SavingsCalculator() {
             {/* Plan select */}
             <div>
               <FieldLabel>{cfg.label} Plan</FieldLabel>
-              <div className="space-y-1 mt-1.5">
+              <select
+                value={planIdx}
+                onChange={(e) => setPlanIdx(Number(e.target.value))}
+                className="mt-1.5 w-full bg-slate-900 border border-slate-700 text-slate-300 text-[10px] font-semibold rounded-lg px-2.5 py-1.5 appearance-none cursor-pointer hover:border-slate-600 focus:outline-none focus:border-emerald-500/50 transition-colors"
+              >
                 {cfg.plans.map((p, i) => (
-                  <button
-                    key={p.label}
-                    onClick={() => setPlanIdx(i)}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl border text-[10px] font-semibold transition-all text-left ${planIdx === i
-                        ? "bg-slate-800 border-slate-600 text-white"
-                        : "bg-slate-900/60 border-slate-800 text-slate-500 hover:border-slate-700 hover:text-slate-400"
-                      }`}
-                  >
-                    <span>{p.label}</span>
-                    <span className="flex items-center gap-2">
-                      {p.penaltyRate > 0 && <span className="text-[8px] font-mono text-rose-400 bg-rose-500/10 px-1.5 py-0.5 rounded">+{(p.penaltyRate * 100).toFixed(1)}%</span>}
-                      {planIdx === i && <CheckCircle2 size={11} className="text-emerald-400 flex-shrink-0" />}
-                    </span>
-                  </button>
+                  <option key={i} value={i}>{p.label}</option>
                 ))}
-              </div>
+              </select>
             </div>
+          </div>
+        </div>
 
+        {/* ── Results: ALWAYS Visible ── */}
+        <div className="space-y-4">
             {/* Result Cards */}
             <div className="grid grid-cols-2 gap-2">
               <div className="rounded-xl bg-rose-500/5 border border-rose-500/20 p-3">
                 <span className="text-[9px] font-black uppercase tracking-widest text-rose-400 block mb-2">Current</span>
-                <Line label="Subscription" value={c.subscription} color="text-slate-400" />
+                <Line label="Base Plan" value={c.subscription - c.appBloatMo} color="text-slate-400" />
+                <Line label="Hidden App Bloat" value={c.appBloatMo} color="text-rose-400" bold />
                 <Line label="Gateway Penalty" value={c.penalty} color="text-rose-400" bold />
                 <PassThru stripe={c.stripe} domain={c.domainMo} />
                 <Total value={c.currentMo} color="text-rose-400" />
@@ -241,17 +242,27 @@ export default function SavingsCalculator() {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400">One-Time Payment</p>
-                  <p className="text-[8px] text-slate-600 font-mono italic">$1,250 base + 15% savings</p>
                 </div>
                 <span className="text-xl font-black text-white font-mono">{usd(c.proFee)}</span>
               </div>
 
-              <div className={`rounded-lg p-2.5 ${c.yr1Net >= 0 ? "bg-emerald-500/8 border border-emerald-500/20" : "bg-amber-500/8 border border-amber-500/20"}`}>
-                <div className="flex justify-between items-center">
-                  <span className="text-[9px] font-black text-white">Net Year 1 ROI</span>
-                  <span className={`text-base font-black font-mono ${c.yr1Net >= 0 ? "text-emerald-400" : "text-amber-400"}`}>
-                    {c.yr1Net >= 0 ? "+" : ""}{usd(c.yr1Net)}
-                  </span>
+              <div className="grid grid-cols-2 gap-2">
+                <div className={`rounded-lg p-2.5 ${c.yr1Net >= 0 ? "bg-emerald-500/8 border border-emerald-500/20" : "bg-amber-500/8 border border-amber-500/20"}`}>
+                  <div className="flex flex-col">
+                    <span className="text-[8px] font-black text-white uppercase tracking-wider mb-1">Year 1 Net ROI</span>
+                    <span className={`text-sm font-black font-mono ${c.yr1Net >= 0 ? "text-emerald-400" : "text-amber-400"}`}>
+                      {c.yr1Net >= 0 ? "+" : ""}{usd(c.yr1Net)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="rounded-lg p-2.5 bg-emerald-500/10 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                  <div className="flex flex-col">
+                    <span className="text-[8px] font-black text-emerald-400 uppercase tracking-wider mb-1">Year 3 Net ROI</span>
+                    <span className="text-sm font-black font-mono text-emerald-400">
+                      +{usd(c.yr3Net)}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -259,20 +270,18 @@ export default function SavingsCalculator() {
             {/* Action CTA */}
             <div className="space-y-2 pt-2">
               <a
-                href="mailto:contact@tycodes.dev?subject=Startup Package — Savings Calculator"
+                href="mailto:contact@tycodes.dev?subject=Vite-com - Savings Calculator"
                 className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-emerald-700/30"
               >
                 <TrendingUp size={12} />
                 Get a Quote
               </a>
-              <p className="text-center text-[8px] font-mono text-slate-600">
-                One-time payment · 100% code ownership
+              <p className="text-center text-[8px] font-mono text-slate-600 leading-relaxed max-w-[200px] mx-auto">
+                One-time payment. 100% code ownership. No monthly platform subscriptions.
               </p>
             </div>
-
-          </div>{/* end collapsible content */}
-        </div>
-      </div>
+        </div>{/* end Results */}
+      </div>{/* end outer wrapper */}
     </section>
   );
 }
