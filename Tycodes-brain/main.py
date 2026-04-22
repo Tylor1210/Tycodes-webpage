@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from scraper import scrape_website
+from scraper import get_website_markdown
 from analyst import analyze_website, AuditResult
 
 app = FastAPI(
@@ -20,7 +20,7 @@ class AuditRequest(BaseModel):
 def audit_website(request: AuditRequest):
     try:
         # Step 1: Scrape the website
-        markdown_content = scrape_website(request.url)
+        markdown_content = get_website_markdown(request.url)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to scrape website: {str(e)}")
 
