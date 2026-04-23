@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Zap, Bot, Layout, CheckCircle2, Mail, TrendingUp, Info } from "lucide-react";
+import { ArrowLeft, Zap, Bot, Layout, Mail, TrendingUp, Info } from "lucide-react";
 
 export default function AutomationPage() {
   return (
