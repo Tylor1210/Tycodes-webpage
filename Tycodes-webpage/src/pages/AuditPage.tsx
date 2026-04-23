@@ -350,12 +350,12 @@ export default function AuditPage() {
                 <span className="flex items-center gap-2">Run Deep Scan <ArrowRight size={14} /></span>
               )}
             </button>
-            <button
+             <button
               onClick={handleManualAudit}
               disabled={isScanning || (monthlySpend === 0 && usesEcom === null)}
               className="flex items-center justify-center gap-2 w-full py-3 mt-2 bg-transparent hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed text-slate-400 text-[10px] font-bold uppercase tracking-widest rounded-xl transition-all border border-white/5 hover:border-white/10"
             >
-               Fast Calculate (No Scrape)
+               Fast Calculate (I KNOW MY COSTS)
             </button>
             <p className="text-center text-[10px] text-slate-500 mt-3">
               Uses Tycodes Agentic AI to scrape and analyze the architecture of {domain}.

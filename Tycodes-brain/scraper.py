@@ -7,6 +7,9 @@ load_dotenv()
 app = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))
 
 def get_website_markdown(url: str):
+    if not url.startswith(("http://", "https://")):
+        url = f"https://{url}"
+        
     print(f"--- Attempting to scrape: {url} ---")
     try:
         # Use .scrape() since your library doesn't recognize .scrape_url()
