@@ -87,17 +87,20 @@ def generate_audit_pricing(tier: str, request_revenue: float, uses_ecom: bool, a
             
     competitor_monthly_cost = competitor_annual_cost / 12
             
-    return FinalAuditResult(
-        **audit_result_dump,
-        estimated_monthly_cost=competitor_monthly_cost,
-        tycodes_estimated_cost=tycodes_cost_1yr,
-        tycodes_payment_plan=payment_plan,
-        is_enterprise=is_enterprise,
-        setup_fee=setup_fee,
-        mgmt_fee=mgmt_fee,
-        savings_1_yr=savings_1_yr,
-        savings_3_yr=savings_3_yr
-    )
+    # Prepare result dictionary to avoid duplicate keyword arguments
+    result_data = audit_result_dump.copy()
+    result_data.update({
+        "estimated_monthly_cost": competitor_monthly_cost,
+        "tycodes_estimated_cost": tycodes_cost_1yr,
+        "tycodes_payment_plan": payment_plan,
+        "is_enterprise": is_enterprise,
+        "setup_fee": setup_fee,
+        "mgmt_fee": mgmt_fee,
+        "savings_1_yr": savings_1_yr,
+        "savings_3_yr": savings_3_yr
+    })
+    
+    return FinalAuditResult(**result_data)
 
 @app.post("/audit", response_model=FinalAuditResult)
 def audit_website(request: AuditRequest):
