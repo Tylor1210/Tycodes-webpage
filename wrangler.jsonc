@@ -6,7 +6,7 @@
     "enabled": true
   },
   "assets": {
-    "directory": "./Tycodes-webpage/dist",
+    "directory": "./dist",
     "not_found_handling": "single-page-application"
   },
   "routes": [

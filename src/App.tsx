@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import HeroTile from "./components/ui/HeroTile";
 import Navbar from "./components/ui/Navbar";
 import Footer from "./components/ui/Footer";
-import SavingsCalculator from "./components/SavingsCalculator";
+import MainHeroFunnel from "./components/ui/MainHeroFunnel";
 import {
   Newspaper,
   Share2,
@@ -86,62 +86,16 @@ function App() {
         {/* Navbar */}
         <Navbar market={market} isMarketOpen={isMarketOpen} visitorCount={visitorCount} />
 
-        {/* ── Primary grid: Calculator (left 50%) + Right column (right 50%) ── */}
+        {/* ── Primary grid ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
 
-          {/* LEFT: Savings Calculator */}
-          <SavingsCalculator />
-
-          {/* RIGHT: all cards stacked in a 2-col sub-grid */}
+          {/* LEFT COLUMN */}
           <div className="flex flex-col gap-4">
-
-            {/* SERVICE MENU */}
-            <Link
-              to="/services"
-              className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] p-5 transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 flex flex-col relative overflow-hidden"
-            >
-              <div className="absolute -top-8 -right-8 w-32 h-32 bg-blue-600/8 rounded-full blur-2xl pointer-events-none" />
-              <div className="flex items-center justify-between mb-3 relative z-10">
-                <div className="flex items-center gap-2">
-                  <Database size={13} className="text-blue-500" />
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500">Service Menu</span>
-                </div>
-                <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-600 group-hover:text-blue-500 transition-colors flex items-center gap-1">
-                  View Pricing <ExternalLink size={9} />
-                </span>
-              </div>
-              <h3 className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight mb-1 relative z-10">
-                Web Architecture &amp; Development
-              </h3>
-              <p className="text-[10px] text-slate-500 mb-4 leading-relaxed relative z-10">
-                Custom Vite + React infrastructure. Eliminate platform taxes and keep your margins.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 relative z-10">
-                {[
-                  { name: "Digital Presence", tag: "$799", desc: "High-Conversion Landing Page. Lightning-fast Vite + React architecture. Built for lead capture and local SEO to turn browsers into clients." },
-                  { name: "Vite-com", tag: "$1,500+", desc: "Custom Storefront Engine. Replace Shopify/Wix with a high-margin Stripe build. Zero platform fees and total ownership of your checkout." },
-                  { name: "High-Velocity E-com", tag: "$3,500+", desc: "Enterprise-Grade Scale. Optimized for massive SKU catalogs and heavy traffic. Built on Supabase for real-time inventory and sub-second performance." },
-                  { name: "Enterprise Contract", tag: "$25k+", desc: "Strategic Systems Architect. Full-scale custom infrastructure and autonomous workflows for businesses doing millions in GMV." },
-                ].map((p) => (
-                  <div key={p.name} className="flex flex-col py-1 pointer-events-none border-b border-slate-100 dark:border-white/5 last:border-0 pb-3 md:pb-1">
-                    <div className="flex items-center justify-between mb-1">
-                      <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">{p.name}</p>
-                      <span className="text-[10px] font-black text-blue-500 border border-blue-500/20 bg-blue-500/5 px-2 py-0.5 rounded flex-shrink-0">
-                        {p.tag}
-                      </span>
-                    </div>
-                    <p className="text-[9px] text-slate-500 leading-relaxed max-w-[90%]">{p.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </Link>
-
-            {/* AUTONOMOUS SYSTEMS */}
-            <HeroTile />
+            {/* MAIN HERO FUNNEL */}
+            <MainHeroFunnel />
 
             {/* 2-col grid: all remaining cards */}
             <div className="grid grid-cols-2 gap-4">
-
 
               {/* PORTFOLIO */}
               <Link
@@ -262,6 +216,55 @@ function App() {
               </div>
 
             </div> {/* end 2-col sub-grid */}
+          </div> {/* end left column */}
+
+          {/* RIGHT COLUMN */}
+          <div className="flex flex-col gap-4">
+
+            {/* SERVICE MENU */}
+            <Link
+              to="/services"
+              className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] p-5 transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 flex flex-col relative overflow-hidden"
+            >
+              <div className="absolute -top-8 -right-8 w-32 h-32 bg-blue-600/8 rounded-full blur-2xl pointer-events-none" />
+              <div className="flex items-center justify-between mb-3 relative z-10">
+                <div className="flex items-center gap-2">
+                  <Database size={13} className="text-blue-500" />
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500">Service Menu</span>
+                </div>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-600 group-hover:text-blue-500 transition-colors flex items-center gap-1">
+                  View Pricing <ExternalLink size={9} />
+                </span>
+              </div>
+              <h3 className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight mb-1 relative z-10">
+                Web Architecture &amp; Development
+              </h3>
+              <p className="text-[10px] text-slate-500 mb-4 leading-relaxed relative z-10">
+                Custom Vite + React infrastructure. Eliminate platform taxes and keep your margins.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 relative z-10">
+                {[
+                  { name: "Digital Presence", tag: "$799", desc: "High-Conversion Landing Page. Lightning-fast Vite + React architecture. Built for lead capture and local SEO to turn browsers into clients." },
+                  { name: "Vite-com", tag: "$1,500+", desc: "Custom Storefront Engine. Replace Shopify/Wix with a high-margin Stripe build. Zero platform fees and total ownership of your checkout." },
+                  { name: "High-Velocity E-com", tag: "$3,500+", desc: "Enterprise-Grade Scale. Optimized for massive SKU catalogs and heavy traffic. Built on Supabase for real-time inventory and sub-second performance." },
+                  { name: "Enterprise Contract", tag: "$25k+", desc: "Strategic Systems Architect. Full-scale custom infrastructure and autonomous workflows for businesses doing millions in GMV." },
+                ].map((p) => (
+                  <div key={p.name} className="flex flex-col py-1 pointer-events-none border-b border-slate-100 dark:border-white/5 last:border-0 pb-3 md:pb-1">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">{p.name}</p>
+                      <span className="text-[10px] font-black text-blue-500 border border-blue-500/20 bg-blue-500/5 px-2 py-0.5 rounded flex-shrink-0">
+                        {p.tag}
+                      </span>
+                    </div>
+                    <p className="text-[9px] text-slate-500 leading-relaxed max-w-[90%]">{p.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </Link>
+
+            {/* AUTONOMOUS SYSTEMS */}
+            <HeroTile />
+
           </div> {/* end right column */}
         </div> {/* end primary grid */}
 

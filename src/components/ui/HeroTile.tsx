@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Bot, ExternalLink, Zap, Layout } from "lucide-react";
+import { Bot, ExternalLink } from "lucide-react";
 
 export default function HeroTile() {
   const tiers = [
