@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { ArrowLeft, LineChart, ShieldAlert, CheckCircle2, Loader2, AlertTriangle, Search, Mail, Phone, Rocket, Info } from "lucide-react";
+import { ArrowLeft, LineChart, ShieldAlert, CheckCircle2, Loader2, AlertTriangle, ArrowRight, Mail, Phone, Rocket, Info } from "lucide-react";
 
 interface AuditData {
   estimated_monthly_cost: number;
@@ -27,6 +27,7 @@ export default function AuditPage() {
 
   // Deep scan states
   const [isScanning, setIsScanning] = useState(false);
+  const [scanProgress, setScanProgress] = useState<string | null>(null);
   const [scanError, setScanError] = useState<string | null>(null);
   const [auditData, setAuditData] = useState<AuditData | null>(null);
 
@@ -124,6 +125,43 @@ export default function AuditPage() {
       }, 2500);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleManualAudit = async () => {
+    setIsScanning(true);
+    setAuditData(null);
+    setScanProgress("Calculating custom pricing...");
+    
+    try {
+      await new Promise(r => setTimeout(r, 600));
+      
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/calculate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          revenue: monthlySpend, 
+          app_fees: appFees, 
+          uses_ecom: usesEcom !== false, 
+          platform: platform 
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to calculate audit.");
+      }
+
+      const data = await response.json();
+      setAuditData(data);
+      setScanProgress("Calculation Complete");
+      setTimeout(() => {
+        document.getElementById('audit-results')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } catch (error) {
+      console.error(error);
+      setScanProgress("Calculation Failed");
+    } finally {
+      setIsScanning(false);
     }
   };
 
