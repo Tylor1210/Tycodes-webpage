@@ -36,9 +36,10 @@ class FinalAuditResult(AuditResult):
 class AuditRequest(BaseModel):
     url: str
     user_revenue: float = 0.0
+    app_fees: float = 0.0
     uses_ecom: bool = True
 
-def generate_audit_pricing(tier: str, request_revenue: float, uses_ecom: bool, estimated_monthly_cost: float, audit_result_dump: dict) -> FinalAuditResult:
+def generate_audit_pricing(tier: str, request_revenue: float, uses_ecom: bool, app_fees: float, audit_result_dump: dict) -> FinalAuditResult:
     if not uses_ecom:
         tier = "Digital Presence"
         
@@ -50,9 +51,15 @@ def generate_audit_pricing(tier: str, request_revenue: float, uses_ecom: bool, e
     if is_enterprise:
         setup_fee = 25000
         mgmt_fee = 2500
-        tycodes_cost = setup_fee + (mgmt_fee * 12)
-        savings_1_yr = (estimated_monthly_cost * 12) - tycodes_cost
-        savings_3_yr = (estimated_monthly_cost * 36) - (setup_fee + (mgmt_fee * 36))
+        tycodes_cost_1yr = setup_fee + (mgmt_fee * 12)
+        tycodes_cost_3yr = setup_fee + (mgmt_fee * 36)
+        
+        # Enterprise TCO estimate is usually complex, but we'll use a high baseline
+        competitor_annual_cost = (request_revenue * 0.02 * 12) + (app_fees * 12) + (299 * 12) # Enterprise base sub
+        
+        savings_1_yr = competitor_annual_cost - tycodes_cost_1yr
+        savings_3_yr = (competitor_annual_cost * 3) - tycodes_cost_3yr
+        
         payment_plan = "Due to your high revenue volume, a custom ROI analysis is required to identify potential 6-figure savings in processing fees and technical overhead."
     else:
         if tier == "Vite-Ecom":
@@ -61,25 +68,29 @@ def generate_audit_pricing(tier: str, request_revenue: float, uses_ecom: bool, e
             setup_fee = 3500
             mgmt_fee = 199
             
-        tycodes_cost = setup_fee + (mgmt_fee * 12)
+        tycodes_cost_1yr = setup_fee + (mgmt_fee * 12)
+        tycodes_cost_3yr = setup_fee + (mgmt_fee * 36)
         
-        annual_competitor_cost = estimated_monthly_cost * 12
-        savings_1_yr = annual_competitor_cost - tycodes_cost
-        savings_3_yr = (estimated_monthly_cost * 36) - (setup_fee + (mgmt_fee * 36))
+        # Competitor Annual Cost: Base_Sub ($29*12) + App_Fees*12 + Transaction_Tax (Revenue*0.02*12)
+        tax_tax = request_revenue * 0.02 * 12
+        competitor_annual_cost = (29 * 12) + (app_fees * 12) + tax_tax
         
-        if annual_competitor_cost > 0:
-            percentage = (tycodes_cost / annual_competitor_cost) * 100
-            if percentage > 120:
-                payment_plan = f"Your platform fees are draining your margins. Over 3 years, you will save roughly ${savings_3_yr:,.0f} by owning your own infrastructure."
-            else:
-                percentage_text = f"roughly {percentage:,.0f}%"
-                payment_plan = f"For {percentage_text} of what you pay annually for a platform you don't own, you can own your infrastructure forever."
+        savings_1_yr = competitor_annual_cost - tycodes_cost_1yr
+        savings_3_yr = (competitor_annual_cost * 3) - tycodes_cost_3yr
+        
+        if savings_3_yr <= 0:
+            payment_plan = "Performance & Ownership over legacy SaaS constraints."
+            savings_3_yr = 0
+            savings_1_yr = max(0, savings_1_yr)
         else:
-            payment_plan = "For a fraction of what you pay annually for a platform you don't own, you can own your infrastructure forever."
+            payment_plan = f"Over 3 years, you will save roughly ${savings_3_yr:,.0f} by switching to Tycodes."
+            
+    competitor_monthly_cost = competitor_annual_cost / 12
             
     return FinalAuditResult(
         **audit_result_dump,
-        tycodes_estimated_cost=tycodes_cost,
+        estimated_monthly_cost=competitor_monthly_cost,
+        tycodes_estimated_cost=tycodes_cost_1yr,
         tycodes_payment_plan=payment_plan,
         is_enterprise=is_enterprise,
         setup_fee=setup_fee,
@@ -100,11 +111,14 @@ def audit_website(request: AuditRequest):
 
     try:
         audit_result = analyze_website(markdown_content)
+        # Use either AI detected app fees or user provided app fees
+        final_app_fees = max(audit_result.detected_app_fees, request.app_fees)
+        
         return generate_audit_pricing(
             audit_result.project_tier, 
             request.user_revenue, 
             request.uses_ecom, 
-            audit_result.estimated_monthly_cost, 
+            final_app_fees, 
             audit_result.model_dump()
         )
     except Exception as e:
@@ -118,21 +132,17 @@ class CalculateRequest(BaseModel):
 
 @app.post("/calculate", response_model=FinalAuditResult)
 def calculate_audit(request: CalculateRequest):
-    tax_rate = 0.02 if request.platform.lower() == "shopify" else 0.015
-    if not request.uses_ecom:
-        tax_rate = 0.0
-    
-    competitor_monthly_cost = (request.revenue * tax_rate) + request.app_fees
     tier = "Vite-Ecom" if request.uses_ecom else "Digital Presence"
     
     mock_audit = {
-        "estimated_monthly_cost": competitor_monthly_cost,
+        "estimated_monthly_cost": 0, # Calculated inside generate_audit_pricing now
+        "detected_app_fees": request.app_fees,
         "detected_stack": [request.platform],
         "recommended_tycodes_components": ["Tycodes Custom Engine", "Stripe API Integration"],
         "project_tier": tier
     }
     
-    return generate_audit_pricing(tier, request.revenue, request.uses_ecom, competitor_monthly_cost, mock_audit)
+    return generate_audit_pricing(tier, request.revenue, request.uses_ecom, request.app_fees, mock_audit)
 
 class ClaimRequest(BaseModel):
     email: str

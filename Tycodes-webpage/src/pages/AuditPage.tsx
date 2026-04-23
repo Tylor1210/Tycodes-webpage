@@ -65,7 +65,7 @@ export default function AuditPage() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ url: domain, user_revenue: monthlySpend, uses_ecom: usesEcom !== false })
+        body: JSON.stringify({ url: domain, user_revenue: monthlySpend, app_fees: appFees, uses_ecom: usesEcom !== false })
       });
 
       if (!response.ok) {
