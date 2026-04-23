@@ -7,12 +7,19 @@ from openai import OpenAI
 load_dotenv()
 
 class AuditResult(BaseModel):
-    estimated_monthly_cost: float = Field(description="Total estimated current monthly cost (Shopify/Wix plans + app fees)")
-    detected_app_fees: float = Field(description="Estimated monthly cost for apps/plugins only (e.g., 150.0)")
-    detected_stack: List[str] = Field(description="Detected technologies, CMS, or platforms (e.g., ['Shopify', 'React'])")
-    recommended_tycodes_components: List[str] = Field(description="Recommended Tycodes components for rebuild (e.g., ['Tycodes Landing Page', 'Tycodes Cart API'])")
+    # ITEMIZATION
+    base_subscription: float = Field(description="Monthly base plan (e.g., $29 or $39 for Shopify/Wix)")
+    app_fees: float = Field(description="Monthly cost for detected apps/plugins (e.g., $150)")
+    platform_transaction_fee: float = Field(description="The EXTRA 0.5% to 2% 'Tax' platforms charge for not using their bank")
+    hosting_cost: float = Field(description="Monthly hosting fee (Note: We cut this, but don't delete the domain fee)")
+    
+    # TOTALS
+    estimated_monthly_total: float = Field(description="Sum of Sub + Apps + Tax + Hosting")
+    
+    # SPECS & TIER
+    detected_stack: List[str] = Field(description="Detected tech (e.g., ['Shopify', 'Klaviyo'])")
     project_tier: str = Field(description="One of: 'Digital Presence', 'Vite-Ecom', 'High-Velocity E-com', 'Enterprise'")
-
+    recommended_tycodes_components: List[str] = Field(description="List of Tycodes-equivalent replacements")
 def analyze_website(markdown_content: str) -> AuditResult:
     """
     Analyzes the markdown content of a website using an LLM to deduce monthly costs,
@@ -31,18 +38,17 @@ def analyze_website(markdown_content: str) -> AuditResult:
         "Detection Rules:\n"
         "- Constraint: Never assume a site is Shopify, Wix, or Squarespace unless you see clear evidence (e.g., 'myshopify.com' links or specific app names).\n"
         "- Rule: If you see 'Vite', 'React', 'Next.js', 'Cloudflare', or 'Tailwind', and NO mention of SaaS platforms like Shopify/Wix, label the detected stack as 'High-Performance Custom Build'.\n\n"
-        "Financial Logic (TCO Calculation):\n"
-        "- Base_Sub: Assume $29/mo for standard SaaS (Shopify/Wix) unless highly complex.\n"
-        "- App Fees: Look for apps like Klaviyo, Yotpo, Recharge, or custom search. If detected, estimate monthly app fees (e.g., $50-$300).\n"
-        "- Total Monthly Cost: Sum of Base_Sub + App Fees.\n"
-        "- 'Steve Madden' Rule: For sites with custom carts and extremely high complexity, estimate total monthly cost to reflect Developer Salaries + Enterprise Servers ($10000-$50000/mo).\n\n"
+        "Financial Logic (Itemized Cost Breakdown):\n"
+        "- Base Subscription: Shopify Basic ($29), Grow ($79), Advanced ($299). Assume $29 unless high complexity is detected.\n"
+        "- App Fees: Detect apps like Klaviyo, Yotpo, Recharge. Estimate monthly fees (e.g., $150).\n"
+        "- The 'Platform Tax': For Shopify/Wix sites, assume a 2% 'Platform Transaction Tax' on estimated revenue.\n"
+        "- Domain/Hosting: Assume a default of $2.00/mo for legacy hosting maintenance.\n"
+        "- Total Monthly Cost: Sum of Base Sub + App Fees + Platform Tax + Hosting.\n\n"
         "Tycodes Pricing Tier Selection:\n"
         "- 'Digital Presence': No E-commerce or payment processing detected.\n"
         "- 'Vite-Ecom': Basic E-commerce, carts, or payment processing detected. Minimum tier if payment/cart exists.\n"
         "- 'High-Velocity E-com': High traffic, complexity, or multiple apps detected.\n"
         "- 'Enterprise Contract': Highly complex features (Internationalization, thousands of products, custom APIs).\n\n"
-        "The Truth Rule:\n"
-        "- We aim to show 3-year savings. If a site looks very cheap (no apps), emphasize 'Performance & Ownership' in your recommended components.\n\n"
         "Generate a JSON payload matching the required schema."
     )
 
@@ -61,9 +67,12 @@ def analyze_website(markdown_content: str) -> AuditResult:
         print(f"AI analysis failed: {str(e)}")
         # Return a default AuditResult if the AI fails
         return AuditResult(
-            estimated_monthly_cost=29.0,
-            detected_app_fees=0.0,
+            base_subscription=29.0,
+            app_fees=0.0,
+            platform_transaction_fee=0.0,
+            hosting_cost=2.0,
+            estimated_monthly_total=31.0,
             detected_stack=["Unknown"],
-            recommended_tycodes_components=["Custom Vite + React architecture"],
-            project_tier="Digital Presence"
+            project_tier="Digital Presence",
+            recommended_tycodes_components=["Custom Vite + React architecture"]
         )

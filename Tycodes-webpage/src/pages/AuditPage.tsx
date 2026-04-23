@@ -3,9 +3,18 @@ import { useSearchParams, Link } from "react-router-dom";
 import { ArrowLeft, LineChart, ShieldAlert, CheckCircle2, Loader2, AlertTriangle, ArrowRight, Mail, Phone, Rocket, Info } from "lucide-react";
 
 interface AuditData {
-  estimated_monthly_cost: number;
+  // Itemized TCO fields
+  base_subscription: number;
+  app_fees: number;
+  platform_transaction_fee: number;
+  hosting_cost: number;
+  estimated_monthly_total: number;
+  // Legacy field kept for compatibility
+  estimated_monthly_cost?: number;
+  // Stack & components
   detected_stack: string[];
   recommended_tycodes_components: string[];
+  // Pricing
   tycodes_estimated_cost: number;
   tycodes_payment_plan: string;
   is_enterprise: boolean;
@@ -13,6 +22,9 @@ interface AuditData {
   mgmt_fee: number;
   savings_1_yr: number;
   savings_3_yr: number;
+  // Dynamic pricing flags
+  is_estimated: boolean;       // true when savings < $2k — show asterisk
+  needs_consultation: boolean; // true when savings > $10k — route to founder call
 }
 
 export default function AuditPage() {
@@ -88,7 +100,11 @@ export default function AuditPage() {
     setIsSubmitting(true);
     try {
       const payloadData = auditData || {
-        estimated_monthly_cost: stats.totalWasteMo,
+        base_subscription: 29,
+        app_fees: appFees,
+        platform_transaction_fee: monthlySpend * 0.02,
+        hosting_cost: 2,
+        estimated_monthly_total: stats.totalWasteMo,
         detected_stack: [platform],
         recommended_tycodes_components: ["Custom Vite + React architecture"],
         tycodes_estimated_cost: 0,
@@ -232,12 +248,22 @@ export default function AuditPage() {
 
     return (
       <div className="mt-8">
-        <button 
-          onClick={() => setShowLeadForm(true)}
-          className={`flex items-center justify-center gap-2 w-full py-4 ${auditData ? (auditData.is_enterprise ? 'bg-amber-600 hover:bg-amber-500 shadow-amber-600/20' : 'bg-blue-600 hover:bg-blue-500 shadow-blue-600/20') : 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-600/20'} text-white text-[11px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg hover:scale-[1.02]`}
-        >
-          {auditData ? (auditData.is_enterprise ? 'Schedule Founder Consultation' : 'Start Development') : 'Claim Your Margins'}
-        </button>
+        {auditData?.needs_consultation || auditData?.is_enterprise ? (
+          <a
+            href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ39ZxoVryKgnZLG_aJ5RfWwq30dGRspuOFH18-mxuwWiBaATCpOY1wk1TFNkOy-8Vy1mt0kyT2N?gv=true"
+            target="_blank" rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full py-4 bg-amber-600 hover:bg-amber-500 shadow-amber-600/20 text-white text-[11px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg hover:scale-[1.02]"
+          >
+            Schedule Founder Consultation
+          </a>
+        ) : (
+          <button
+            onClick={() => setShowLeadForm(true)}
+            className={`flex items-center justify-center gap-2 w-full py-4 ${auditData ? 'bg-blue-600 hover:bg-blue-500 shadow-blue-600/20' : 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-600/20'} text-white text-[11px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg hover:scale-[1.02]`}
+          >
+            {auditData ? 'Start Development' : 'Claim Your Margins'}
+          </button>
+        )}
       </div>
     );
   };
@@ -414,9 +440,35 @@ export default function AuditPage() {
                       ))}
                     </div>
                   </div>
-                  <div>
-                    <span className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Tycodes: Your estimated current cost</span>
-                    <span className="text-lg font-mono font-bold text-rose-400">{usd(auditData.estimated_monthly_cost)}/mo</span>
+
+                  {/* Itemized Hidden Tax Breakdown */}
+                  <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 overflow-hidden">
+                    <div className="px-4 py-2.5 border-b border-rose-500/10 flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-rose-400">Tycodes: Your Estimated Monthly Cost</span>
+                      <span className="text-base font-mono font-black text-rose-400">{usd(auditData.estimated_monthly_total)}/mo</span>
+                    </div>
+                    <div className="divide-y divide-white/5">
+                      <div className="flex justify-between items-center px-4 py-2">
+                        <span className="text-[11px] text-slate-400">Base Subscription</span>
+                        <span className="text-[11px] font-mono text-slate-300">{usd(auditData.base_subscription)}/mo</span>
+                      </div>
+                      <div className="flex justify-between items-center px-4 py-2">
+                        <span className="text-[11px] text-slate-400">App Fees</span>
+                        <span className="text-[11px] font-mono text-slate-300">{usd(auditData.app_fees)}/mo</span>
+                      </div>
+                      {auditData.platform_transaction_fee > 0 && (
+                        <div className="flex justify-between items-center px-4 py-2 bg-rose-500/10">
+                          <span className="text-[11px] text-rose-400 font-bold flex items-center gap-1.5">
+                            <AlertTriangle size={11} /> Platform Transaction Tax (2%)
+                          </span>
+                          <span className="text-[11px] font-mono font-bold text-rose-400">{usd(auditData.platform_transaction_fee)}/mo</span>
+                        </div>
+                      )}
+                      <div className="flex justify-between items-center px-4 py-2">
+                        <span className="text-[11px] text-slate-400">Domain / Hosting</span>
+                        <span className="text-[11px] font-mono text-slate-300">{usd(auditData.hosting_cost)}/mo</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -441,10 +493,20 @@ export default function AuditPage() {
                       <span className="text-sm font-black text-amber-500 uppercase tracking-widest mt-2">Strategic Transformation</span>
                     ) : (
                       <div className="text-right">
-                        <span className="text-2xl font-mono font-black text-blue-400 block mb-1">{usd(auditData.setup_fee)} Setup</span>
+                        <div className="flex items-start justify-end gap-1">
+                          <span className="text-2xl font-mono font-black text-blue-400">{usd(auditData.setup_fee)} Setup</span>
+                          {auditData.is_estimated && (
+                            <span className="text-blue-400 text-lg font-black leading-none mt-0.5" title="Estimated starting fee — final price may vary based on features and add-ons">*</span>
+                          )}
+                        </div>
                         <span className="text-[10px] font-bold text-blue-400/80 uppercase tracking-widest bg-blue-500/10 px-2 py-1 rounded border border-blue-500/20 inline-block">
                           2 payments of {usd(auditData.setup_fee / 2)} <span className="opacity-70 lowercase font-normal">(50% non refundable deposit, 50% upon completion)</span>
                         </span>
+                        {auditData.is_estimated && (
+                          <p className="text-[10px] text-slate-500 mt-2 text-right leading-relaxed">
+                            * Estimated starting fee. Final price may vary based on features and add-ons — let's discuss first.
+                          </p>
+                        )}
                         {auditData.mgmt_fee > 0 && (
                           <span className="text-[11px] font-bold text-slate-400 block mt-2">
                             + {usd(auditData.mgmt_fee)}/mo Management
