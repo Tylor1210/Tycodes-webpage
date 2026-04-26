@@ -58,23 +58,8 @@ function App() {
       setIsMarketOpen(day !== "Sat" && day !== "Sun" && hour >= 9 && hour < 16);
     };
 
-    const fetchVisitorCount = async () => {
-      try {
-        const response = await fetch(
-          "https://api.counterapi.dev/v1/tycodes/tycodes-site-visits/up"
-        );
-        const data = await response.json();
-        if (data && typeof data.count === "number") {
-          setVisitorCount(0 + data.count);
-        }
-      } catch (err) {
-        console.error("Failed to fetch visitor count", err);
-      }
-    };
-
     fetchNews();
     checkMarket();
-    fetchVisitorCount();
   }, []);
 
   return (
