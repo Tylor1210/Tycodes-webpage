@@ -1,0 +1,11 @@
+name = "tycodes-auditor"
+main = "src/index.ts"
+compatibility_date = "2026-04-25"
+
+# Cloudflare will automatically ignore venv if we don't tell it otherwise
+# and just focus on the python files.
+
+[vars]
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = "587"
+# Note: Set FIRECRAWL_API_KEY and OPENAI_API_KEY using 'wrangler secret put'

@@ -1,0 +1,21 @@
+{
+  "name": "tycodes-brain",
+  "version": "1.0.0",
+  "description": "You are the lead AI Engineer at Tycodes LLC. Your goal is to build an \"Agentic Auditor\" that analyzes potential client websites (Shopify/Wix) and proposes a custom high-performance Tycodes stack conversion.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "hono": "^4.12.15"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260426.1",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.85.0"
+  }
+}

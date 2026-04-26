@@ -66,13 +66,15 @@ export default function AuditPage() {
     };
   }, [monthlySpend, appFees, platform]);
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
   const handleDeepAudit = async () => {
     setIsScanning(true);
     setScanError(null);
     setAuditData(null);
     setShowLeadForm(false);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/audit`, {
+      const response = await fetch(`${API_BASE_URL}/audit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -116,7 +118,7 @@ export default function AuditPage() {
         savings_3_yr: 0
       };
 
-      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/claim`, {
+      await fetch(`${API_BASE_URL}/claim`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -152,7 +154,7 @@ export default function AuditPage() {
     try {
       await new Promise(r => setTimeout(r, 600));
       
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/calculate`, {
+      const response = await fetch(`${API_BASE_URL}/calculate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
