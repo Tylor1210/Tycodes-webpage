@@ -560,6 +560,7 @@ export default function AuditPage() {
                 
                 {renderLeadCapture()}
               </div>
+            </div>
           )}
 
           {/* Heuristic / Manual Result */}
