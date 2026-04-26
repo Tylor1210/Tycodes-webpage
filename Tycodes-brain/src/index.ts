@@ -165,7 +165,7 @@ app.post('/calculate', async (c) => {
             analysis.platform_transaction_fee + 
             analysis.hosting_cost;
             
-        const pricingResult = generateAuditPricing(analysis);
+        const pricingResult = generateAuditPricing(analysis, (analysis as any).platform || "other");
         return c.json(pricingResult);
     } catch (e: any) {
         return c.json({ detail: e.message || "Invalid payload" }, 400);

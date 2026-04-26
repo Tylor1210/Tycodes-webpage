@@ -440,7 +440,9 @@ export default function AuditPage() {
                       </p>
                     </div>
                   </div>
-                              <div className="space-y-4 mb-6">
+                )}
+
+                <div className="space-y-4 mb-6">
                   <div>
                     <span className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Detected Stack</span>
                     <div className="flex flex-wrap gap-2">
@@ -558,7 +560,6 @@ export default function AuditPage() {
                 
                 {renderLeadCapture()}
               </div>
-            </div>
           )}
 
           {/* Heuristic / Manual Result */}
