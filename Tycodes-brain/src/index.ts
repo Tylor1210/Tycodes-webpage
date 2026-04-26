@@ -22,6 +22,8 @@ app.use('*', cors({
     maxAge: 600,
 }))
 
+app.get('/', (c) => c.text('Tycodes Auditor API is online!'))
+
 // Define the Tycodes Pricing mapping (replicating Python logic)
 const TYCODES_TIERS: Record<string, { upfront: number, monthly: number }> = {
     "Digital Presence": { upfront: 1500, monthly: 50 },
@@ -30,39 +32,61 @@ const TYCODES_TIERS: Record<string, { upfront: number, monthly: number }> = {
     "Enterprise Contract": { upfront: 10000, monthly: 500 }
 };
 
-interface PricingResult {
-    analysis: AuditResult;
-    tycodes_pricing: {
-        recommended_tier: string;
-        estimated_upfront_cost: number;
-        estimated_monthly_maintenance: number;
-        twelve_month_savings: number;
-    };
-    raw_markdown: string;
+export interface FlatAuditData {
+  base_subscription: number;
+  app_fees: number;
+  platform_transaction_fee: number;
+  hosting_cost: number;
+  estimated_monthly_total: number;
+  detected_stack: string[];
+  recommended_tycodes_components: string[];
+  tycodes_estimated_cost: number;
+  tycodes_payment_plan: string;
+  is_enterprise: boolean;
+  setup_fee: number;
+  mgmt_fee: number;
+  savings_1_yr: number;
+  savings_3_yr: number;
+  is_estimated: boolean;
+  needs_consultation: boolean;
+  raw_markdown?: string;
 }
 
-function generateAuditPricing(analysis: AuditResult): PricingResult {
-    // Look up the pricing tier, default to 'Digital Presence' if not found
+function generateAuditPricing(analysis: AuditResult): FlatAuditData {
     const tierPricing = TYCODES_TIERS[analysis.project_tier] || TYCODES_TIERS["Digital Presence"];
     const upfront = tierPricing.upfront;
     const tycodesMonthly = tierPricing.monthly;
     
-    // Calculate 12 month costs
     const current12MoCost = analysis.estimated_monthly_total * 12;
     const tycodes12MoCost = upfront + (tycodesMonthly * 12);
+    const savings1Yr = current12MoCost - tycodes12MoCost;
     
-    // Calculate total savings
-    const savings = current12MoCost - tycodes12MoCost;
-    
+    const current3YrCost = analysis.estimated_monthly_total * 36;
+    const tycodes3YrCost = upfront + (tycodesMonthly * 36);
+    const savings3Yr = current3YrCost - tycodes3YrCost;
+
+    const isEnterprise = analysis.project_tier === "Enterprise Contract";
+    const needsConsultation = savings1Yr > 10000 || isEnterprise;
+    const isEstimated = savings1Yr < 2000;
+
     return {
-        analysis: analysis,
-        tycodes_pricing: {
-            recommended_tier: analysis.project_tier,
-            estimated_upfront_cost: upfront,
-            estimated_monthly_maintenance: tycodesMonthly,
-            twelve_month_savings: savings
-        },
-        raw_markdown: ""
+        base_subscription: analysis.base_subscription,
+        app_fees: analysis.app_fees,
+        platform_transaction_fee: analysis.platform_transaction_fee,
+        hosting_cost: analysis.hosting_cost,
+        estimated_monthly_total: analysis.estimated_monthly_total,
+        detected_stack: analysis.detected_stack,
+        recommended_tycodes_components: analysis.recommended_tycodes_components,
+        
+        tycodes_estimated_cost: upfront,
+        tycodes_payment_plan: isEnterprise ? "Custom payment schedule to be determined during consultation." : `2 payments of $${upfront / 2} (50% deposit, 50% on completion)`,
+        is_enterprise: isEnterprise,
+        setup_fee: upfront,
+        mgmt_fee: tycodesMonthly,
+        savings_1_yr: savings1Yr,
+        savings_3_yr: savings3Yr,
+        is_estimated: isEstimated,
+        needs_consultation: needsConsultation
     };
 }
 
