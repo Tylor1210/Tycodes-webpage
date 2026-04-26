@@ -4,12 +4,12 @@ import { getWebsiteMarkdown } from './scraper'
 import { analyzeWebsite, AuditResult } from './analyst'
 
 type Bindings = {
-  FIRECRAWL_API_KEY: string
-  OPENAI_API_KEY: string
-  SMTP_SERVER?: string
-  SMTP_PORT?: string
-  SMTP_USER?: string
-  SMTP_PASS?: string
+    FIRECRAWL_API_KEY: string
+    OPENAI_API_KEY: string
+    SMTP_SERVER?: string
+    SMTP_PORT?: string
+    SMTP_USER?: string
+    SMTP_PASS?: string
 }
 
 const app = new Hono<{ Bindings: Bindings }>()
@@ -33,38 +33,38 @@ const TYCODES_TIERS: Record<string, { min_upfront: number, monthly: number }> = 
 };
 
 export interface FlatAuditData {
-  base_subscription: number;
-  app_fees: number;
-  platform_transaction_fee: number;
-  hosting_cost: number;
-  estimated_monthly_total: number;
-  detected_stack: string[];
-  recommended_tycodes_components: string[];
-  tycodes_estimated_cost: number;
-  tycodes_payment_plan: string;
-  is_enterprise: boolean;
-  setup_fee: number;
-  mgmt_fee: number;
-  savings_1_yr: number;
-  savings_3_yr: number;
-  is_estimated: boolean;
-  needs_consultation: boolean;
-  estimated_revenue: number;
+    base_subscription: number;
+    app_fees: number;
+    platform_transaction_fee: number;
+    hosting_cost: number;
+    estimated_monthly_total: number;
+    detected_stack: string[];
+    recommended_tycodes_components: string[];
+    tycodes_estimated_cost: number;
+    tycodes_payment_plan: string;
+    is_enterprise: boolean;
+    setup_fee: number;
+    mgmt_fee: number;
+    savings_1_yr: number;
+    savings_3_yr: number;
+    is_estimated: boolean;
+    needs_consultation: boolean;
+    estimated_revenue: number;
 
-  // Value-Based Commission Fields
-  base_setup_fee: number;
-  performance_commission: number;
-  annual_savings_total: number;
-  payback_months: number | string;
-  raw_markdown?: string;
+    // Value-Based Commission Fields
+    base_setup_fee: number;
+    performance_commission: number;
+    annual_savings_total: number;
+    payback_months: number | string;
+    raw_markdown?: string;
 }
 
 function generateAuditPricing(analysis: any, userPlatform: string): FlatAuditData {
     const revenue = analysis.estimated_revenue || 0;
-    
+
     // 1. Headless Shopify Detection
     // If user claims Shopify, or AI found it in stack, it's Shopify.
-    const hasShopifyDna = analysis.detected_stack.some((s: string) => 
+    const hasShopifyDna = analysis.detected_stack.some((s: string) =>
         s.toLowerCase().includes("shopify") || s.toLowerCase().includes("headless shopify")
     );
     const finalPlatform = (userPlatform === "shopify" || hasShopifyDna) ? "shopify" : (userPlatform === "wix" ? "wix" : "other");
@@ -74,7 +74,7 @@ function generateAuditPricing(analysis: any, userPlatform: string): FlatAuditDat
     if (revenue >= 100000) projectTier = "Enterprise Contract";
     else if (revenue >= 15000) projectTier = "High-Velocity E-com";
     else if (revenue > 0) projectTier = "Vite-com";
-    
+
     // If the site has absolutely no E-com markers and 0 revenue, it's Digital Presence
     if (revenue === 0 && analysis.project_tier === "Digital Presence") {
         projectTier = "Digital Presence";
@@ -89,16 +89,16 @@ function generateAuditPricing(analysis: any, userPlatform: string): FlatAuditDat
     let platformTax = 0;
     if (finalPlatform === "shopify") platformTax = revenue * 0.02;
     else if (finalPlatform === "wix") platformTax = revenue * 0.029;
-    
+
     const currentMonthlyLeakage = platformTax + analysis.app_fees;
-    
+
     // Annual Savings: (Current Leakage - Tycodes Monthly Management) * 12
     const annualSavings = Math.max(0, (currentMonthlyLeakage - tycodesMgmt) * 12);
-    
+
     // Performance Commission: 20% of the Projected Annual Savings
     const performanceCommission = Math.max(0, annualSavings * 0.20);
     const totalSetupFee = baseFee + performanceCommission;
-    
+
     // 4. Payback Period
     const monthlySavings = (analysis.estimated_monthly_total + platformTax) - (tycodesMgmt + (analysis.app_fees * 0.2));
     const paybackMonths = monthlySavings > 0 ? (totalSetupFee / monthlySavings).toFixed(1) : "Strategic Investment";
@@ -116,14 +116,14 @@ function generateAuditPricing(analysis: any, userPlatform: string): FlatAuditDat
         detected_stack: analysis.detected_stack,
         recommended_tycodes_components: analysis.recommended_tycodes_components,
         estimated_revenue: revenue,
-        
+
         base_setup_fee: baseFee,
         performance_commission: performanceCommission,
         annual_savings_total: annualSavings,
         payback_months: paybackMonths,
-        
+
         tycodes_estimated_cost: totalSetupFee,
-        tycodes_payment_plan: isEnterprise ? "Custom payment schedule to be determined during consultation." : `$[Base] Setup + $[Efficiency Fee] Efficiency Fee`,
+        tycodes_payment_plan: isEnterprise ? "Custom payment schedule to be determined during consultation." : `Savings and costs are estimates based on user input and AI analysis.`,
         is_enterprise: isEnterprise,
         setup_fee: totalSetupFee,
         mgmt_fee: tycodesMgmt,
@@ -142,13 +142,13 @@ app.post('/audit', async (c) => {
         const userRevenue = body.user_revenue || 0;
         const userAppFees = body.app_fees || 0;
         const userPlatform = body.platform || "other";
-        
+
         if (!url) {
             return c.json({ detail: "URL is required" }, 400);
         }
 
         const markdown = await getWebsiteMarkdown(url, c.env.FIRECRAWL_API_KEY);
-        
+
         if (markdown.startsWith("Error:")) {
             return c.json({ detail: `Scraping failed: ${markdown}` }, 500);
         }
@@ -158,10 +158,10 @@ app.post('/audit', async (c) => {
             app_fees: userAppFees,
             platform: userPlatform
         });
-        
+
         const fullResult = generateAuditPricing(analysis, userPlatform);
         fullResult.raw_markdown = markdown.substring(0, 500) + "...";
-        
+
         return c.json(fullResult);
     } catch (e: any) {
         return c.json({ detail: e.message || "Internal server error" }, 500);
@@ -173,12 +173,12 @@ app.post('/calculate', async (c) => {
     try {
         const analysis: AuditResult = await c.req.json();
         // Recalculate the total just to be safe
-        analysis.estimated_monthly_total = 
-            analysis.base_subscription + 
-            analysis.app_fees + 
-            analysis.platform_transaction_fee + 
+        analysis.estimated_monthly_total =
+            analysis.base_subscription +
+            analysis.app_fees +
+            analysis.platform_transaction_fee +
             analysis.hosting_cost;
-            
+
         const pricingResult = generateAuditPricing(analysis, (analysis as any).platform || "other");
         return c.json(pricingResult);
     } catch (e: any) {
@@ -190,11 +190,11 @@ app.post('/calculate', async (c) => {
 app.post('/claim', async (c) => {
     try {
         const payload = await c.req.json();
-        
+
         // For sending emails in CF Workers, MailChannels is natively trusted.
         // It's the standard free way to send emails without SMTP.
         // NOTE: This requires the sender domain (tycodes.dev) to have DKIM/SPF configured.
-        
+
         const emailContent = {
             personalizations: [{
                 to: [{ email: "audit@tycodes.dev" }],
@@ -204,11 +204,11 @@ app.post('/claim', async (c) => {
             content: [{
                 type: "text/plain",
                 value: `New Claim Details:\n\n` +
-                       `Email: ${payload.email}\n` +
-                       `Company: ${payload.company_name}\n` +
-                       `Tier: ${payload.tier}\n` +
-                       `Savings: $${payload.savings}\n` +
-                       `Custom Notes: ${payload.custom_notes || 'None'}`
+                    `Email: ${payload.email}\n` +
+                    `Company: ${payload.company_name}\n` +
+                    `Tier: ${payload.tier}\n` +
+                    `Savings: $${payload.savings}\n` +
+                    `Custom Notes: ${payload.custom_notes || 'None'}`
             }]
         };
 
