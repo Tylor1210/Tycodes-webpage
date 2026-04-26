@@ -59,38 +59,52 @@ export interface FlatAuditData {
   raw_markdown?: string;
 }
 
-function generateAuditPricing(analysis: any, platform: string): FlatAuditData {
-    const tierPricing = TYCODES_TIERS[analysis.project_tier] || TYCODES_TIERS["Digital Presence"];
+function generateAuditPricing(analysis: any, userPlatform: string): FlatAuditData {
+    const revenue = analysis.estimated_revenue || 0;
+    
+    // 1. Headless Shopify Detection
+    // If user claims Shopify, or AI found it in stack, it's Shopify.
+    const hasShopifyDna = analysis.detected_stack.some((s: string) => 
+        s.toLowerCase().includes("shopify") || s.toLowerCase().includes("headless shopify")
+    );
+    const finalPlatform = (userPlatform === "shopify" || hasShopifyDna) ? "shopify" : (userPlatform === "wix" ? "wix" : "other");
+
+    // 2. Service Menu Tiering (Strictly Revenue-Based)
+    let projectTier = "Digital Presence";
+    if (revenue >= 100000) projectTier = "Enterprise Contract";
+    else if (revenue >= 15000) projectTier = "High-Velocity E-com";
+    else if (revenue > 0) projectTier = "Vite-com";
+    
+    // If the site has absolutely no E-com markers and 0 revenue, it's Digital Presence
+    if (revenue === 0 && analysis.project_tier === "Digital Presence") {
+        projectTier = "Digital Presence";
+    }
+
+    const tierPricing = TYCODES_TIERS[projectTier] || TYCODES_TIERS["Digital Presence"];
     const baseFee = tierPricing.min_upfront;
     const tycodesMgmt = tierPricing.monthly;
-    const revenue = analysis.estimated_revenue || 5000;
 
-    // 1. Current Leakage Calculation
+    // 3. The "Sweet Spot" Math
+    // Current Monthly Leakage: (Revenue * 0.02) + (App Fees)
     let platformTax = 0;
-    if (platform === "shopify") platformTax = revenue * 0.02;
-    else if (platform === "wix") platformTax = revenue * 0.029;
+    if (finalPlatform === "shopify") platformTax = revenue * 0.02;
+    else if (finalPlatform === "wix") platformTax = revenue * 0.029;
     
-    const currentMonthlyLeakage = platformTax + analysis.app_fees + analysis.hosting_cost;
-    const currentMonthlyTotal = analysis.base_subscription + currentMonthlyLeakage;
-
-    // 2. Tycodes Efficiency Math
-    // Assume Tycodes reduces "App Fees" by 80% and "Platform Tax" to 0%
-    const tycodesAppFees = analysis.app_fees * 0.20;
-    const tycodesMonthlyTotal = tycodesMgmt + tycodesAppFees + analysis.hosting_cost; // base subscription eliminated
-
-    // 3. Savings Math
-    const monthlySavings = currentMonthlyTotal - tycodesMonthlyTotal;
-    const annualSavings = Math.max(0, monthlySavings * 12);
+    const currentMonthlyLeakage = platformTax + analysis.app_fees;
     
-    // 4. Performance Commission (20% of Projected Annual Savings)
+    // Annual Savings: (Current Leakage - Tycodes Monthly Management) * 12
+    const annualSavings = Math.max(0, (currentMonthlyLeakage - tycodesMgmt) * 12);
+    
+    // Performance Commission: 20% of the Projected Annual Savings
     const performanceCommission = Math.max(0, annualSavings * 0.20);
     const totalSetupFee = baseFee + performanceCommission;
     
-    // 5. Payback Period
+    // 4. Payback Period
+    const monthlySavings = (analysis.estimated_monthly_total + platformTax) - (tycodesMgmt + (analysis.app_fees * 0.2));
     const paybackMonths = monthlySavings > 0 ? (totalSetupFee / monthlySavings).toFixed(1) : "Strategic Investment";
 
-    const isEnterprise = analysis.project_tier === "Enterprise Contract";
-    const needsConsultation = annualSavings > 10000 || isEnterprise;
+    const isEnterprise = projectTier === "Enterprise Contract";
+    const needsConsultation = annualSavings > 15000 || isEnterprise;
     const isEstimated = annualSavings < 2000;
 
     return {
@@ -98,7 +112,7 @@ function generateAuditPricing(analysis: any, platform: string): FlatAuditData {
         app_fees: analysis.app_fees,
         platform_transaction_fee: platformTax,
         hosting_cost: analysis.hosting_cost,
-        estimated_monthly_total: currentMonthlyTotal,
+        estimated_monthly_total: analysis.estimated_monthly_total + platformTax,
         detected_stack: analysis.detected_stack,
         recommended_tycodes_components: analysis.recommended_tycodes_components,
         estimated_revenue: revenue,
@@ -109,7 +123,7 @@ function generateAuditPricing(analysis: any, platform: string): FlatAuditData {
         payback_months: paybackMonths,
         
         tycodes_estimated_cost: totalSetupFee,
-        tycodes_payment_plan: isEnterprise ? "Custom payment schedule to be determined during consultation." : `Base $${baseFee} + $${performanceCommission.toFixed(0)} Commission (20% of Savings)`,
+        tycodes_payment_plan: isEnterprise ? "Custom payment schedule to be determined during consultation." : `$[Base] Setup + $[Efficiency Fee] Efficiency Fee`,
         is_enterprise: isEnterprise,
         setup_fee: totalSetupFee,
         mgmt_fee: tycodesMgmt,

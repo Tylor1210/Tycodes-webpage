@@ -27,8 +27,12 @@ User Inputs:
 - Provided App Fees: ${userContext.app_fees > 0 ? `$${userContext.app_fees}/mo` : "Not provided (You must estimate this)"}
 
 Detection Rules:
-- Constraint: Never assume a site is Shopify, Wix, or Squarespace unless you see clear evidence (e.g., 'myshopify.com' links or specific app names).
-- Rule: If you see 'Vite', 'React', 'Next.js', 'Cloudflare', or 'Tailwind', and NO mention of SaaS platforms like Shopify/Wix, label the detected stack as 'High-Performance Custom Build'.
+- Headless Shopify Detection: High-end sites often use Shopify backends with custom React/Next.js frontends.
+  - Scan all asset URLs, scripts, and image links for "cdn.shopify.com".
+  - Look for clues like "window.Shopify" or shopify-specific app patterns (Recharge, Klaviyo, Yotpo).
+  - If Shopify markers are found but the framework is Next.js/React, label the stack as ["Headless Shopify", "React"].
+- Framework Detection: If you see 'Vite', 'React', 'Next.js', 'Cloudflare', or 'Tailwind', and NO mention of SaaS platforms, label the detected stack as 'High-Performance Custom Build'.
+- Conflict Resolution: If the User Input says "Shopify" but your scan is unsure, default to the User's input to ensure the Platform Tax (2%) is calculated.
 
 Revenue Guessing (If user revenue is 0):
 - Scan for traffic markers: Social media followers, blog post frequency, complex catalog size, or "Enterprise" contact forms.
@@ -41,13 +45,7 @@ Financial Logic (Itemized Cost Breakdown):
 - Base Subscription: Shopify Basic ($29), Grow ($79), Advanced ($299). Assume $29 unless high complexity is detected.
 - App Fees: Detect apps like Klaviyo, Yotpo, Recharge. Estimate monthly fees if not provided.
 - Domain/Hosting: Assume a default of $2.00/mo for legacy hosting maintenance.
-- Note: DO NOT calculate the Platform Tax here. Return 0 for platform_transaction_fee; the system will calculate it based on your revenue guess.
-
-Tycodes Pricing Tier Selection:
-- 'Digital Presence': No E-commerce or payment processing detected.
-- 'Vite-com': Basic E-commerce, carts, or payment processing detected.
-- 'High-Velocity E-com': High traffic, complexity, or multiple apps detected.
-- 'Enterprise Contract': Highly complex features (Internationalization, thousands of products, custom APIs).
+- Note: Return 0 for platform_transaction_fee; the system calculates the 2% tax externally.
 
 Generate a JSON payload matching the required schema.`;
 

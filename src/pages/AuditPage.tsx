@@ -493,7 +493,7 @@ export default function AuditPage() {
                       {auditData.platform_transaction_fee > 0 && (
                         <div className="flex justify-between items-center px-4 py-2 bg-rose-500/5">
                           <span className="text-[11px] text-rose-400 font-bold flex items-center gap-1.5">
-                            Platform Tax
+                            {platform === "shopify" || auditData.detected_stack.join(" ").toLowerCase().includes("shopify") ? "Shopify Transaction Tax (2%)" : "Platform Markup Tax"}
                           </span>
                           <span className="text-[11px] font-mono font-bold text-rose-400">{usd(auditData.platform_transaction_fee)}/mo</span>
                         </div>
@@ -516,19 +516,27 @@ export default function AuditPage() {
                   
                   <div className="mb-6">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-[10px] text-slate-500 uppercase tracking-widest">Base Fee</span>
+                      <span className="text-[10px] text-slate-500 uppercase tracking-widest">Base Setup Fee</span>
                       <span className="text-[11px] font-mono text-white font-bold">{usd(auditData.base_setup_fee)}</span>
                     </div>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-[10px] text-emerald-500 uppercase tracking-widest font-bold">Performance Commission (20%)</span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-[10px] text-emerald-500 uppercase tracking-widest font-bold">Efficiency Fee (20%)</span>
+                        <div className="group relative">
+                          <Info size={10} className="text-emerald-500/50 cursor-help" />
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-slate-900 border border-white/10 rounded-lg text-[9px] text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                            The Efficiency Fee is a one-time 20% commission on your projected first-year savings. We only win when you save.
+                          </div>
+                        </div>
+                      </div>
                       <span className="text-[11px] font-mono text-emerald-500 font-black">+{usd(auditData.performance_commission)}</span>
                     </div>
                     <div className="pt-2 border-t border-white/5 flex justify-between items-center">
-                      <span className="text-[11px] text-slate-300 font-bold uppercase tracking-widest">Total Investment</span>
+                      <span className="text-[11px] text-slate-300 font-bold uppercase tracking-widest">Total Tycodes Investment</span>
                       <span className="text-xl font-mono text-blue-400 font-black">{usd(auditData.setup_fee)}</span>
                     </div>
                     <p className="text-[9px] text-slate-500 mt-2 italic leading-relaxed">
-                      "Our fee is {usd(auditData.base_setup_fee)} + a 20% commission on the money we save you this year. If we don't save you money, you don't pay the commission."
+                      "Efficiency Fee is a one-time 20% commission on your projected first-year savings. We only win when you save."
                     </p>
                   </div>
 
@@ -575,7 +583,7 @@ export default function AuditPage() {
                 
                 <div className="space-y-5 mb-10">
                   <div className="flex justify-between items-center pb-5 border-b border-white/5">
-                    <span className="text-base text-slate-400">Gateway Penalty (~{(platform === "shopify" ? 2 : 1.5)}%)</span>
+                    <span className="text-base text-slate-400">{platform === "shopify" ? "Shopify Transaction Tax (2%)" : "Platform Gateway Penalty"}</span>
                     <span className="text-lg font-mono font-bold text-rose-400">-{usd(stats.platformPenalty)}/mo</span>
                   </div>
                   <div className="flex justify-between items-center pb-5 border-b border-white/5">
