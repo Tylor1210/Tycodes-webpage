@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Zap, TrendingUp, ShieldCheck, Rocket, ArrowLeft, Mail } from "lucide-react";
+import { Zap, TrendingUp, ShieldCheck, Rocket, ArrowLeft, Mail, Smartphone, BarChart3, Globe } from "lucide-react";
 
 export default function DigitalPresence() {
   return (
@@ -34,6 +34,9 @@ export default function DigitalPresence() {
             { icon: Zap, label: "Enterprise Speed", body: "Vite + React with zero framework overhead. Scores 95+ on Lighthouse." },
             { icon: TrendingUp, label: "Lead Capture", body: "Optimized conversion paths and custom forms to maximize inbound flow." },
             { icon: ShieldCheck, label: "Local SEO", body: "Schema markup + meta injection so you rank in local searches from day one." },
+            { icon: Smartphone, label: "Mobile-First", body: "Responsive layouts optimized for thumb-navigation and lightning-fast mobile speeds." },
+            { icon: BarChart3, label: "Insightful Tracking", body: "Google Analytics & Meta Pixel integration to track every visitor and conversion." },
+            { icon: Globe, label: "Global Hosting", body: "Secure SSL encryption and deployment on a global CDN for 99.9% uptime." },
           ].map(({ icon: Icon, label, body }) => (
             <div key={label} className="bg-white/3 rounded-2xl p-5 border border-white/5">
               <div className="bg-blue-600/10 p-2 rounded-lg w-fit mb-3">
@@ -79,8 +82,11 @@ export default function DigitalPresence() {
 
       <div className="flex justify-center mt-8">
         <a
-          href="mailto:contact@tycodes.dev?subject=Vite-com — Savings Calculator"
-          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-[11px] px-10 py-4 rounded-2xl transition-all hover:scale-105 shadow-lg shadow-blue-600/20"
+          href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ39ZxoVryKgnZLG_aJ5RfWwq30dGRspuOFH18-mxuwWiBaATCpOY1wk1TFNkOy-8Vy1mt0kyT2N?gv=true"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-analytics-id="digital-presence-get-started"
+          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-[11px] px-10 py-4 rounded-2xl transition-all hover:scale-105 shadow-lg shadow-blue-600/20 cursor-pointer"
         >
           <Mail size={14} />
           Get Started

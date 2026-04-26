@@ -59,8 +59,11 @@ export default function BrandPage() {
       </div>
 
       <a
-        href="mailto:contact@tycodes.dev"
-        className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-[11px] px-8 py-4 rounded-2xl transition-all hover:scale-105 shadow-lg shadow-blue-600/20"
+        href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ39ZxoVryKgnZLG_aJ5RfWwq30dGRspuOFH18-mxuwWiBaATCpOY1wk1TFNkOy-8Vy1mt0kyT2N?gv=true"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-analytics-id="brand-start-automating"
+        className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-[11px] px-8 py-4 rounded-2xl transition-all hover:scale-105 shadow-lg shadow-blue-600/20 cursor-pointer"
       >
         <Mail size={14} />
         Start Automating

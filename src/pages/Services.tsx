@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Database, CheckCircle2, TrendingUp, BarChart3, Mail } from "lucide-react";
+import { ArrowLeft, Database, CheckCircle2, TrendingUp, BarChart3, Mail, Cable, Syringe, Layers, Bot } from "lucide-react";
 
 export default function ServicesPage() {
   return (
@@ -90,10 +90,54 @@ export default function ServicesPage() {
               <td className="py-4 text-emerald-400">+$118,000</td>
               <td className="py-4 text-emerald-400">+$160,000</td>
               <td className="py-4 text-emerald-400">+$190,000</td>
-              <td className="py-4 text-emerald-500 font-black">+$468,000</td>
             </tr>
           </tbody>
         </table>
+      </div>
+      {/* Autonomous Systems Section */}
+      <div className="flex items-center gap-3 mb-6">
+        <div className="bg-emerald-500/15 p-3 rounded-xl">
+          <Bot className="text-emerald-500" size={20} />
+        </div>
+        <h2 className="text-2xl font-black tracking-tighter">Autonomous <span className="text-emerald-500">Systems.</span></h2>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+        {[
+          {
+            name: "The Connector",
+            price: "$2,500 – $7,500",
+            subtitle: "API & Middleware",
+            body: "Custom bridges between CRM, Email, and Project Management tools to eliminate manual data entry.",
+            icon: Cable
+          },
+          {
+            name: "The Transfusion",
+            price: "$5,000 – $15,000",
+            subtitle: "Intelligent Workflow Injection",
+            body: "Custom AI logic and automation tailored to your specific marketing or operational bottlenecks.",
+            icon: Syringe
+          },
+          {
+            name: "The Architect",
+            price: "$15,000 – $50,000+",
+            subtitle: "Custom ERP & Internal Tools",
+            body: "Foundation-level infrastructure and autonomous systems built to run your business on autopilot.",
+            icon: Layers
+          }
+        ].map((pkg) => (
+          <div key={pkg.name} className="bg-white/3 rounded-2xl p-5 border border-white/5 flex flex-col hover:border-emerald-500/30 transition-colors">
+            <div className="bg-emerald-500/10 p-2 rounded-lg w-fit mb-4">
+              <pkg.icon size={14} className="text-emerald-500" />
+            </div>
+            <h3 className="text-sm font-black uppercase tracking-widest text-emerald-500 mb-1">{pkg.name}</h3>
+            <p className="text-xl font-black text-white tracking-tighter mb-1">{pkg.price}</p>
+            <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-4">{pkg.subtitle}</p>
+            <p className="text-[11px] text-slate-400 leading-relaxed">
+              {pkg.body}
+            </p>
+          </div>
+        ))}
       </div>
 
       {/* Detailed cost comparison breakdown */}
@@ -267,13 +311,16 @@ export default function ServicesPage() {
               ["Vite-com", "$1,500+", "$0", "App Fees & Third-Party Transaction Fees"],
               ["High-Velocity E-com", "$3,500+", "$199", "High-SKU Management Fees & API Limits"],
               ["Enterprise Contract", "$25k+", "$2,500", "Enterprise Revenue Sharing & Variable Fees"],
+              ["The Connector", "$2,500+", "$0", "Manual Data Entry & Duplicate Work"],
+              ["The Transfusion", "$5,000+", "$0", "Operational Bottlenecks & Support Overhead"],
+              ["The Architect", "$15,000+", "$500+", "SaaS Seat Taxes & Data Fragmentation"],
             ].map((row, i) => (
               <tr key={i} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
                 <td className="py-4 text-white font-bold">{row[0]}</td>
-                <td className="py-4 text-blue-400 font-mono">{row[1]}</td>
+                <td className={`py-4 font-mono ${i < 4 ? 'text-blue-400' : 'text-emerald-400'}`}>{row[1]}</td>
                 <td className="py-4 text-slate-400 font-mono">{row[2]}</td>
                 <td className="py-4 text-slate-300 flex items-center gap-2">
-                  <CheckCircle2 size={12} className="text-blue-500" />
+                  <CheckCircle2 size={12} className={i < 4 ? 'text-blue-500' : 'text-emerald-500'} />
                   {row[3]}
                 </td>
               </tr>
@@ -284,8 +331,11 @@ export default function ServicesPage() {
 
       <div className="flex justify-center mt-8">
         <a
-          href="mailto:contact@tycodes.dev"
-          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-[11px] px-10 py-4 rounded-2xl transition-all hover:scale-105 shadow-lg shadow-blue-600/20"
+        href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ39ZxoVryKgnZLG_aJ5RfWwq30dGRspuOFH18-mxuwWiBaATCpOY1wk1TFNkOy-8Vy1mt0kyT2N?gv=true"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-analytics-id="services-book-free-audit"
+          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-[11px] px-10 py-4 rounded-2xl transition-all hover:scale-105 shadow-lg shadow-blue-600/20 cursor-pointer"
         >
           <Mail size={14} />
           Book a Free Audit

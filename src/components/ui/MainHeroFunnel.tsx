@@ -28,7 +28,7 @@ export default function MainHeroFunnel() {
               Whether you're starting fresh or scaling an existing brand, we build custom infrastructure that maximizes your margins.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button
               onClick={() => setStep("build")}
@@ -52,7 +52,7 @@ export default function MainHeroFunnel() {
               </div>
               <div>
                 <h3 className="text-sm font-bold text-white mb-1">Optimize Existing</h3>
-                <p className="text-[10px] text-slate-400 leading-relaxed">Calculate savings by migrating off Shopify or Wix.</p>
+                <p className="text-[10px] text-slate-400 leading-relaxed">Calculate savings by migrating off platforms like Shopify or Wix.</p>
               </div>
             </button>
           </div>
@@ -64,7 +64,7 @@ export default function MainHeroFunnel() {
           <button onClick={() => setStep("initial")} className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-white transition-colors flex items-center gap-1.5 w-fit">
             &larr; Back
           </button>
-          
+
           <div>
             <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-2">Build from Scratch</h2>
             <p className="text-xs text-slate-400 leading-relaxed max-w-md">
@@ -83,11 +83,11 @@ export default function MainHeroFunnel() {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 mt-1">
-              <a href="mailto:contact@tycodes.dev?subject=New Project Briefing" className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-blue-600/20 hover:scale-[1.02]">
+              <a href="mailto:contact@tycodes.dev?subject=New Project Briefing" data-analytics-id="hero-email-us" className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-blue-600/20 hover:scale-[1.02]">
                 <Mail size={14} />
                 Email Us
               </a>
-              <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ39ZxoVryKgnZLG_aJ5RfWwq30dGRspuOFH18-mxuwWiBaATCpOY1wk1TFNkOy-8Vy1mt0kyT2N?gv=true" target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all hover:scale-[1.02]">
+              <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ39ZxoVryKgnZLG_aJ5RfWwq30dGRspuOFH18-mxuwWiBaATCpOY1wk1TFNkOy-8Vy1mt0kyT2N?gv=true" target="_blank" rel="noopener noreferrer" data-analytics-id="hero-book-meeting" className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all hover:scale-[1.02]">
                 <Zap size={14} />
                 Book Meeting
               </a>
@@ -101,7 +101,7 @@ export default function MainHeroFunnel() {
           <button onClick={() => setStep("initial")} className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-white transition-colors flex items-center gap-1.5 w-fit">
             &larr; Back
           </button>
-          
+
           <div>
             <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-2">Audit Your Stack</h2>
             <p className="text-xs text-slate-400 leading-relaxed max-w-md">
@@ -163,7 +163,8 @@ export default function MainHeroFunnel() {
             <button
               onClick={handleAudit}
               disabled={!domain}
-              className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-emerald-600/20 mt-2 hover:scale-[1.02]"
+              data-analytics-id="hero-start-audit"
+              className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-emerald-600/20 mt-2 hover:scale-[1.02] cursor-pointer"
             >
               Start Free Audit <ArrowRight size={14} />
             </button>

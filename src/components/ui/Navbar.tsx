@@ -5,10 +5,9 @@ import { useTheme } from "../theme-provider";
 
 const navLinks = [
   { label: "Home", to: "/" },
-  { label: "Vite-com", to: "/services" },
+  { label: "Web Architecture", to: "/services" },
   { label: "Digital Presence", to: "/digital-presence" },
   { label: "Automation", to: "/automation" },
-  { label: "Web Architecture & Development", to: "/web-architecture-development" },
   { label: "Brand Infrastructure", to: "/brand" },
   { label: "Projects", to: "/projects" },
 ];
@@ -66,7 +65,8 @@ export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarPro
           {/* Contact CTA */}
           <a
             href="mailto:contact@tycodes.dev"
-            className="hidden sm:flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-2.5 rounded-xl transition-all hover:scale-105 shadow-lg shadow-blue-600/20"
+            data-analytics-id="navbar-contact"
+            className="hidden sm:flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-2.5 rounded-xl transition-all hover:scale-105 shadow-lg shadow-blue-600/20 cursor-pointer"
           >
             <Mail size={12} />
             <span>Contact</span>

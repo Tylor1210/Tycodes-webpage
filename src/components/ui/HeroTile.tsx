@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { Bot, ExternalLink } from "lucide-react";
+import { Bot, ExternalLink, Cable, Syringe, Layers } from "lucide-react";
 
 export default function HeroTile() {
   const tiers = [
-    { name: "The Connector", tag: "$2,500 – $7.5k", desc: "API & Middleware. Custom bridges between CRM, Email, and Project Management tools." },
-    { name: "The Agent", tag: "$5,000 – $15k+", desc: "Autonomous AI Agents. Deploy 24/7 digital employees for support and document analysis." },
-    { name: "The Architect", tag: "$15,000 – $50k+", desc: "Custom ERP & Internal Tools. Private dashboards and strategic systems for your business." },
+    { name: "The Connector", tag: "$2,500 – $7,500", desc: "API & Middleware. Custom bridges between CRM, Email, and Project Management tools.", icon: Cable },
+    { name: "The Transfusion", tag: "$5,000 – $15,000", desc: "Intelligent Workflow Injection. Custom AI logic tailored to your bottlenecks.", icon: Syringe },
+    { name: "The Architect", tag: "$15,000 – $50k+", desc: "Custom ERP & Internal Tools. Autonomous systems built to run on autopilot.", icon: Layers },
   ];
 
   return (
@@ -35,7 +35,10 @@ export default function HeroTile() {
         {tiers.map((p) => (
           <div key={p.name} className="flex flex-col py-1 pointer-events-none border-b border-slate-100 dark:border-white/5 last:border-0 pb-3 md:pb-1">
             <div className="flex items-center justify-between mb-1">
-              <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">{p.name}</p>
+              <div className="flex items-center gap-2">
+                <p.icon size={12} className="text-emerald-500/50" />
+                <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">{p.name}</p>
+              </div>
               <span className="text-[10px] font-black text-emerald-500 border border-emerald-500/20 bg-emerald-500/5 px-2 py-0.5 rounded flex-shrink-0">
                 {p.tag}
               </span>

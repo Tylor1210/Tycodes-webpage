@@ -146,7 +146,9 @@ function App() {
                     ))}
                   </div>
                 </div>
-                <button className="mt-3 w-full py-1.5 bg-blue-600 group-hover:bg-blue-500 text-white text-[9px] font-black uppercase tracking-widest rounded-xl transition-all">
+                <button
+                  data-analytics-id="home-digital-presence-cta"
+                  className="mt-3 w-full py-1.5 bg-blue-600 group-hover:bg-blue-500 text-white text-[9px] font-black uppercase tracking-widest rounded-xl transition-all cursor-pointer">
                   Get the Package
                 </button>
               </Link>
