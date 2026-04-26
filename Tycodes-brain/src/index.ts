@@ -24,12 +24,12 @@ app.use('*', cors({
 
 app.get('/', (c) => c.text('Tycodes Auditor API is online!'))
 
-// Define the Tycodes Pricing mapping (replicating Python logic)
-const TYCODES_TIERS: Record<string, { upfront: number, monthly: number }> = {
-    "Digital Presence": { upfront: 1500, monthly: 50 },
-    "Vite-Ecom": { upfront: 3000, monthly: 150 },
-    "High-Velocity E-com": { upfront: 5500, monthly: 250 },
-    "Enterprise Contract": { upfront: 10000, monthly: 500 }
+// Define the Tycodes Pricing mapping (Base Minimums)
+const TYCODES_TIERS: Record<string, { min_upfront: number, monthly: number }> = {
+    "Digital Presence": { min_upfront: 799, monthly: 50 },
+    "Vite-com": { min_upfront: 1500, monthly: 150 },
+    "High-Velocity E-com": { min_upfront: 3500, monthly: 250 },
+    "Enterprise Contract": { min_upfront: 15000, monthly: 500 }
 };
 
 export interface FlatAuditData {
@@ -49,21 +49,31 @@ export interface FlatAuditData {
   savings_3_yr: number;
   is_estimated: boolean;
   needs_consultation: boolean;
+  estimated_revenue: number;
   raw_markdown?: string;
 }
 
-function generateAuditPricing(analysis: AuditResult): FlatAuditData {
+function generateAuditPricing(analysis: any, platform: string): FlatAuditData {
     const tierPricing = TYCODES_TIERS[analysis.project_tier] || TYCODES_TIERS["Digital Presence"];
-    const upfront = tierPricing.upfront;
     const tycodesMonthly = tierPricing.monthly;
+    const revenue = analysis.estimated_revenue || 5000;
+
+    // 1. Calculate Platform Tax accurately on the backend
+    let platformTax = 0;
+    if (platform === "shopify") platformTax = revenue * 0.02;
+    else if (platform === "wix") platformTax = revenue * 0.029;
+
+    // 2. Final Current Monthly Cost
+    const currentMonthlyTotal = analysis.base_subscription + analysis.app_fees + platformTax + analysis.hosting_cost;
     
-    const current12MoCost = analysis.estimated_monthly_total * 12;
-    const tycodes12MoCost = upfront + (tycodesMonthly * 12);
-    const savings1Yr = current12MoCost - tycodes12MoCost;
+    // 3. Monthly Savings
+    const monthlySavings = currentMonthlyTotal - tycodesMonthly;
     
-    const current3YrCost = analysis.estimated_monthly_total * 36;
-    const tycodes3YrCost = upfront + (tycodesMonthly * 36);
-    const savings3Yr = current3YrCost - tycodes3YrCost;
+    // 4. ROI Principle Setup Fee (3x Monthly Savings, but not less than Tier Minimum)
+    const setupFee = Math.max(tierPricing.min_upfront, monthlySavings * 3);
+    
+    const savings1Yr = (currentMonthlyTotal * 12) - (setupFee + (tycodesMonthly * 12));
+    const savings3Yr = (currentMonthlyTotal * 36) - (setupFee + (tycodesMonthly * 36));
 
     const isEnterprise = analysis.project_tier === "Enterprise Contract";
     const needsConsultation = savings1Yr > 10000 || isEnterprise;
@@ -72,19 +82,20 @@ function generateAuditPricing(analysis: AuditResult): FlatAuditData {
     return {
         base_subscription: analysis.base_subscription,
         app_fees: analysis.app_fees,
-        platform_transaction_fee: analysis.platform_transaction_fee,
+        platform_transaction_fee: platformTax,
         hosting_cost: analysis.hosting_cost,
-        estimated_monthly_total: analysis.estimated_monthly_total,
+        estimated_monthly_total: currentMonthlyTotal,
         detected_stack: analysis.detected_stack,
         recommended_tycodes_components: analysis.recommended_tycodes_components,
+        estimated_revenue: revenue,
         
-        tycodes_estimated_cost: upfront,
-        tycodes_payment_plan: isEnterprise ? "Custom payment schedule to be determined during consultation." : `2 payments of $${upfront / 2} (50% deposit, 50% on completion)`,
+        tycodes_estimated_cost: setupFee,
+        tycodes_payment_plan: isEnterprise ? "Custom payment schedule to be determined during consultation." : `2 payments of $${(setupFee / 2).toFixed(0)} (50% deposit, 50% on completion)`,
         is_enterprise: isEnterprise,
-        setup_fee: upfront,
+        setup_fee: setupFee,
         mgmt_fee: tycodesMonthly,
-        savings_1_yr: savings1Yr,
-        savings_3_yr: savings3Yr,
+        savings_1_yr: Math.max(0, savings1Yr),
+        savings_3_yr: Math.max(0, savings3Yr),
         is_estimated: isEstimated,
         needs_consultation: needsConsultation
     };
@@ -95,6 +106,9 @@ app.post('/audit', async (c) => {
     try {
         const body = await c.req.json();
         const url = body.url;
+        const userRevenue = body.user_revenue || 0;
+        const userAppFees = body.app_fees || 0;
+        const userPlatform = body.platform || "other";
         
         if (!url) {
             return c.json({ detail: "URL is required" }, 400);
@@ -106,10 +120,13 @@ app.post('/audit', async (c) => {
             return c.json({ detail: `Scraping failed: ${markdown}` }, 500);
         }
 
-        const analysis = await analyzeWebsite(markdown, c.env.OPENAI_API_KEY);
-        const fullResult = generateAuditPricing(analysis);
+        const analysis = await analyzeWebsite(markdown, c.env.OPENAI_API_KEY, {
+            revenue: userRevenue,
+            app_fees: userAppFees,
+            platform: userPlatform
+        });
         
-        // Append raw markdown (optional, can be large so we might truncate)
+        const fullResult = generateAuditPricing(analysis, userPlatform);
         fullResult.raw_markdown = markdown.substring(0, 500) + "...";
         
         return c.json(fullResult);

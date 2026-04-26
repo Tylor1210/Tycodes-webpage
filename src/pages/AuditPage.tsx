@@ -53,7 +53,10 @@ export default function AuditPage() {
   const usd = (n: number) => "$" + n.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
   const stats = useMemo(() => {
-    const platformTaxRate = platform === "shopify" ? 0.02 : 0.015; 
+    let platformTaxRate = 0;
+    if (platform === "shopify") platformTaxRate = 0.02;
+    else if (platform === "wix") platformTaxRate = 0.029;
+    
     const platformPenalty = monthlySpend * platformTaxRate;
     
     const totalWasteMo = platformPenalty + appFees;
@@ -431,9 +434,7 @@ export default function AuditPage() {
                       </p>
                     </div>
                   </div>
-                )}
-
-                <div className="space-y-4 mb-6">
+                              <div className="space-y-4 mb-6">
                   <div>
                     <span className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Detected Stack</span>
                     <div className="flex flex-wrap gap-2">
@@ -443,11 +444,34 @@ export default function AuditPage() {
                     </div>
                   </div>
 
+                  {/* The Transaction Tax Leak Section */}
+                  {auditData.platform_transaction_fee > 0 && (
+                    <div className="rounded-xl border border-rose-500/40 bg-rose-500/10 p-4 animate-in slide-in-from-right-4 duration-500">
+                      <div className="flex items-center gap-2 mb-3">
+                        <ShieldAlert size={16} className="text-rose-500" />
+                        <h4 className="text-[11px] font-black uppercase tracking-widest text-rose-500">The Transaction Tax Leak</h4>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-[10px] text-slate-400 uppercase tracking-tight">Standard Stripe Fee</span>
+                          <span className="text-[11px] font-mono text-slate-300">2.9% + 30¢</span>
+                        </div>
+                        <div className="flex justify-between items-center bg-rose-500/5 p-2 rounded-lg border border-rose-500/10">
+                          <span className="text-[10px] text-rose-400 font-bold uppercase tracking-tight">Platform Markup ({platform === "shopify" ? "2.0%" : "2.9%"})</span>
+                          <span className="text-[12px] font-mono font-black text-rose-400">+{usd(auditData.platform_transaction_fee)}/mo</span>
+                        </div>
+                        <p className="text-[9px] text-slate-500 leading-relaxed">
+                          By using {platform.charAt(0).toUpperCase() + platform.slice(1)}, you are paying an extra tax on every dollar processed. Tycodes direct Stripe integration eliminates this entirely.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Itemized Hidden Tax Breakdown */}
-                  <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 overflow-hidden">
-                    <div className="px-4 py-2.5 border-b border-rose-500/10 flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-rose-400">Tycodes: Your Estimated Monthly Cost</span>
-                      <span className="text-base font-mono font-black text-rose-400">{usd(auditData.estimated_monthly_total)}/mo</span>
+                  <div className="rounded-xl border border-white/5 bg-black/40 overflow-hidden">
+                    <div className="px-4 py-2.5 border-b border-white/5 flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Current Monthly Drain</span>
+                      <span className="text-base font-mono font-black text-white">{usd(auditData.estimated_monthly_total)}/mo</span>
                     </div>
                     <div className="divide-y divide-white/5">
                       <div className="flex justify-between items-center px-4 py-2">
@@ -459,9 +483,9 @@ export default function AuditPage() {
                         <span className="text-[11px] font-mono text-slate-300">{usd(auditData.app_fees)}/mo</span>
                       </div>
                       {auditData.platform_transaction_fee > 0 && (
-                        <div className="flex justify-between items-center px-4 py-2 bg-rose-500/10">
+                        <div className="flex justify-between items-center px-4 py-2 bg-rose-500/5">
                           <span className="text-[11px] text-rose-400 font-bold flex items-center gap-1.5">
-                            <AlertTriangle size={11} /> Platform Transaction Tax (2%)
+                            Platform Tax
                           </span>
                           <span className="text-[11px] font-mono font-bold text-rose-400">{usd(auditData.platform_transaction_fee)}/mo</span>
                         </div>
@@ -475,10 +499,15 @@ export default function AuditPage() {
                 </div>
 
                 <div className="bg-[#0a0a0a] rounded-2xl p-5 border border-blue-500/30">
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-blue-500 mb-3">Tycodes Proposal</h4>
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-[10px] font-bold uppercase tracking-widest text-blue-500">Tycodes: {auditData.recommended_tycodes_components[0] || 'Vite-com'}</h4>
+                    <span className="text-[10px] font-black bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded border border-blue-500/20 uppercase tracking-widest">
+                      ROI Selection
+                    </span>
+                  </div>
                   
                   <div className="mb-4">
-                    <span className="block text-[10px] text-slate-500 mb-1">Recommended Rebuild</span>
+                    <span className="block text-[10px] text-slate-500 mb-1">Architecture Components</span>
                     <div className="flex flex-col gap-1.5 mt-2">
                       {auditData.recommended_tycodes_components.map((comp, i) => (
                         <span key={i} className="text-[11px] text-blue-400 flex items-center gap-2">
@@ -487,7 +516,7 @@ export default function AuditPage() {
                         </span>
                       ))}
                     </div>
-                  </div>
+                  </div></div>
 
                   <div className="flex justify-between items-start mb-1 mt-6">
                     <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mt-2">Tycodes Build</span>
