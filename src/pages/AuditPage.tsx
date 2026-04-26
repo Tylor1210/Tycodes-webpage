@@ -25,6 +25,12 @@ interface AuditData {
   // Dynamic pricing flags
   is_estimated: boolean;       // true when savings < $2k — show asterisk
   needs_consultation: boolean; // true when savings > $10k — route to founder call
+  
+  // Value-Based Commission Fields
+  base_setup_fee: number;
+  performance_commission: number;
+  annual_savings_total: number;
+  payback_months: number | string;
 }
 
 export default function AuditPage() {
@@ -506,6 +512,37 @@ export default function AuditPage() {
                     </span>
                   </div>
                   
+                  <div className="mb-6">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[10px] text-slate-500 uppercase tracking-widest">Base Fee</span>
+                      <span className="text-[11px] font-mono text-white font-bold">{usd(auditData.base_setup_fee)}</span>
+                    </div>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-[10px] text-emerald-500 uppercase tracking-widest font-bold">Performance Commission (20%)</span>
+                      <span className="text-[11px] font-mono text-emerald-500 font-black">+{usd(auditData.performance_commission)}</span>
+                    </div>
+                    <div className="pt-2 border-t border-white/5 flex justify-between items-center">
+                      <span className="text-[11px] text-slate-300 font-bold uppercase tracking-widest">Total Investment</span>
+                      <span className="text-xl font-mono text-blue-400 font-black">{usd(auditData.setup_fee)}</span>
+                    </div>
+                    <p className="text-[9px] text-slate-500 mt-2 italic leading-relaxed">
+                      "Our fee is {usd(auditData.base_setup_fee)} + a 20% commission on the money we save you this year. If we don't save you money, you don't pay the commission."
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 mb-6">
+                    <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                      <span className="block text-[10px] font-bold uppercase tracking-widest text-emerald-500/70 mb-1">Profit Recovery (1yr)</span>
+                      <span className="text-sm font-mono font-bold text-emerald-400">{usd(auditData.savings_1_yr)}</span>
+                    </div>
+                    <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+                      <span className="block text-[10px] font-bold uppercase tracking-widest text-blue-500/70 mb-1">Payback Period</span>
+                      <span className="text-sm font-mono font-bold text-blue-400">
+                        {typeof auditData.payback_months === 'number' || !isNaN(Number(auditData.payback_months)) ? `${auditData.payback_months} Months` : auditData.payback_months}
+                      </span>
+                    </div>
+                  </div>
+                  
                   <div className="mb-4">
                     <span className="block text-[10px] text-slate-500 mb-1">Architecture Components</span>
                     <div className="flex flex-col gap-1.5 mt-2">
@@ -516,57 +553,7 @@ export default function AuditPage() {
                         </span>
                       ))}
                     </div>
-                  </div></div>
-
-                  <div className="flex justify-between items-start mb-1 mt-6">
-                    <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mt-2">Tycodes Build</span>
-                    {auditData.is_enterprise ? (
-                      <span className="text-sm font-black text-amber-500 uppercase tracking-widest mt-2">Strategic Transformation</span>
-                    ) : (
-                      <div className="text-right">
-                        <div className="flex items-start justify-end gap-1">
-                          <span className="text-2xl font-mono font-black text-blue-400">{usd(auditData.setup_fee)} Setup</span>
-                          {auditData.is_estimated && (
-                            <span className="text-blue-400 text-lg font-black leading-none mt-0.5" title="Estimated starting fee — final price may vary based on features and add-ons">*</span>
-                          )}
-                        </div>
-                        <span className="text-[10px] font-bold text-blue-400/80 uppercase tracking-widest bg-blue-500/10 px-2 py-1 rounded border border-blue-500/20 inline-block">
-                          2 payments of {usd(auditData.setup_fee / 2)} <span className="opacity-70 lowercase font-normal">(50% non refundable deposit, 50% upon completion)</span>
-                        </span>
-                        {auditData.is_estimated && (
-                          <p className="text-[10px] text-slate-500 mt-2 text-right leading-relaxed">
-                            * Estimated starting fee. Final price may vary based on features and add-ons — let's discuss first.
-                          </p>
-                        )}
-                        {auditData.mgmt_fee > 0 && (
-                          <span className="text-[11px] font-bold text-slate-400 block mt-2">
-                            + {usd(auditData.mgmt_fee)}/mo Management
-                          </span>
-                        )}
-                      </div>
-                    )}
                   </div>
-                  
-                  {(!auditData.is_enterprise && auditData.savings_1_yr > 0) && (
-                    <div className="grid grid-cols-2 gap-2 mt-4">
-                      <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-                        <span className="block text-[10px] font-bold uppercase tracking-widest text-emerald-500/70 mb-1">1-Year Savings</span>
-                        <span className="text-sm font-mono font-bold text-emerald-400">{usd(auditData.savings_1_yr)}</span>
-                      </div>
-                      <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-                        <span className="block text-[10px] font-bold uppercase tracking-widest text-emerald-500/70 mb-1">3-Year Savings</span>
-                        <span className="text-sm font-mono font-bold text-emerald-400">{usd(auditData.savings_3_yr)}</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {!auditData.is_enterprise && (
-                    <div className="mt-4 p-3 bg-black/40 rounded-xl border border-white/5">
-                      <p className="text-[11px] text-slate-400 leading-relaxed text-center">
-                        {auditData.tycodes_payment_plan}
-                      </p>
-                    </div>
-                  )}
                 </div>
                 
                 {renderLeadCapture()}

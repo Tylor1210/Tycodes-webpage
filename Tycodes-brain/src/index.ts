@@ -50,34 +50,48 @@ export interface FlatAuditData {
   is_estimated: boolean;
   needs_consultation: boolean;
   estimated_revenue: number;
+
+  // Value-Based Commission Fields
+  base_setup_fee: number;
+  performance_commission: number;
+  annual_savings_total: number;
+  payback_months: number | string;
   raw_markdown?: string;
 }
 
 function generateAuditPricing(analysis: any, platform: string): FlatAuditData {
     const tierPricing = TYCODES_TIERS[analysis.project_tier] || TYCODES_TIERS["Digital Presence"];
-    const tycodesMonthly = tierPricing.monthly;
+    const baseFee = tierPricing.min_upfront;
+    const tycodesMgmt = tierPricing.monthly;
     const revenue = analysis.estimated_revenue || 5000;
 
-    // 1. Calculate Platform Tax accurately on the backend
+    // 1. Current Leakage Calculation
     let platformTax = 0;
     if (platform === "shopify") platformTax = revenue * 0.02;
     else if (platform === "wix") platformTax = revenue * 0.029;
+    
+    const currentMonthlyLeakage = platformTax + analysis.app_fees + analysis.hosting_cost;
+    const currentMonthlyTotal = analysis.base_subscription + currentMonthlyLeakage;
 
-    // 2. Final Current Monthly Cost
-    const currentMonthlyTotal = analysis.base_subscription + analysis.app_fees + platformTax + analysis.hosting_cost;
+    // 2. Tycodes Efficiency Math
+    // Assume Tycodes reduces "App Fees" by 80% and "Platform Tax" to 0%
+    const tycodesAppFees = analysis.app_fees * 0.20;
+    const tycodesMonthlyTotal = tycodesMgmt + tycodesAppFees + analysis.hosting_cost; // base subscription eliminated
+
+    // 3. Savings Math
+    const monthlySavings = currentMonthlyTotal - tycodesMonthlyTotal;
+    const annualSavings = Math.max(0, monthlySavings * 12);
     
-    // 3. Monthly Savings
-    const monthlySavings = currentMonthlyTotal - tycodesMonthly;
+    // 4. Performance Commission (20% of Projected Annual Savings)
+    const performanceCommission = Math.max(0, annualSavings * 0.20);
+    const totalSetupFee = baseFee + performanceCommission;
     
-    // 4. ROI Principle Setup Fee (3x Monthly Savings, but not less than Tier Minimum)
-    const setupFee = Math.max(tierPricing.min_upfront, monthlySavings * 3);
-    
-    const savings1Yr = (currentMonthlyTotal * 12) - (setupFee + (tycodesMonthly * 12));
-    const savings3Yr = (currentMonthlyTotal * 36) - (setupFee + (tycodesMonthly * 36));
+    // 5. Payback Period
+    const paybackMonths = monthlySavings > 0 ? (totalSetupFee / monthlySavings).toFixed(1) : "Strategic Investment";
 
     const isEnterprise = analysis.project_tier === "Enterprise Contract";
-    const needsConsultation = savings1Yr > 10000 || isEnterprise;
-    const isEstimated = savings1Yr < 2000;
+    const needsConsultation = annualSavings > 10000 || isEnterprise;
+    const isEstimated = annualSavings < 2000;
 
     return {
         base_subscription: analysis.base_subscription,
@@ -89,13 +103,18 @@ function generateAuditPricing(analysis: any, platform: string): FlatAuditData {
         recommended_tycodes_components: analysis.recommended_tycodes_components,
         estimated_revenue: revenue,
         
-        tycodes_estimated_cost: setupFee,
-        tycodes_payment_plan: isEnterprise ? "Custom payment schedule to be determined during consultation." : `2 payments of $${(setupFee / 2).toFixed(0)} (50% deposit, 50% on completion)`,
+        base_setup_fee: baseFee,
+        performance_commission: performanceCommission,
+        annual_savings_total: annualSavings,
+        payback_months: paybackMonths,
+        
+        tycodes_estimated_cost: totalSetupFee,
+        tycodes_payment_plan: isEnterprise ? "Custom payment schedule to be determined during consultation." : `Base $${baseFee} + $${performanceCommission.toFixed(0)} Commission (20% of Savings)`,
         is_enterprise: isEnterprise,
-        setup_fee: setupFee,
-        mgmt_fee: tycodesMonthly,
-        savings_1_yr: Math.max(0, savings1Yr),
-        savings_3_yr: Math.max(0, savings3Yr),
+        setup_fee: totalSetupFee,
+        mgmt_fee: tycodesMgmt,
+        savings_1_yr: annualSavings,
+        savings_3_yr: annualSavings * 3,
         is_estimated: isEstimated,
         needs_consultation: needsConsultation
     };
