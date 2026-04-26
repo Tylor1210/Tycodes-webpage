@@ -66,7 +66,7 @@ export default function AuditPage() {
     };
   }, [monthlySpend, appFees, platform]);
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://tycodes-auditor.tclont11.workers.dev';
 
   const handleDeepAudit = async () => {
     setIsScanning(true);
