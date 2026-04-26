@@ -21,7 +21,7 @@ function App() {
   const [news, setNews] = useState<{ title: string; url: string }[]>([]);
   const [market] = useState({ price: "5,130.42", change: "+0.45%" });
   const [isMarketOpen, setIsMarketOpen] = useState(false);
-  const [visitorCount, setVisitorCount] = useState(1240);
+  const [visitorCount] = useState(1240);
 
   useEffect(() => {
     const fetchNews = async () => {
