@@ -25,7 +25,7 @@ export default function MainHeroFunnel() {
               Stop paying <span className="text-blue-500">platform taxes.</span>
             </h2>
             <p className="text-sm text-slate-400 leading-relaxed max-w-md">
-              Whether you're starting fresh or scaling an existing brand, we build custom infrastructure that maximizes your margins.
+              Whether you're starting fresh or scaling an existing brand, we build custom infrastructure that maximizes your margins. Brands switching from Shopify or Wix to direct Stripe integration typically reclaim <span className="text-white font-semibold">2–3% per transaction</span> — kept by you, not the platform.
             </p>
           </div>
 
@@ -52,7 +52,7 @@ export default function MainHeroFunnel() {
               </div>
               <div>
                 <h3 className="text-sm font-bold text-white mb-1">Optimize Existing</h3>
-                <p className="text-[10px] text-slate-400 leading-relaxed">Calculate savings by migrating off platforms like Shopify or Wix.</p>
+                <p className="text-[10px] text-slate-400 leading-relaxed">Calculate your exact savings migrating off Shopify, Wix, or Squarespace.</p>
               </div>
             </button>
           </div>
@@ -103,9 +103,9 @@ export default function MainHeroFunnel() {
           </button>
 
           <div>
-            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-2">Audit Your Stack</h2>
+            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-1">Revenue Leak Detection.</h2>
             <p className="text-xs text-slate-400 leading-relaxed max-w-md">
-              Find out how much you're losing to platform fees and middleman taxes.
+              In 60 seconds, our Agentic Auditor scans your live site and calculates the exact dollar amount Shopify, Wix, or your app stack is draining from your margins every month.
             </p>
           </div>
 
@@ -164,9 +164,9 @@ export default function MainHeroFunnel() {
               onClick={handleAudit}
               disabled={!domain}
               data-analytics-id="hero-start-audit"
-              className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-emerald-600/20 mt-2 hover:scale-[1.02] cursor-pointer"
+              className="flex items-center justify-center gap-2 w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-emerald-600/20 mt-2 hover:scale-[1.02] cursor-pointer"
             >
-              Start Free Audit <ArrowRight size={14} />
+              Find My Revenue Leaks <ArrowRight size={14} />
             </button>
           </div>
         </div>

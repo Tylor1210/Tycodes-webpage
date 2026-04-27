@@ -30,11 +30,11 @@ export default function Navbar({ market, isMarketOpen, visitorCount }: NavbarPro
         {/* Left: Logo */}
         <div className="flex items-center gap-3">
           <Link to="/" className="hover:opacity-80 transition-opacity flex-shrink-0 flex items-center">
-            {/* Simple Logo Icon & Text for Navbar instead of the huge original one */}
-            <div className="bg-slate-900 dark:bg-white rounded-lg w-8 h-8 flex items-center justify-center mr-2">
-              <span className="text-blue-500 font-mono text-xs font-bold">&lt;/&gt;</span>
+            {/* Logo Icon */}
+            <div className="bg-slate-900 dark:bg-white rounded-lg w-7 h-7 md:w-8 md:h-8 flex items-center justify-center mr-2">
+              <span className="text-blue-500 font-mono text-[10px] md:text-xs font-bold">&lt;/&gt;</span>
             </div>
-            <span className="font-mono font-bold text-lg text-slate-900 dark:text-white tracking-tight">
+            <span className="font-mono font-bold text-base md:text-lg text-slate-900 dark:text-white tracking-tight">
               Tycodes<span className="text-blue-500">.dev</span>
             </span>
           </Link>
