@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Disallow internal/functional paths
+Disallow: /audit?*
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://tycodes.dev/sitemap.xml
+
+# Crawl hints for AI search engines (Perplexity, GPTBot, Anthropic, Google Gemini)
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
