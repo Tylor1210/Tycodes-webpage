@@ -1,16 +1,22 @@
 import SavingsCalculator from "../components/SavingsCalculator";
-import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import PageHeader from "@/components/ui/PageHeader";
+import { BookAuditBand } from "@/components/ui/BookAuditCTA";
+import { Calculator } from "lucide-react";
 
 export default function CalculatorPage() {
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4 h-screen flex flex-col">
-      <Link to="/" className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-[11px] font-bold uppercase tracking-widest mb-10">
-        <ArrowLeft size={14} /> Back to Home
-      </Link>
-      <div className="flex-1">
+    <div className="max-w-4xl mx-auto py-12 px-4">
+      <PageHeader
+        icon={Calculator}
+        eyebrow="Platform Tax Savings"
+        accent="indigo"
+        title="Calculate your platform tax."
+        subtitle="See how much you're losing to subscription fees and gateway penalties — and what switching to a custom stack would save you."
+      />
+      <div className="h-[70vh] min-h-[560px] max-h-[820px]">
         <SavingsCalculator />
       </div>
+      <BookAuditBand analyticsId="calculator-bottom-book-audit" />
     </div>
   );
 }

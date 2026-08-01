@@ -1,248 +1,228 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Package, CheckCircle2, ShoppingCart, Database, Mail } from "lucide-react";
+import { motion } from "motion/react";
+import { Package, CheckCircle2, ShoppingCart, Database, Info } from "lucide-react";
+import PageHeader from "@/components/ui/PageHeader";
+import PricingTierCard from "@/components/ui/PricingTierCard";
+import { BookAuditBand } from "@/components/ui/BookAuditCTA";
+import { BOOKING_URL } from "@/lib/constants";
+import { fadeUp, staggerContainer, fadeUpItem } from "@/lib/motion";
+
+const tiers = [
+  {
+    id: "tier1",
+    name: "Tier 1: Small E-com",
+    description: '(Growth Focus) — For emerging brands replacing Shopify Basic.',
+    price: "$2,500",
+    priceLabel: "Setup",
+    monthly: "$99/mo",
+    roi: "+ $7,976 3-Year ROI",
+  },
+  {
+    id: "tier2",
+    name: "Tier 2: Large E-com",
+    description: "(Scale Focus) — For established retailers replacing Shopify Pro/Growth.",
+    price: "$5,000",
+    priceLabel: "Setup",
+    monthly: "$199/mo",
+    roi: "+ $10,796 3-Year ROI",
+    badge: "Popular" as const,
+  },
+  {
+    id: "tier3",
+    name: 'Tier 3: The "Contract"',
+    description: "(Enterprise/Titan Focus) — For corporations replacing Shopify Plus ($2M+ revenue).",
+    price: "$25k–$50k",
+    priceLabel: "Setup",
+    monthly: "$2,500/mo",
+    roi: "+ $468,000 3-Year ROI",
+  },
+];
+
+const breakdowns = [
+  {
+    title: "Tier 1: Small E-com Cost Profile",
+    competitor: "Shopify Basic",
+    ours: 'TYcodes "Pure Path"',
+    rows: [
+      ["Monthly Managed Fee", "$39", "$99"],
+      ["Transaction Tax", "2.0% (Added Fee)", "0% (Direct Integration)"],
+      ["Shipping Apps", "$30 - $60/mo", "$0 (API Integrated)"],
+    ],
+  },
+  {
+    title: "Tier 2: Large E-com Cost Profile",
+    competitor: "Shopify Pro",
+    ours: "TYcodes Enterprise",
+    rows: [
+      ["Monthly Managed Fee", "$105", "$199"],
+      ["Transaction Tax", "1.0% (approx. $5k on $500k)", "0% (Direct Bank API)"],
+      ["Shipping Surcharges", "High (Hidden Markups)", "$0 (Base Rate Access)"],
+    ],
+  },
+  {
+    title: 'Tier 3: The "Contract" Cost Profile',
+    competitor: "Shopify Plus",
+    ours: "TYcodes Custom Infra",
+    rows: [
+      ["Monthly Managed Fee", "$2,300", "$2,500"],
+      ["Transaction Tax", "0.5% ($100k on $20M sales)", "0% (Direct Bank/Stripe)"],
+      ["Logistics Audit Recovery", "$0 (Lost Revenue)", "2% Avg. Reclaimed"],
+    ],
+  },
+];
 
 export default function ShipComPage() {
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
-      <Link to="/" className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-[11px] font-bold uppercase tracking-widest mb-10">
-        <ArrowLeft size={14} /> Back to Home
-      </Link>
+      <PageHeader
+        icon={Package}
+        eyebrow="The Ship-com Package"
+        accent="indigo"
+        title={
+          <>
+            The Logistics &amp; <span className="text-indigo-600 dark:text-indigo-400">Commerce Suite.</span>
+          </>
+        }
+        subtitle="Target: brands shipping physical goods who are currently losing margins to platform fees and shipping inefficiencies."
+      />
 
-      <div className="flex items-center gap-3 mb-6">
-        <div className="bg-orange-500/15 p-3 rounded-xl">
-          <Package className="text-orange-500" size={22} />
-        </div>
-        <span className="text-[10px] font-bold uppercase tracking-widest text-orange-500/80">The Ship-com Package</span>
-      </div>
-
-      <h1 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight mb-4">
-        The Logistics & <span className="text-orange-500">Commerce Suite.</span>
-      </h1>
-
-      <p className="text-slate-400 text-base leading-relaxed mb-12 max-w-2xl">
-        Target: Brands shipping physical goods who are currently losing margins to platform fees and shipping inefficiencies.
-      </p>
+      {/* Clarifying note vs. Vite-com */}
+      <motion.div
+        {...fadeUp}
+        className="flex gap-3 items-start bg-indigo-500/5 border border-indigo-500/20 rounded-2xl px-5 py-4 mb-12"
+      >
+        <Info size={16} className="text-indigo-600 dark:text-indigo-400 flex-shrink-0 mt-0.5" />
+        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+          Shipping &amp; Commerce packages include ongoing logistics and fulfillment management, which is why
+          pricing differs from our standalone storefront builds — see{" "}
+          <Link to="/services" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
+            Services
+          </Link>{" "}
+          for the full comparison.
+        </p>
+      </motion.div>
 
       {/* Pricing Tiers Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-        {/* Tier 1 */}
-        <div className="rounded-2xl border border-white/10 overflow-hidden flex flex-col hover:border-orange-500/30 transition-all">
-          <div className="bg-[#0a0a0a] p-6 border-b border-white/10 flex-1">
-            <h3 className="text-lg font-bold text-white mb-1 tracking-tight flex justify-between items-center">
-              Tier 1: Small E-com
-            </h3>
-            <p className="text-[11px] font-mono text-orange-400 mb-4">(Growth Focus)</p>
-            <p className="text-sm text-slate-500 mb-6">For emerging brands replacing Shopify Basic.</p>
-            <div className="mb-2">
-              <span className="text-2xl font-black text-white">$2,500</span>
-              <span className="text-xs text-slate-500 ml-2">Setup</span>
-            </div>
-            <div>
-              <span className="text-lg font-bold text-slate-300">$99</span>
-              <span className="text-xs text-slate-500 ml-1">/mo Managed Fee</span>
-            </div>
+        {tiers.map((tier) => (
+          <div key={tier.name} className="flex flex-col">
+            <PricingTierCard
+              name={tier.name}
+              description={tier.description}
+              price={tier.price}
+              priceLabel={tier.priceLabel}
+              monthly={tier.monthly}
+              badge={tier.badge ? { label: tier.badge, tone: "indigo" } : undefined}
+              ctaLabel="Book a Strategy Call"
+              ctaHref={BOOKING_URL}
+              ctaAnalyticsId={`shipcom-${tier.id}-cta`}
+              highlighted={!!tier.badge}
+            />
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.15 }}
+              className="mt-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-2.5"
+            >
+              <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 tracking-wide uppercase text-center">
+                {tier.roi}
+              </p>
+            </motion.div>
           </div>
-          <div className="bg-emerald-500/10 p-4 border-t border-emerald-500/20">
-            <p className="text-xs font-bold text-emerald-400 tracking-widest uppercase text-center">
-              + $7,976 3-Year ROI
-            </p>
-          </div>
-        </div>
-
-        {/* Tier 2 */}
-        <div className="rounded-2xl border border-white/10 overflow-hidden flex flex-col hover:border-orange-500/30 transition-all">
-          <div className="bg-[#0a0a0a] p-6 border-b border-white/10 flex-1 relative">
-            <div className="absolute top-0 right-0 bg-orange-500 text-white text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-lg">
-              Popular
-            </div>
-            <h3 className="text-lg font-bold text-white mb-1 tracking-tight flex justify-between items-center">
-              Tier 2: Large E-com
-            </h3>
-            <p className="text-[11px] font-mono text-orange-400 mb-4">(Scale Focus)</p>
-            <p className="text-sm text-slate-500 mb-6">For established retailers replacing Shopify Pro/Growth.</p>
-            <div className="mb-2">
-              <span className="text-2xl font-black text-white">$5,000</span>
-              <span className="text-xs text-slate-500 ml-2">Setup</span>
-            </div>
-            <div>
-              <span className="text-lg font-bold text-slate-300">$199</span>
-              <span className="text-xs text-slate-500 ml-1">/mo Managed Fee</span>
-            </div>
-          </div>
-          <div className="bg-emerald-500/10 p-4 border-t border-emerald-500/20">
-            <p className="text-xs font-bold text-emerald-400 tracking-widest uppercase text-center">
-              + $10,796 3-Year ROI
-            </p>
-          </div>
-        </div>
-
-        {/* Tier 3 */}
-        <div className="rounded-2xl border border-white/10 overflow-hidden flex flex-col hover:border-orange-500/30 transition-all">
-          <div className="bg-[#0a0a0a] p-6 border-b border-white/10 flex-1">
-            <h3 className="text-lg font-bold text-white mb-1 tracking-tight flex justify-between items-center">
-              Tier 3: The "Contract"
-            </h3>
-            <p className="text-[11px] font-mono text-orange-400 mb-4">(Enterprise/Titan Focus)</p>
-            <p className="text-sm text-slate-500 mb-6">For corporations replacing Shopify Plus ($2M+ Revenue).</p>
-            <div className="mb-2">
-              <span className="text-2xl font-black text-white">$25k–$50k</span>
-              <span className="text-xs text-slate-500 ml-2">Setup</span>
-            </div>
-            <div>
-              <span className="text-lg font-bold text-slate-300">$2,500</span>
-              <span className="text-xs text-slate-500 ml-1">/mo Managed Fee</span>
-            </div>
-          </div>
-          <div className="bg-emerald-500/10 p-4 border-t border-emerald-500/20">
-            <p className="text-xs font-bold text-emerald-400 tracking-widest uppercase text-center">
-              + $468,000 3-Year ROI
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Detailed Cost Comparison */}
-      <h2 className="text-2xl font-bold tracking-tighter mb-8 flex items-center gap-3">
-        <ShoppingCart className="text-orange-500" /> Infrastructure Breakdown
+      <h2 className="text-2xl font-semibold tracking-tight mb-8 flex items-center gap-3 text-slate-900 dark:text-white">
+        <ShoppingCart className="text-indigo-600 dark:text-indigo-400" /> Infrastructure Breakdown
       </h2>
 
-      <div className="space-y-8 mb-16">
-        {/* Tier 1 Breakdown */}
-        <div className="rounded-2xl border border-white/10 overflow-hidden">
-          <div className="bg-[#0a0a0a] p-5 border-b border-white/10">
-            <h3 className="text-sm font-bold text-white tracking-widest uppercase">Tier 1: Small E-com Cost Profile</h3>
-          </div>
-          <div className="bg-[#050505] p-5 overflow-x-auto">
-            <table className="w-full text-left text-sm min-w-[500px]">
-              <thead>
-                <tr className="border-b border-white/5 text-[10px] uppercase tracking-widest text-slate-500">
-                  <th className="pb-3 w-1/3">Expense Category</th>
-                  <th className="pb-3 text-red-400/80">Shopify Basic</th>
-                  <th className="pb-3 text-emerald-500">TYcodes "Pure Path"</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["Monthly Managed Fee", "$39", "$99"],
-                  ["Transaction Tax", "2.0% (Added Fee)", "0% (Direct Integration)"],
-                  ["Shipping Apps", "$30 - $60/mo", "$0 (API Integrated)"],
-                ].map((row, i) => (
-                  <tr key={i} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
-                    <td className="py-3 text-slate-300 font-medium">{row[0]}</td>
-                    <td className="py-3 text-slate-500 font-mono text-xs">{row[1]}</td>
-                    <td className="py-3 text-slate-300 font-mono text-xs">{row[2]}</td>
+      <motion.div
+        className="space-y-8 mb-16"
+        initial="initial"
+        whileInView="whileInView"
+        viewport={{ once: true, margin: "-40px" }}
+        variants={staggerContainer}
+      >
+        {breakdowns.map((b) => (
+          <motion.div
+            key={b.title}
+            variants={fadeUpItem}
+            className="rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden"
+          >
+            <div className="bg-white dark:bg-[#0a0a0a] p-5 border-b border-slate-200 dark:border-white/10">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white tracking-wide uppercase">{b.title}</h3>
+            </div>
+            <div className="bg-slate-50 dark:bg-[#050505] p-5 overflow-x-auto">
+              <table className="w-full text-left text-sm min-w-[500px]">
+                <thead>
+                  <tr className="border-b border-slate-200 dark:border-white/5 text-[11px] uppercase tracking-wide text-slate-500">
+                    <th className="pb-3 w-1/3">Expense Category</th>
+                    <th className="pb-3 text-rose-500/80">{b.competitor}</th>
+                    <th className="pb-3 text-indigo-600 dark:text-indigo-400">{b.ours}</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Tier 2 Breakdown */}
-        <div className="rounded-2xl border border-white/10 overflow-hidden">
-          <div className="bg-[#0a0a0a] p-5 border-b border-white/10">
-            <h3 className="text-sm font-bold text-white tracking-widest uppercase">Tier 2: Large E-com Cost Profile</h3>
-          </div>
-          <div className="bg-[#050505] p-5 overflow-x-auto">
-            <table className="w-full text-left text-sm min-w-[500px]">
-              <thead>
-                <tr className="border-b border-white/5 text-[10px] uppercase tracking-widest text-slate-500">
-                  <th className="pb-3 w-1/3">Expense Category</th>
-                  <th className="pb-3 text-red-400/80">Shopify Pro</th>
-                  <th className="pb-3 text-emerald-500">TYcodes Enterprise</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["Monthly Managed Fee", "$105", "$199"],
-                  ["Transaction Tax", "1.0% (approx. $5k on $500k)", "0% (Direct Bank API)"],
-                  ["Shipping Surcharges", "High (Hidden Markups)", "$0 (Base Rate Access)"],
-                ].map((row, i) => (
-                  <tr key={i} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
-                    <td className="py-3 text-slate-300 font-medium">{row[0]}</td>
-                    <td className="py-3 text-slate-500 font-mono text-xs">{row[1]}</td>
-                    <td className="py-3 text-slate-300 font-mono text-xs">{row[2]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Tier 3 Breakdown */}
-        <div className="rounded-2xl border border-white/10 overflow-hidden">
-          <div className="bg-[#0a0a0a] p-5 border-b border-white/10">
-            <h3 className="text-sm font-bold text-white tracking-widest uppercase">Tier 3: The "Contract" Cost Profile</h3>
-          </div>
-          <div className="bg-[#050505] p-5 overflow-x-auto">
-            <table className="w-full text-left text-sm min-w-[500px]">
-              <thead>
-                <tr className="border-b border-white/5 text-[10px] uppercase tracking-widest text-slate-500">
-                  <th className="pb-3 w-1/3">Expense Category</th>
-                  <th className="pb-3 text-red-400/80">Shopify Plus</th>
-                  <th className="pb-3 text-emerald-500">TYcodes Custom Infra</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["Monthly Managed Fee", "$2,300", "$2,500"],
-                  ["Transaction Tax", "0.5% ($100k on $20M sales)", "0% (Direct Bank/Stripe)"],
-                  ["Logistics Audit Recovery", "$0 (Lost Revenue)", "2% Avg. Reclaimed"],
-                ].map((row, i) => (
-                  <tr key={i} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
-                    <td className="py-3 text-slate-300 font-medium">{row[0]}</td>
-                    <td className="py-3 text-slate-500 font-mono text-xs">{row[1]}</td>
-                    <td className="py-3 text-slate-300 font-mono text-xs">{row[2]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+                </thead>
+                <tbody>
+                  {b.rows.map((row, i) => (
+                    <tr
+                      key={i}
+                      className="border-b border-slate-100 dark:border-white/5 last:border-0 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+                    >
+                      <td className="py-3 text-slate-700 dark:text-slate-300 font-medium">{row[0]}</td>
+                      <td className="py-3 text-slate-500 font-mono text-xs">{row[1]}</td>
+                      <td className="py-3 text-slate-700 dark:text-slate-300 font-mono text-xs">{row[2]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
 
       {/* Strategic Comparison */}
-      <h2 className="text-2xl font-bold tracking-tighter mb-6 flex items-center gap-3">
-        <Database className="text-indigo-500" /> Strategic Comparison: Why a Custom Stack Wins
+      <h2 className="text-2xl font-semibold tracking-tight mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
+        <Database className="text-indigo-600 dark:text-indigo-400" /> Strategic Comparison: Why a Custom Stack Wins
       </h2>
-      <div className="rounded-3xl bg-[#0a0a0a] border border-white/10 p-6 md:p-8 overflow-x-auto mb-10">
+      <motion.div
+        {...fadeUp}
+        className="rounded-3xl bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 p-6 md:p-8 overflow-x-auto mb-10 shadow-sm"
+      >
         <table className="w-full text-left border-collapse min-w-[600px]">
           <thead>
-            <tr className="border-b border-white/10 text-[10px] uppercase tracking-widest text-slate-500">
+            <tr className="border-b border-slate-200 dark:border-white/10 text-[11px] uppercase tracking-wide text-slate-500">
               <th className="pb-3 font-bold w-1/4">Feature</th>
-              <th className="pb-3 font-bold w-[37.5%] text-slate-400">Legacy E-commerce Platforms</th>
-              <th className="pb-3 font-bold text-indigo-400">TYcodes Automated Systems</th>
+              <th className="pb-3 font-bold w-[37.5%] text-slate-500 dark:text-slate-400">Legacy E-commerce Platforms</th>
+              <th className="pb-3 font-bold text-indigo-600 dark:text-indigo-400">TYcodes Automated Systems</th>
             </tr>
           </thead>
           <tbody className="text-sm font-medium">
             {[
               ["Checkout Speed", "Throttled by platform scripts", "Instant (React/Vite optimized)"],
-              ["Payment Gateway", "Forced 3rd party \"middleman\" fees", "Direct-to-Bank (Stripe Elements)"],
+              ["Payment Gateway", 'Forced 3rd party "middleman" fees', "Direct-to-Bank (Stripe Elements)"],
               ["Data Control", "Proprietary/Locked DB", "Raw Postgres/SQL Access"],
               ["Scaling", "Higher revenue = Higher platform %", "Fixed Cost Infrastructure"],
             ].map((row) => (
-              <tr key={row[0]} className="border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors">
-                <td className="py-4 text-white font-bold">{row[0]}</td>
-                <td className="py-4 text-slate-400 border-r border-white/5 pr-4 mr-4">{row[1]}</td>
-                <td className="py-4 pl-4 text-indigo-300 font-mono flex items-center gap-2">
-                  <CheckCircle2 size={12} className="text-indigo-500 bg-indigo-500/10 rounded-full" />
+              <tr
+                key={row[0]}
+                className="border-b border-slate-100 dark:border-white/5 last:border-0 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
+              >
+                <td className="py-4 text-slate-900 dark:text-white font-bold">{row[0]}</td>
+                <td className="py-4 text-slate-600 dark:text-slate-400 border-r border-slate-100 dark:border-white/5 pr-4 mr-4">
+                  {row[1]}
+                </td>
+                <td className="py-4 pl-4 text-indigo-700 dark:text-indigo-300 font-mono flex items-center gap-2">
+                  <CheckCircle2 size={12} className="text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 rounded-full" />
                   {row[2]}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+      </motion.div>
 
-      <div className="flex justify-center mt-8">
-        <a
-          href="mailto:contact@tycodes.dev"
-          className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-500 text-white font-black uppercase tracking-widest text-[11px] px-10 py-4 rounded-2xl transition-all hover:scale-105 shadow-lg shadow-orange-600/20"
-        >
-          <Mail size={14} />
-          Book a Strategy Call
-        </a>
-      </div>
+      <BookAuditBand analyticsId="shipcom-bottom-book-audit" />
     </div>
   );
 }

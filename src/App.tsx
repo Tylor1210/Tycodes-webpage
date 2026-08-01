@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "motion/react";
 import HeroTile from "./components/ui/HeroTile";
 import Navbar from "./components/ui/Navbar";
 import Footer from "./components/ui/Footer";
 import MainHeroFunnel from "./components/ui/MainHeroFunnel";
+import { BookAuditButton, BookAuditBand } from "./components/ui/BookAuditCTA";
 import {
-  Newspaper,
   Share2,
   Bot,
   FolderOpen,
@@ -15,275 +15,209 @@ import {
   ShieldCheck,
   Rocket,
   Database,
-  Shield,
   Target,
   BarChart3,
 } from "lucide-react";
 
+const fadeUp = {
+  initial: { opacity: 0, y: 12 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.4 },
+};
+
 function App() {
-  const [news, setNews] = useState<{ title: string; url: string }[]>([]);
-  const [market] = useState({ price: "5,130.42", change: "+0.45%" });
-  const [isMarketOpen, setIsMarketOpen] = useState(false);
-  const [visitorCount] = useState(1240);
-
-  useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const response = await fetch(
-          "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
-        );
-        const ids = await response.json();
-        const stories = await Promise.all(
-          ids.slice(0, 4).map(async (id: number) => {
-            const res = await fetch(
-              `https://hacker-news.firebaseio.com/v0/item/${id}.json`
-            );
-            return res.json();
-          })
-        );
-        setNews(stories);
-      } catch (err) {
-        console.error("Sync error", err);
-      }
-    };
-
-    const checkMarket = () => {
-      const now = new Date();
-      const parts = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: false,
-        weekday: "short",
-      }).formatToParts(now);
-      const day = parts.find((p) => p.type === "weekday")?.value;
-      const hour = parseInt(parts.find((p) => p.type === "hour")?.value || "0");
-      setIsMarketOpen(day !== "Sat" && day !== "Sun" && hour >= 9 && hour < 16);
-    };
-
-    fetchNews();
-    checkMarket();
-  }, []);
-
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020202] text-slate-900 dark:text-white selection:bg-blue-600/40 font-sans tracking-tight overflow-x-hidden flex flex-col transition-colors duration-300">
-      {/* Background grid */}
-      <div className="fixed inset-0 blueprint-grid pointer-events-none" />
-
+    <div className="min-h-screen bg-white dark:bg-[#020202] text-slate-900 dark:text-white selection:bg-indigo-600/40 font-sans tracking-tight overflow-x-hidden flex flex-col transition-colors duration-300">
       <main className="relative z-10 flex flex-col flex-1 w-[90%] mx-auto py-6 md:py-8 lg:py-10 max-w-[1400px]">
-        {/* Navbar */}
-        <Navbar market={market} isMarketOpen={isMarketOpen} visitorCount={visitorCount} />
+        <Navbar />
 
-        {/* ── Primary grid — flat for correct mobile stacking order ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
-
-          {/* 1. MAIN HERO FUNNEL — mobile: 1st | desktop: col1 row1 */}
-          <div className="lg:col-start-1 lg:row-start-1">
-            <MainHeroFunnel />
+        {/* ── HERO ── */}
+        <section className="relative rounded-3xl bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 overflow-hidden px-6 py-12 md:px-12 md:py-16">
+          <div className="absolute inset-0 blueprint-grid pointer-events-none opacity-60" />
+          <div className="relative z-10 max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 mb-4">
+              AI-powered websites &amp; automation for small businesses
+            </p>
+            <h1 className="text-3xl md:text-5xl font-semibold text-slate-900 dark:text-white tracking-tight leading-[1.1] mb-5">
+              Websites and AI, built on infrastructure you actually own.
+            </h1>
+            <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8 max-w-xl">
+              We build new sites, or add AI automation to the one you already have &mdash; on lean
+              infrastructure you own outright. Most of what runs it costs nothing beyond your domain;
+              a dedicated AI assistant is available as a simple add-on if you want one.
+            </p>
+            <BookAuditButton analyticsId="home-hero-book-audit" size="lg" />
           </div>
 
-          {/* 2. SERVICE MENU — mobile: 2nd | desktop: col2 row1 */}
+          <div className="relative z-10 mt-10 max-w-2xl">
+            <MainHeroFunnel />
+          </div>
+        </section>
+
+        {/* ── SERVICE MENU TEASER ── */}
+        <motion.div {...fadeUp}>
           <Link
             to="/services"
-            className="lg:col-start-2 lg:row-start-1 group rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.12)] p-5 transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 flex flex-col relative overflow-hidden"
+            className="group mt-6 block rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 p-6 md:p-8 transition-all outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 relative overflow-hidden"
           >
-            <div className="absolute -top-8 -right-8 w-32 h-32 bg-blue-600/8 rounded-full blur-2xl pointer-events-none" />
-            <div className="flex items-center justify-between mb-3 relative z-10">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-3 relative z-10">
               <div className="flex items-center gap-2">
-                <Database size={13} className="text-blue-500" />
-                <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500">Web Development | Vite-com menu</span>
+                <Database size={14} className="text-indigo-500" />
+                <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Web Development Menu</span>
               </div>
-              <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-600 group-hover:text-blue-500 transition-colors flex items-center gap-1">
-                View Pricing <ExternalLink size={9} />
+              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-600 group-hover:text-indigo-500 transition-colors flex items-center gap-1">
+                View Pricing <ExternalLink size={11} />
               </span>
             </div>
-            <h3 className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight mb-1 relative z-10">
-              We don't build sites. We build <span className="text-blue-500">revenue engines.</span>
-            </h3>
-            <p className="text-[10px] text-slate-500 mb-4 leading-relaxed relative z-10">
-              Every tier is a performance system designed to eliminate waste and compound margin over time. No platform lock-in. No hidden taxes.
+            <h2 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white tracking-tight mb-2 relative z-10">
+              We don&apos;t build sites. We build <span className="text-indigo-500">revenue engines.</span>
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed max-w-2xl relative z-10">
+              Every tier is designed to eliminate waste and compound margin over time. No platform lock-in, no hidden fees.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5 relative z-10">
               {[
                 { name: "Digital Presence", tag: "$799", desc: "Conversion-optimized landing page. Loads in under 1 second. Ranks locally. Costs you nothing after launch." },
-                { name: "Vite-com", tag: "$1,500+", desc: "Custom checkout engine. Eliminate the 2% Shopify transaction tax and $600/yr in mandatory apps. You own the code." },
+                { name: "Vite-com", tag: "$1,500+", desc: "Custom checkout engine. Eliminate the 2% Shopify transaction fee and $600/yr in mandatory apps. You own the code." },
                 { name: "High-Velocity E-com", tag: "$3,500+", desc: "Built for brands doing $250k+ in GMV. Real-time inventory, massive SKU support, and a storefront that never throttles under load." },
                 { name: "Enterprise Contract", tag: "$25k+", desc: "Full infrastructure migration for high-volume operators. We replace every vendor dependency with infrastructure you own outright." },
               ].map((p) => (
-                <div key={p.name} className="flex flex-col py-1 pointer-events-none border-b border-slate-100 dark:border-white/5 last:border-0 pb-3 md:pb-1">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">{p.name}</p>
-                    <span className="text-[10px] font-black text-blue-500 border border-blue-500/20 bg-blue-500/5 px-2 py-0.5 rounded flex-shrink-0">
+                <div key={p.name} className="flex flex-col py-1 pointer-events-none border-b border-slate-100 dark:border-white/5 last:border-0 pb-4 md:pb-1">
+                  <div className="flex items-center justify-between mb-1 gap-2">
+                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">{p.name}</p>
+                    <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 bg-indigo-500/5 px-2 py-0.5 rounded flex-shrink-0">
                       {p.tag}
                     </span>
                   </div>
-                  <p className="text-[9px] text-slate-500 leading-relaxed max-w-[90%]">{p.desc}</p>
+                  <p className="text-xs text-slate-500 leading-relaxed max-w-md">{p.desc}</p>
                 </div>
               ))}
             </div>
           </Link>
+        </motion.div>
 
-          {/* 3. AUTONOMOUS SYSTEMS (AI Automation) — mobile: 3rd | desktop: col2 row2 */}
-          <div className="lg:col-start-2 lg:row-start-2">
-            <HeroTile />
-          </div>
+        {/* ── PORTFOLIO / DIGITAL PRESENCE / BRAND ── */}
+        <motion.div {...fadeUp} className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* PORTFOLIO */}
+          <Link
+            to="/projects"
+            className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/30 transition-all outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 p-5 flex flex-col"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <FolderOpen size={14} className="text-indigo-500" />
+              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Portfolio</span>
+            </div>
+            <div className="space-y-3 flex-1">
+              {[
+                { name: "Tycodes-webpage", lang: "TypeScript" },
+                { name: "tycodes-small-ecom1", lang: "TypeScript" },
+                { name: "confirmAutomation", lang: "Python" },
+              ].map((p) => (
+                <div key={p.name} className="flex items-start justify-between group/item gap-1">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 group-hover/item:text-indigo-500 transition-colors truncate">
+                      {p.name}
+                    </p>
+                    <span className="text-[11px] font-mono text-slate-400">{p.lang}</span>
+                  </div>
+                  <ExternalLink size={11} className="text-slate-300 dark:text-slate-700 group-hover:text-indigo-500 transition-colors flex-shrink-0 mt-0.5" />
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-white/5">
+              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 group-hover:text-indigo-500 transition-colors flex items-center gap-1">
+                View all <ExternalLink size={10} />
+              </span>
+            </div>
+          </Link>
 
-          {/* 4. SMALL CARDS GRID — mobile: 4th | desktop: col1 row2 */}
-          <div className="lg:col-start-1 lg:row-start-2 grid grid-cols-2 gap-4">
-
-            {/* PORTFOLIO */}
-            <Link
-              to="/projects"
-              className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-blue-500/30 transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 p-4 flex flex-col"
-            >
+          {/* DIGITAL PRESENCE */}
+          <Link
+            to="/digital-presence"
+            className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-indigo-500/30 hover:border-indigo-500/60 p-5 flex flex-col justify-between transition-all outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 relative overflow-hidden"
+          >
+            <div className="relative z-10">
               <div className="flex items-center gap-2 mb-3">
-                <FolderOpen size={13} className="text-blue-500" />
-                <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500">Portfolio</span>
+                <div className="bg-indigo-600/15 p-1.5 rounded-lg">
+                  <Rocket size={13} className="text-indigo-500" />
+                </div>
+                <span className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400">Digital Presence</span>
               </div>
-              <div className="space-y-2.5 flex-1">
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white tracking-tight mb-2">
+                Your site. <span className="text-indigo-500">Your margins.</span>
+              </h3>
+              <div className="space-y-1.5">
                 {[
-                  { name: "Tycodes-webpage", lang: "TypeScript" },
-                  { name: "tycodes-small-ecom1", lang: "TypeScript" },
-                  { name: "confirmAutomation", lang: "Python" },
-                  { name: "Data-Structures-and-Algos", lang: "C/C++" },
-                  { name: "2026spring-c-projects", lang: "C" },
-                ].map((p) => (
-                  <div key={p.name} className="flex items-start justify-between group/item gap-1">
-                    <div className="min-w-0 flex-1">
-                      <p className="text-[10px] font-semibold text-slate-600 dark:text-slate-400 group-hover/item:text-blue-500 transition-colors truncate">
-                        {p.name}
-                      </p>
-                      <span className="text-[8px] font-mono text-slate-400">{p.lang}</span>
-                    </div>
-                    <ExternalLink size={9} className="text-slate-300 dark:text-slate-700 group-hover:text-blue-500 transition-colors flex-shrink-0 mt-0.5" />
+                  { icon: Zap, sub: "Sub-1s load time" },
+                  { icon: TrendingUp, sub: "Zero monthly fees" },
+                  { icon: ShieldCheck, sub: "Localized SEO" },
+                ].map(({ icon: Icon, sub }) => (
+                  <div key={sub} className="flex items-center gap-1.5">
+                    <Icon size={11} className="text-indigo-500 flex-shrink-0" />
+                    <span className="text-xs text-slate-500 leading-snug">{sub}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-3 pt-3 border-t border-slate-100 dark:border-white/5">
-                <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 group-hover:text-blue-500 transition-colors flex items-center gap-1">
-                  View all <ExternalLink size={8} />
-                </span>
-              </div>
-            </Link>
-
-            {/* DIGITAL PRESENCE */}
-            <Link
-              to="/digital-presence"
-              className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-blue-500/30 hover:border-blue-500/60 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] p-4 flex flex-col justify-between transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600 relative overflow-hidden"
-            >
-              <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-600/10 rounded-full blur-2xl pointer-events-none" />
-              <div className="relative z-10">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="bg-blue-600/15 p-1.5 rounded-lg">
-                    <Rocket size={11} className="text-blue-500" />
-                  </div>
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-blue-500/80">Digital Presence</span>
-                </div>
-                <h3 className="text-xs font-bold text-slate-900 dark:text-white tracking-tight mb-1.5">
-                  Your site. <span className="text-blue-500">Your margins.</span>
-                </h3>
-                <div className="space-y-1">
-                  {[
-                    { icon: Zap, sub: "Sub-1s load time" },
-                    { icon: TrendingUp, sub: "Zero monthly fees" },
-                    { icon: ShieldCheck, sub: "Localized SEO" },
-                  ].map(({ icon: Icon, sub }) => (
-                    <div key={sub} className="flex items-center gap-1.5">
-                      <Icon size={9} className="text-blue-500 flex-shrink-0" />
-                      <span className="text-[9px] text-slate-500 leading-snug">{sub}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <button
-                data-analytics-id="home-digital-presence-cta"
-                className="mt-3 w-full py-1.5 bg-blue-600 group-hover:bg-blue-500 text-white text-[9px] font-black uppercase tracking-widest rounded-xl transition-all cursor-pointer">
-                Get the Package
-              </button>
-            </Link>
-
-            {/* BRAND INFRASTRUCTURE */}
-            <Link
-              to="/brand"
-              className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-blue-500/40 p-4 flex flex-col justify-between transition-all outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <Bot size={12} className="text-blue-500" />
-                <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500">Auto-Growth</span>
-              </div>
-              <div>
-                <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-tight mb-1">
-                  Brand Infrastructure
-                </h3>
-                <p className="text-[9px] text-slate-500 leading-relaxed">
-                  Autonomous content for YT, Twitch &amp; TikTok.
-                </p>
-              </div>
-              <Share2 className="text-slate-300 dark:text-slate-700 group-hover:text-blue-500 transition-colors mt-2" size={20} />
-            </Link>
-
-            {/* LIVE TECH NEWS */}
-            <div className="rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-4 overflow-hidden">
-              <div className="flex items-center gap-2 mb-2.5 text-slate-500">
-                <Newspaper size={11} />
-                <span className="text-[9px] font-bold uppercase tracking-widest">Live Tech News</span>
-              </div>
-              <div className="space-y-2">
-                {news.length > 0 ? (
-                  news.slice(0, 4).map((item, i) => (
-                    <a
-                      key={i}
-                      href={item?.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-[9px] text-slate-600 dark:text-slate-400 line-clamp-2 tracking-tight hover:text-blue-500 transition-colors"
-                    >
-                      • {item?.title}
-                    </a>
-                  ))
-                ) : (
-                  <div className="space-y-1.5">
-                    <div className="h-2 w-full bg-slate-100 dark:bg-white/5 animate-pulse rounded" />
-                    <div className="h-2 w-3/4 bg-slate-100 dark:bg-white/5 animate-pulse rounded" />
-                    <div className="h-2 w-5/6 bg-slate-100 dark:bg-white/5 animate-pulse rounded" />
-                  </div>
-                )}
-              </div>
             </div>
+            <button
+              data-analytics-id="home-digital-presence-cta"
+              className="mt-4 w-full py-2 bg-indigo-600 group-hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg transition-all cursor-pointer">
+              Get the Package
+            </button>
+          </Link>
 
-          </div> {/* end small cards grid */}
+          {/* BRAND INFRASTRUCTURE */}
+          <Link
+            to="/brand"
+            className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/40 p-5 flex flex-col justify-between transition-all outline-none focus-visible:ring-2 focus-visible:ring-indigo-600"
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <Bot size={13} className="text-indigo-500" />
+              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Auto-Growth</span>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white tracking-tight mb-1.5">
+                Brand Infrastructure
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Autonomous content for YT, Twitch &amp; TikTok.
+              </p>
+            </div>
+            <Share2 className="text-slate-300 dark:text-slate-700 group-hover:text-indigo-500 transition-colors mt-3" size={22} />
+          </Link>
+        </motion.div>
 
-        </div> {/* end primary grid */}
-
-
-
+        {/* ── AUTOMATION / HERO TILE ── */}
+        <div className="mt-6">
+          <HeroTile />
+        </div>
 
         {/* ── LOGISTICS-TO-LOGIC PILLAR ── */}
-        <div className="mt-6 rounded-3xl bg-[#0a0a0a] border border-white/5 p-6 md:p-8 relative overflow-hidden">
-          <div className="absolute -top-20 -right-20 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <motion.div {...fadeUp} className="mt-6 rounded-3xl bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 p-6 md:p-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Left: The concept */}
             <div className="lg:col-span-2">
-              <div className="flex items-center gap-2 mb-4">
-                <Shield size={14} className="text-blue-400" />
-                <span className="text-[9px] font-bold uppercase tracking-widest text-blue-400 font-mono">&lt;TY/&gt; 92-Y Focus</span>
-              </div>
-              <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-3 leading-tight">
-                Logistics-to-Logic.<br />
-                <span className="text-blue-500">Military precision. Applied to software.</span>
-              </h2>
-              <p className="text-sm text-slate-400 leading-relaxed max-w-xl mb-6">
-                As a <strong className="text-white">U.S. Army National Guard 92-Y</strong> (Unit Supply Specialist), I managed supply chain operations where a single data silo or tracking failure had real-world consequences. That operational discipline is the foundation of every system I build.
+              <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 mb-4">
+                How we operate
               </p>
-              <p className="text-sm text-slate-400 leading-relaxed max-w-xl">
-                Most agencies build websites. We engineer <em className="text-white">supply chains for data</em> — systems where every tool, every API, every dollar flows with zero friction and full visibility. No silos. No dropped handoffs. No revenue that disappears between platforms.
+              <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white tracking-tight mb-4 leading-tight">
+                Built for reliability, not just launch day.
+              </h2>
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl mb-4">
+                We treat every project like a system with a real owner: clear scope, measurable output, and no dropped
+                handoffs. If something breaks, you&apos;ll hear from us before you have to ask.
+              </p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+                That discipline comes in part from the founder&apos;s background as a{" "}
+                <strong className="text-slate-900 dark:text-white">U.S. Army National Guard 92-Y</strong> (Unit Supply
+                Specialist), managing supply chain operations where a dropped handoff had real consequences &mdash; the
+                same standard now applied to every site and workflow we ship.
               </p>
             </div>
 
             {/* Right: The 3 pillars */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-5">
               {[
                 {
                   icon: Target,
@@ -302,18 +236,20 @@ function App() {
                 }
               ].map(({ icon: Icon, label, body }) => (
                 <div key={label} className="flex gap-3">
-                  <div className="bg-blue-500/10 p-2 rounded-lg w-fit h-fit flex-shrink-0 mt-0.5">
-                    <Icon size={12} className="text-blue-400" />
+                  <div className="bg-indigo-500/10 p-2 rounded-lg w-fit h-fit flex-shrink-0 mt-0.5">
+                    <Icon size={13} className="text-indigo-500" />
                   </div>
                   <div>
-                    <p className="text-[11px] font-bold text-white mb-0.5">{label}</p>
-                    <p className="text-[10px] text-slate-500 leading-relaxed">{body}</p>
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white mb-1">{label}</p>
+                    <p className="text-xs text-slate-500 leading-relaxed">{body}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
+
+        <BookAuditBand analyticsId="home-bottom-book-audit" />
 
         <Footer />
       </main>

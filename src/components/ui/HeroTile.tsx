@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { motion } from "motion/react";
 import { Bot, ExternalLink, Cable, Syringe, Layers } from "lucide-react";
 
 export default function HeroTile() {
@@ -9,44 +10,51 @@ export default function HeroTile() {
   ];
 
   return (
-    <Link
-      to="/automation"
-      className="group rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.12)] p-5 transition-all outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 flex flex-col relative overflow-hidden"
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
     >
-      <div className="absolute -top-8 -right-8 w-32 h-32 bg-emerald-600/8 rounded-full blur-2xl pointer-events-none" />
-      <div className="flex items-center justify-between mb-3 relative z-10">
-        <div className="flex items-center gap-2">
-          <Bot size={13} className="text-emerald-500" />
-          <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500">Autonomous Systems</span>
-        </div>
-        <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-600 group-hover:text-emerald-500 transition-colors flex items-center gap-1">
-          View Systems <ExternalLink size={9} />
-        </span>
-      </div>
-
-      <h3 className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight mb-1 relative z-10">
-        Automation that <span className="text-emerald-500">scales</span>
-      </h3>
-      <p className="text-[10px] text-slate-500 mb-4 leading-relaxed relative z-10">
-        Stop fighting your software. Deploy custom AI employees and API bridges built for absolute efficiency.
-      </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 relative z-10">
-        {tiers.map((p) => (
-          <div key={p.name} className="flex flex-col py-1 pointer-events-none border-b border-slate-100 dark:border-white/5 last:border-0 pb-3 md:pb-1">
-            <div className="flex items-center justify-between mb-1">
-              <div className="flex items-center gap-2">
-                <p.icon size={12} className="text-emerald-500/50" />
-                <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">{p.name}</p>
-              </div>
-              <span className="text-[10px] font-black text-emerald-500 border border-emerald-500/20 bg-emerald-500/5 px-2 py-0.5 rounded flex-shrink-0">
-                {p.tag}
-              </span>
-            </div>
-            <p className="text-[9px] text-slate-500 leading-relaxed max-w-[90%] line-clamp-2">{p.desc}</p>
+      <Link
+        to="/automation"
+        className="group block rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 p-6 md:p-8 transition-all outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 relative overflow-hidden"
+      >
+        <div className="absolute -top-10 -right-10 w-40 h-40 bg-emerald-600/5 rounded-full blur-2xl pointer-events-none" />
+        <div className="flex items-center justify-between mb-4 relative z-10">
+          <div className="flex items-center gap-2">
+            <Bot size={14} className="text-emerald-500" />
+            <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Autonomous Systems</span>
           </div>
-        ))}
-      </div>
-    </Link>
+          <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-600 group-hover:text-emerald-500 transition-colors flex items-center gap-1">
+            View Systems <ExternalLink size={11} />
+          </span>
+        </div>
+
+        <h3 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white tracking-tight mb-2 relative z-10">
+          Automation that <span className="text-emerald-500">scales</span>
+        </h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed max-w-2xl relative z-10">
+          Stop fighting your software. Deploy custom AI employees and API bridges built for absolute efficiency.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-5 relative z-10">
+          {tiers.map((p) => (
+            <div key={p.name} className="flex flex-col pointer-events-none">
+              <div className="flex items-center justify-between mb-1.5 gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <p.icon size={13} className="text-emerald-500/70 flex-shrink-0" />
+                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 truncate">{p.name}</p>
+                </div>
+                <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 bg-emerald-500/5 px-2 py-0.5 rounded flex-shrink-0">
+                  {p.tag}
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </Link>
+    </motion.div>
   );
 }

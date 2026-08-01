@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "motion/react";
 import { Zap, Settings, ArrowRight, Layout, Globe, Mail } from "lucide-react";
 
 export default function MainHeroFunnel() {
@@ -13,164 +14,188 @@ export default function MainHeroFunnel() {
   };
 
   return (
-    <div className="rounded-3xl bg-[#0a0a0a] border border-white/5 overflow-hidden flex flex-col relative p-5 md:p-6">
-      {/* Ambient glows */}
-      <div className="absolute -top-20 -left-20 w-56 h-56 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-20 -right-20 w-56 h-56 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      {step === "initial" && (
-        <div className="relative z-10 flex flex-col justify-center space-y-5 py-2">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter mb-2 leading-[1.1]">
-              Stop paying <span className="text-blue-500">platform taxes.</span>
-            </h2>
-            <p className="text-sm text-slate-400 leading-relaxed max-w-md">
-              Whether you're starting fresh or scaling an existing brand, we build custom infrastructure that maximizes your margins. Brands switching from Shopify or Wix to direct Stripe integration typically reclaim <span className="text-white font-semibold">2–3% per transaction</span> — kept by you, not the platform.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button
-              onClick={() => setStep("build")}
-              className="group flex flex-col gap-3 p-4 md:p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-blue-500/5 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] transition-all text-left"
-            >
-              <div className="bg-blue-500/10 p-2.5 rounded-xl w-fit">
-                <Zap size={18} className="text-blue-400 group-hover:scale-110 transition-transform" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-white mb-1">Build New</h3>
-                <p className="text-[10px] text-slate-400 leading-relaxed">Launch a high-performance storefront or landing page.</p>
-              </div>
-            </button>
-
-            <button
-              onClick={() => setStep("optimize")}
-              className="group flex flex-col gap-3 p-4 md:p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/50 hover:bg-emerald-500/5 hover:shadow-[0_0_30px_rgba(16,185,129,0.1)] transition-all text-left"
-            >
-              <div className="bg-emerald-500/10 p-2.5 rounded-xl w-fit">
-                <Settings size={18} className="text-emerald-400 group-hover:scale-110 transition-transform" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-white mb-1">Optimize Existing</h3>
-                <p className="text-[10px] text-slate-400 leading-relaxed">Calculate your exact savings migrating off Shopify, Wix, or Squarespace.</p>
-              </div>
-            </button>
-          </div>
-        </div>
-      )}
-
-      {step === "build" && (
-        <div className="relative z-10 flex flex-col space-y-4 py-2 animate-in fade-in slide-in-from-right-4 duration-500">
-          <button onClick={() => setStep("initial")} className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-white transition-colors flex items-center gap-1.5 w-fit">
-            &larr; Back
-          </button>
-
-          <div>
-            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-2">Build from Scratch</h2>
-            <p className="text-xs text-slate-400 leading-relaxed max-w-md">
-              We design and develop custom, high-velocity web architecture tailored to your brand.
-            </p>
-          </div>
-
-          <div className="bg-white/5 border border-white/10 p-5 rounded-2xl flex flex-col gap-4 mt-2">
-            <div className="flex items-center gap-3">
-              <div className="bg-blue-500/10 p-2.5 rounded-xl">
-                <Layout className="text-blue-500" size={20} />
-              </div>
-              <div className="flex-1">
-                <h4 className="text-sm font-bold text-white">Project Briefing</h4>
-                <p className="text-[10px] text-slate-400">Tell us about your goals and required features.</p>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-2 mt-1">
-              <a href="mailto:contact@tycodes.dev?subject=New Project Briefing" data-analytics-id="hero-email-us" className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-blue-600/20 hover:scale-[1.02]">
-                <Mail size={14} />
-                Email Us
-              </a>
-              <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ39ZxoVryKgnZLG_aJ5RfWwq30dGRspuOFH18-mxuwWiBaATCpOY1wk1TFNkOy-8Vy1mt0kyT2N?gv=true" target="_blank" rel="noopener noreferrer" data-analytics-id="hero-book-meeting" className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all hover:scale-[1.02]">
-                <Zap size={14} />
-                Book Meeting
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {step === "optimize" && (
-        <div className="relative z-10 flex flex-col space-y-4 py-2 animate-in fade-in slide-in-from-right-4 duration-500">
-          <button onClick={() => setStep("initial")} className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-white transition-colors flex items-center gap-1.5 w-fit">
-            &larr; Back
-          </button>
-
-          <div>
-            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-1">Revenue Leak Detection.</h2>
-            <p className="text-xs text-slate-400 leading-relaxed max-w-md">
-              In 60 seconds, our Agentic Auditor scans your live site and calculates the exact dollar amount Shopify, Wix, or your app stack is draining from your margins every month.
-            </p>
-          </div>
-
-          <div className="space-y-4 mt-1">
+    <div className="rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col relative p-5 md:p-6">
+      <AnimatePresence mode="wait">
+        {step === "initial" && (
+          <motion.div
+            key="initial"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="relative z-10 flex flex-col justify-center space-y-4 py-1"
+          >
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">Platform</label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                <button
-                  onClick={() => setPlatform("shopify")}
-                  className={`py-2.5 text-xs font-bold rounded-xl border transition-all ${platform === "shopify" ? "bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)]" : "bg-white/5 border-white/10 text-slate-400 hover:border-white/20"}`}
-                >
-                  Shopify
-                </button>
-                <button
-                  onClick={() => setPlatform("wix")}
-                  className={`py-2.5 text-xs font-bold rounded-xl border transition-all ${platform === "wix" ? "bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)]" : "bg-white/5 border-white/10 text-slate-400 hover:border-white/20"}`}
-                >
-                  Wix
-                </button>
-                <button
-                  onClick={() => setPlatform("squarespace")}
-                  className={`py-2.5 text-xs font-bold rounded-xl border transition-all ${platform === "squarespace" ? "bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)]" : "bg-white/5 border-white/10 text-slate-400 hover:border-white/20"}`}
-                >
-                  Squarespace
-                </button>
-                <button
-                  onClick={() => setPlatform("woocommerce")}
-                  className={`py-2.5 text-xs font-bold rounded-xl border transition-all ${platform === "woocommerce" ? "bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)]" : "bg-white/5 border-white/10 text-slate-400 hover:border-white/20"}`}
-                >
-                  WooCommerce
-                </button>
-                <button
-                  onClick={() => setPlatform("other")}
-                  className={`py-2.5 text-xs font-bold rounded-xl border transition-all ${platform === "other" ? "bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)]" : "bg-white/5 border-white/10 text-slate-400 hover:border-white/20"} sm:col-span-2`}
-                >
-                  Other / None
-                </button>
-              </div>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 mb-2">
+                Or run our free AI scanner first
+              </p>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight mb-1.5">
+                Not ready to book yet?
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-md">
+                Tell us whether you're starting fresh or already have a site, and we'll point you to the right next step.
+              </p>
             </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                onClick={() => setStep("build")}
+                className="group flex flex-col gap-2.5 p-4 rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-indigo-500/50 hover:bg-indigo-50 dark:hover:bg-indigo-500/5 transition-all text-left cursor-pointer"
+              >
+                <div className="bg-indigo-500/10 p-2 rounded-lg w-fit">
+                  <Zap size={16} className="text-indigo-500" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-0.5">Build New</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Launch a high-performance storefront or landing page.</p>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setStep("optimize")}
+                className="group flex flex-col gap-2.5 p-4 rounded-xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-indigo-500/50 hover:bg-indigo-50 dark:hover:bg-indigo-500/5 transition-all text-left cursor-pointer"
+              >
+                <div className="bg-indigo-500/10 p-2 rounded-lg w-fit">
+                  <Settings size={16} className="text-indigo-500" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-0.5">Optimize Existing</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">See what switching off Shopify, Wix, or Squarespace could save you.</p>
+                </div>
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {step === "build" && (
+          <motion.div
+            key="build"
+            initial={{ opacity: 0, x: 12 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="relative z-10 flex flex-col space-y-4 py-1"
+          >
+            <button onClick={() => setStep("initial")} className="text-xs font-semibold uppercase tracking-wide text-slate-500 hover:text-indigo-500 transition-colors flex items-center gap-1.5 w-fit cursor-pointer">
+              &larr; Back
+            </button>
 
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">Current Domain</label>
-              <div className="relative">
-                <Globe size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
-                <input
-                  type="text"
-                  placeholder="e.g. yourstore.com"
-                  value={domain}
-                  onChange={(e) => setDomain(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/50 transition-all"
-                />
-              </div>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight mb-1.5">Build from Scratch</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-md">
+                We design and develop custom, high-velocity web architecture tailored to your brand.
+              </p>
             </div>
 
-            <button
-              onClick={handleAudit}
-              disabled={!domain}
-              data-analytics-id="hero-start-audit"
-              className="flex items-center justify-center gap-2 w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-emerald-600/20 mt-2 hover:scale-[1.02] cursor-pointer"
-            >
-              Find My Revenue Leaks <ArrowRight size={14} />
+            <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 p-4 rounded-xl flex flex-col gap-4">
+              <div className="flex items-center gap-3">
+                <div className="bg-indigo-500/10 p-2 rounded-lg">
+                  <Layout className="text-indigo-500" size={18} />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white">Project Briefing</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Tell us about your goals and required features.</p>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <a href="mailto:contact@tycodes.dev?subject=New Project Briefing" data-analytics-id="hero-email-us" className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer">
+                  <Mail size={14} />
+                  Email Us
+                </a>
+                <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ39ZxoVryKgnZLG_aJ5RfWwq30dGRspuOFH18-mxuwWiBaATCpOY1wk1TFNkOy-8Vy1mt0kyT2N?gv=true" target="_blank" rel="noopener noreferrer" data-analytics-id="hero-book-meeting" className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-500 border border-indigo-500/30 text-xs font-semibold rounded-lg transition-colors cursor-pointer">
+                  <Zap size={14} />
+                  Book Meeting
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {step === "optimize" && (
+          <motion.div
+            key="optimize"
+            initial={{ opacity: 0, x: 12 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="relative z-10 flex flex-col space-y-4 py-1"
+          >
+            <button onClick={() => setStep("initial")} className="text-xs font-semibold uppercase tracking-wide text-slate-500 hover:text-indigo-500 transition-colors flex items-center gap-1.5 w-fit cursor-pointer">
+              &larr; Back
             </button>
-          </div>
-        </div>
-      )}
+
+            <div>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight mb-1">Free AI Site Scanner</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed max-w-md">
+                In under 60 seconds, we scan your live site and estimate what you could be saving by switching off Shopify, Wix, or your current app stack.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Platform</label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <button
+                    onClick={() => setPlatform("shopify")}
+                    className={`py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${platform === "shopify" ? "bg-indigo-500/10 border-indigo-500/50 text-indigo-500" : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-white/20"}`}
+                  >
+                    Shopify
+                  </button>
+                  <button
+                    onClick={() => setPlatform("wix")}
+                    className={`py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${platform === "wix" ? "bg-indigo-500/10 border-indigo-500/50 text-indigo-500" : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-white/20"}`}
+                  >
+                    Wix
+                  </button>
+                  <button
+                    onClick={() => setPlatform("squarespace")}
+                    className={`py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${platform === "squarespace" ? "bg-indigo-500/10 border-indigo-500/50 text-indigo-500" : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-white/20"}`}
+                  >
+                    Squarespace
+                  </button>
+                  <button
+                    onClick={() => setPlatform("woocommerce")}
+                    className={`py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${platform === "woocommerce" ? "bg-indigo-500/10 border-indigo-500/50 text-indigo-500" : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-white/20"}`}
+                  >
+                    WooCommerce
+                  </button>
+                  <button
+                    onClick={() => setPlatform("other")}
+                    className={`py-2 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${platform === "other" ? "bg-indigo-500/10 border-indigo-500/50 text-indigo-500" : "bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:border-slate-300 dark:hover:border-white/20"} sm:col-span-2`}
+                  >
+                    Other / None
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Current Domain</label>
+                <div className="relative">
+                  <Globe size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="e.g. yourstore.com"
+                    value={domain}
+                    onChange={(e) => setDomain(e.target.value)}
+                    className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all"
+                  />
+                </div>
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleAudit}
+                disabled={!domain}
+                data-analytics-id="hero-start-audit"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
+              >
+                Find My Savings <ArrowRight size={14} />
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

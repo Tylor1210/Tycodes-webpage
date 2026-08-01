@@ -7,7 +7,7 @@
   <!-- Home -->
   <url>
     <loc>https://tycodes.dev/</loc>
-    <lastmod>2026-04-26</lastmod>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,7 +15,7 @@
   <!-- Services / Web Architecture -->
   <url>
     <loc>https://tycodes.dev/services</loc>
-    <lastmod>2026-04-26</lastmod>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -23,7 +23,15 @@
   <!-- Digital Presence -->
   <url>
     <loc>https://tycodes.dev/digital-presence</loc>
-    <lastmod>2026-04-26</lastmod>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Shipping & Commerce -->
+  <url>
+    <loc>https://tycodes.dev/ship-com</loc>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -31,7 +39,7 @@
   <!-- Automation -->
   <url>
     <loc>https://tycodes.dev/automation</loc>
-    <lastmod>2026-04-26</lastmod>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -39,15 +47,23 @@
   <!-- Brand Infrastructure -->
   <url>
     <loc>https://tycodes.dev/brand</loc>
-    <lastmod>2026-04-26</lastmod>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- Savings Calculator -->
+  <url>
+    <loc>https://tycodes.dev/calculator</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
   <!-- Projects / Portfolio -->
   <url>
     <loc>https://tycodes.dev/projects</loc>
-    <lastmod>2026-04-26</lastmod>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -55,7 +71,7 @@
   <!-- Audit Tool -->
   <url>
     <loc>https://tycodes.dev/audit</loc>
-    <lastmod>2026-04-26</lastmod>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>

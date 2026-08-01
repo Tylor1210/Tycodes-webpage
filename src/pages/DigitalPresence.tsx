@@ -1,35 +1,42 @@
 import { Link } from "react-router-dom";
-import { Zap, TrendingUp, ShieldCheck, Rocket, ArrowLeft, Mail, Smartphone, BarChart3, Globe } from "lucide-react";
+import { motion } from "motion/react";
+import { Zap, TrendingUp, ShieldCheck, Rocket, Smartphone, BarChart3, Globe, ArrowRight } from "lucide-react";
+import PageHeader from "@/components/ui/PageHeader";
+import { BookAuditBand } from "@/components/ui/BookAuditCTA";
+import { fadeUp, staggerContainer, fadeUpItem } from "@/lib/motion";
 
 export default function DigitalPresence() {
   return (
     <div className="max-w-3xl mx-auto py-12 px-4">
-      <Link to="/" className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-[11px] font-bold uppercase tracking-widest mb-10">
-        <ArrowLeft size={14} /> Back to Home
-      </Link>
-
-      <div className="flex items-center gap-3 mb-6">
-        <div className="bg-blue-600/15 p-3 rounded-xl">
-          <Rocket className="text-blue-500" size={22} />
-        </div>
-        <span className="text-[10px] font-bold uppercase tracking-widest text-blue-500/80">Digital Presence Tier</span>
-      </div>
-
-      <h1 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight mb-4">
-        Premium <span className="text-blue-500">Landing Pages.</span>
-      </h1>
-
-      <p className="text-slate-400 text-base leading-relaxed mb-10 max-w-xl">
-        High-Conversion Landing Pages. Lightning-fast Vite + React architecture. Built for lead capture and local SEO to turn browsers into clients.
-      </p>
+      <PageHeader
+        icon={Rocket}
+        eyebrow="Digital Presence Tier"
+        title={
+          <>
+            Premium <span className="text-indigo-600">Landing Pages.</span>
+          </>
+        }
+        subtitle="High-conversion landing pages on lightning-fast Vite + React architecture. Built for lead capture and local SEO to turn browsers into clients."
+      />
 
       {/* Core pitch */}
-      <div className="rounded-3xl bg-[#0a0a0a] border border-white/10 p-8 mb-6">
-        <h2 className="text-xl font-bold tracking-tighter mb-3">The Solution</h2>
-        <p className="text-slate-400 text-sm leading-relaxed mb-6">
-          We deploy a high-performance Vite-based architecture that outperforms bloated Wix or Squarespace sites. This gives you enterprise-grade speed, a professional first impression, and localized SEO injection that ensures your brand actually appears in search results.
+      <motion.div
+        {...fadeUp}
+        className="rounded-3xl bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 p-8 mb-6"
+      >
+        <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white mb-3">The Solution</h2>
+        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+          We deploy a high-performance Vite-based architecture that outperforms bloated Wix or Squarespace sites.
+          This gives you enterprise-grade speed, a professional first impression, and localized SEO injection that
+          ensures your brand actually appears in search results.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4"
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true, margin: "-40px" }}
+          variants={staggerContainer}
+        >
           {[
             { icon: Zap, label: "Enterprise Speed", body: "Vite + React with zero framework overhead. Scores 95+ on Lighthouse." },
             { icon: TrendingUp, label: "Lead Capture", body: "Optimized conversion paths and custom forms to maximize inbound flow." },
@@ -38,60 +45,57 @@ export default function DigitalPresence() {
             { icon: BarChart3, label: "Insightful Tracking", body: "Google Analytics & Meta Pixel integration to track every visitor and conversion." },
             { icon: Globe, label: "Global Hosting", body: "Secure SSL encryption and deployment on a global CDN for 99.9% uptime." },
           ].map(({ icon: Icon, label, body }) => (
-            <div key={label} className="bg-white/3 rounded-2xl p-5 border border-white/5">
-              <div className="bg-blue-600/10 p-2 rounded-lg w-fit mb-3">
-                <Icon size={14} className="text-blue-500" />
+            <motion.div
+              key={label}
+              variants={fadeUpItem}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
+              className="bg-slate-50 dark:bg-white/3 rounded-2xl p-5 border border-slate-200 dark:border-white/5"
+            >
+              <div className="bg-indigo-600/10 p-2 rounded-lg w-fit mb-3">
+                <Icon size={14} className="text-indigo-600" />
               </div>
-              <h3 className="text-sm font-bold mb-1">{label}</h3>
-              <p className="text-[11px] text-slate-500 leading-relaxed">{body}</p>
-            </div>
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-1">{label}</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">{body}</p>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Savings callout */}
-      <div className="rounded-3xl bg-blue-600/10 border border-blue-600/20 p-6 mb-10 flex items-center gap-6">
-        <div>
-          <p className="text-3xl font-black text-blue-400 tracking-tighter">$799</p>
-          <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">One-Time Setup</p>
+      <motion.div
+        {...fadeUp}
+        className="rounded-3xl bg-indigo-50 dark:bg-indigo-600/10 border border-indigo-200 dark:border-indigo-600/20 p-6 mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-6"
+      >
+        <div className="shrink-0">
+          <p className="text-3xl font-semibold text-indigo-600 dark:text-indigo-400 tracking-tight">$799</p>
+          <p className="text-xs text-slate-500 uppercase tracking-wide font-bold">One-Time Setup</p>
         </div>
-        <p className="text-sm text-slate-400 leading-relaxed">
-          The ultimate foundation for service-based businesses. No monthly hosting fees, no bloated platform costs. Just professional architecture you own.
+        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          The ultimate foundation for service-based businesses. No monthly hosting fees, no bloated platform costs.
+          Just professional architecture you own.
         </p>
-      </div>
+      </motion.div>
 
-      {/* Pricing Tiers Overview */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-        {[
-          { name: "Digital Presence", setup: "$799", mo: "N/A" },
-          { name: "Vite-com", setup: "$1,500+", mo: "N/A" },
-          { name: "High-Velocity E-com", setup: "$3,500+", mo: "$199/mo" },
-          { name: "Enterprise Contract", setup: "$25k+", mo: "$2,500/mo" },
-        ].map((tier) => (
-          <div key={tier.name} className="rounded-2xl bg-[#0a0a0a] border border-white/10 p-5 hover:border-blue-600/40 transition-colors">
-            <h3 className="text-sm font-bold text-white mb-3">{tier.name}</h3>
-            <p className="text-2xl font-black text-blue-500 tracking-tighter mb-1">{tier.setup}</p>
-            <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Setup Fee</p>
-            <div className="mt-4 pt-4 border-t border-white/5 flex justify-between items-center">
-              <span className="text-[10px] text-slate-400 font-mono">Management</span>
-              <span className="text-xs font-bold text-slate-300">{tier.mo}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex justify-center mt-8">
-        <a
-          href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ39ZxoVryKgnZLG_aJ5RfWwq30dGRspuOFH18-mxuwWiBaATCpOY1wk1TFNkOy-8Vy1mt0kyT2N?gv=true"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-analytics-id="digital-presence-get-started"
-          className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-[11px] px-10 py-4 rounded-2xl transition-all hover:scale-105 shadow-lg shadow-blue-600/20 cursor-pointer"
+      {/* Next step pointer */}
+      <motion.div {...fadeUp}>
+        <Link
+          to="/services"
+          data-analytics-id="digital-presence-website-infrastructure-pointer"
+          className="group flex items-center justify-between gap-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0a0a] p-5 mb-12 hover:border-indigo-500/40 transition-colors cursor-pointer"
         >
-          <Mail size={14} />
-          Get Started
-        </a>
-      </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wide text-indigo-600 mb-1">Need more than one page?</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300">
+              Check out <span className="font-semibold text-slate-900 dark:text-white">Website Infrastructure</span>{" "}
+              ($999) — a 5-page site with a built-in AI visitor concierge, the next step up from a single landing page.
+            </p>
+          </div>
+          <ArrowRight size={18} className="text-indigo-600 shrink-0 group-hover:translate-x-1 transition-transform" />
+        </Link>
+      </motion.div>
+
+      <BookAuditBand analyticsId="digital-presence-bottom-book-audit" />
     </div>
   );
 }

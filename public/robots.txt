@@ -8,8 +8,14 @@ Disallow: /api/
 # Sitemaps
 Sitemap: https://tycodes.dev/sitemap.xml
 
-# Crawl hints for AI search engines (Perplexity, GPTBot, Anthropic, Google Gemini)
+# LLM-readable site summary (see llmstxt.org)
+# https://tycodes.dev/llms.txt
+
+# Crawl hints for AI search & agent crawlers (Perplexity, OpenAI, Anthropic, Google, Meta)
 User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
 Allow: /
 
 User-agent: PerplexityBot
@@ -18,5 +24,14 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
 User-agent: Google-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
 Allow: /
