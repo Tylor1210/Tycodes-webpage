@@ -9,6 +9,7 @@ import Projects from './pages/Projects.tsx'
 import Services from './pages/Services.tsx'
 import ShipComPage from './pages/ShipCom.tsx'
 import Automation from './pages/Automation.tsx'
+import GrowthOperations from './pages/GrowthOperations.tsx'
 import CalculatorPage from './pages/CalculatorPage.tsx'
 import AuditPage from './pages/AuditPage.tsx'
 import { ThemeProvider } from './components/theme-provider.tsx'
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/services" element={<Services />} />
           <Route path="/ship-com" element={<ShipComPage />} />
           <Route path="/automation" element={<Automation />} />
+          <Route path="/growth-operations" element={<GrowthOperations />} />
           <Route path="/calculator" element={<CalculatorPage />} />
           <Route path="/audit" element={<AuditPage />} />
         </Routes>

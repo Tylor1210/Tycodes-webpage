@@ -44,6 +44,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Growth Operations -->
+  <url>
+    <loc>https://tycodes.dev/growth-operations</loc>
+    <lastmod>2026-08-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Brand Infrastructure -->
   <url>
     <loc>https://tycodes.dev/brand</loc>

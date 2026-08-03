@@ -12,6 +12,7 @@ const navLinks = [
   { label: "Digital Presence", to: "/digital-presence" },
   { label: "Shipping & Commerce", to: "/ship-com" },
   { label: "Automation", to: "/automation" },
+  { label: "Growth Operations", to: "/growth-operations" },
   { label: "Brand Infrastructure", to: "/brand" },
   { label: "Projects", to: "/projects" },
 ];

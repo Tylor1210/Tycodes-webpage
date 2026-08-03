@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import HeroTile from "./components/ui/HeroTile";
+import GrowthOpsTile from "./components/ui/GrowthOpsTile";
 import Navbar from "./components/ui/Navbar";
 import Footer from "./components/ui/Footer";
 import MainHeroFunnel from "./components/ui/MainHeroFunnel";
@@ -100,6 +101,11 @@ function App() {
         {/* ── AUTOMATION / HERO TILE ── */}
         <div className="mt-6">
           <HeroTile />
+        </div>
+
+        {/* ── GROWTH OPERATIONS ── */}
+        <div className="mt-6">
+          <GrowthOpsTile />
         </div>
 
         {/* ── PORTFOLIO / DIGITAL PRESENCE / BRAND ── */}
