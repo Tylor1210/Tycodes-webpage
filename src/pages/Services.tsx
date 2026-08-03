@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { Database, CheckCircle2, TrendingUp, BarChart3, Cable, Syringe, Layers, Bot, Sparkles } from "lucide-react";
+import { Database, CheckCircle2, TrendingUp, BarChart3, MessageSquare, Star, Cable, Bot, Sparkles, ArrowRight } from "lucide-react";
 import PageHeader from "@/components/ui/PageHeader";
 import PricingTierCard from "@/components/ui/PricingTierCard";
 import { BookAuditBand } from "@/components/ui/BookAuditCTA";
+import { BOOKING_URL } from "@/lib/constants";
 import { fadeUp, staggerContainer, fadeUpItem } from "@/lib/motion";
 
 const mainTiers = [
@@ -20,52 +22,54 @@ const mainTiers = [
     badge: { label: "Recommended After Your Audit", tone: "amber" as const },
     description: "The complete foundation for a new LLC or growing local business.",
     features: [
-      "Up to 5 custom pages — Home, About, Services, Contact, plus one more — built on the same Vite + React stack that powers our own site. No page-builder lock-in; you own the code.",
+      "Up to 5 custom pages (Home, About, Services, Contact, plus one more), built on the same Vite + React stack that powers our own site. No page-builder lock-in; you own the code.",
       "Mobile-first design with sub-1-second load times",
       "Local SEO built in from day one: schema markup, sitemap, and meta tags configured for your market",
-      "AI-powered visitor concierge — a chat assistant trained on your business, built on the same AI engine behind our audit scanner, that answers FAQs and captures leads or bookings 24/7",
-      "Contact and booking forms wired directly to your email and calendar — no monthly form-builder fees",
+      "AI-powered visitor concierge: a chat assistant trained on your business, built on the same AI engine behind our audit scanner, that answers FAQs and captures leads or bookings 24/7",
+      "Contact and booking forms wired directly to your email and calendar, with no monthly form-builder fees",
       "30 days of post-launch support",
     ],
   },
   {
     name: "Vite-com",
-    price: "$1,500+",
+    price: "$1,499",
     monthly: "N/A",
   },
   {
     name: "High-Velocity E-com",
-    price: "$3,500+",
+    price: "$3,499",
     monthly: "$199/mo",
   },
   {
     name: "Enterprise Contract",
-    price: "$25k+",
-    monthly: "$2,500/mo",
+    description: "Full infrastructure migration for high-volume operators. Custom-scoped, so pricing is discussed on a call.",
+    ctaLabel: "Book a Call",
+    ctaHref: BOOKING_URL,
+    ctaAnalyticsId: "services-enterprise-contract-cta",
   },
 ];
 
 const autonomousTiers = [
   {
-    name: "The Connector",
-    price: "$2,500 – $7,500",
-    subtitle: "API & Middleware",
-    body: "Custom bridges between CRM, Email, and Project Management tools to eliminate manual data entry.",
+    name: "Lead Capture & Booking",
+    price: "$999 + $69/mo",
+    subtitle: "Never Miss An Inquiry",
+    body: "Instantly qualifies and books every website inquiry onto your calendar, day or night.",
+    icon: MessageSquare,
+  },
+  {
+    name: "Follow-Up & Reviews",
+    price: "$999 + $69/mo",
+    subtitle: "Repeat Customers & Reviews",
+    body: "Automated post-sale follow-up and review requests that keep customers coming back.",
+    icon: Star,
+  },
+  {
+    name: "Back-Office Sync",
+    price: "$999 + $69/mo",
+    subtitle: "No More Double Entry",
+    body: "Connects your CRM, invoicing, and inbox so new leads and orders sync automatically.",
     icon: Cable,
-  },
-  {
-    name: "The Transfusion",
-    price: "$5,000 – $15,000",
-    subtitle: "Intelligent Workflow Injection",
-    body: "Custom AI logic and automation tailored to your specific marketing or operational bottlenecks.",
-    icon: Syringe,
-  },
-  {
-    name: "The Architect",
-    price: "$15,000 – $50,000+",
-    subtitle: "Custom ERP & Internal Tools",
-    body: "Foundation-level infrastructure and autonomous systems built to run your business on autopilot.",
-    icon: Layers,
   },
 ];
 
@@ -96,6 +100,9 @@ export default function ServicesPage() {
             badge={tier.badge}
             description={tier.description}
             features={tier.features}
+            ctaLabel={tier.ctaLabel}
+            ctaHref={tier.ctaHref}
+            ctaAnalyticsId={tier.ctaAnalyticsId}
           />
         ))}
       </div>
@@ -113,7 +120,7 @@ export default function ServicesPage() {
             New: AI Visitor Concierge, included in Website Infrastructure
           </h3>
           <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Every Website Infrastructure build ships with a chat assistant trained on your business — built on the
+            Every Website Infrastructure build ships with a chat assistant trained on your business, built on the
             same AI engine that powers our audit scanner. It answers visitor questions and captures leads or
             bookings around the clock, so you're not paying a separate monthly fee for a chatbot app.
           </p>
@@ -181,13 +188,13 @@ export default function ServicesPage() {
         </table>
       </motion.div>
 
-      {/* Autonomous Systems Section */}
+      {/* Workflow Automation Section */}
       <div className="flex items-center gap-3 mb-6">
         <div className="bg-indigo-600/10 p-3 rounded-xl">
           <Bot className="text-indigo-600" size={20} />
         </div>
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-          Autonomous <span className="text-indigo-600">Systems.</span>
+          Workflow <span className="text-indigo-600">Automation.</span>
         </h2>
       </div>
 
@@ -215,6 +222,24 @@ export default function ServicesPage() {
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{pkg.body}</p>
           </motion.div>
         ))}
+      </motion.div>
+
+      {/* Bundle pointer */}
+      <motion.div {...fadeUp}>
+        <Link
+          to="/automation"
+          data-analytics-id="services-automation-bundle-pointer"
+          className="group flex items-center justify-between gap-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0a0a] p-5 mb-12 hover:border-indigo-500/40 transition-colors cursor-pointer"
+        >
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wide text-indigo-600 mb-1">Want all three?</p>
+            <p className="text-sm text-slate-700 dark:text-slate-300">
+              Get <span className="font-semibold text-slate-900 dark:text-white">Full Ecosystem Access</span> -
+              all three workflow systems for $1,999 + $99/mo, on the Automation page.
+            </p>
+          </div>
+          <ArrowRight size={18} className="text-indigo-600 shrink-0 group-hover:translate-x-1 transition-transform" />
+        </Link>
       </motion.div>
 
       {/* Detailed cost comparison breakdown */}
@@ -329,7 +354,7 @@ export default function ServicesPage() {
                   ["Platform Subscription", "$468 ($39/mo)", "$0 (Serverless)"],
                   ["Transaction Tax", "2.0% (3rd party gateway fee)", "0% (Direct Stripe Integration)"],
                   ["Essential Apps", "$600 (Reviews, Upsells, SEO)", "$0 (Hard-coded Features)"],
-                  ["Year 1 Setup Fee", "$0", "$1,500 (Your Fee)"],
+                  ["Year 1 Setup Fee", "$0", "$1,499 (Your Fee)"],
                 ].map((row, i) => (
                   <tr key={i} className="border-b border-slate-100 dark:border-white/5 hover:bg-white dark:hover:bg-white/5 transition-colors">
                     <td className="py-3 text-slate-700 dark:text-slate-300 font-medium">{row[0]}</td>
@@ -368,7 +393,7 @@ export default function ServicesPage() {
                   ["Transaction Tax", "1.0% (approx. $5,000 on $500k)", "0% (Direct Stripe Integration)"],
                   ["App Stack 'Tax'", "$1,800 (Inventory, Filter, Search)", "$0 (Integrated API Logic)"],
                   ["Infrastructure Costs", "Included", "$0 (Edge architecture)"],
-                  ["Year 1 Setup Fee", "$0", "$3,500 (Your Fee)"],
+                  ["Year 1 Setup Fee", "$0", "$3,499 (Your Fee)"],
                 ].map((row, i) => (
                   <tr key={i} className="border-b border-slate-100 dark:border-white/5 last:border-0 hover:bg-white dark:hover:bg-white/5 transition-colors">
                     <td className="py-3 text-slate-700 dark:text-slate-300 font-medium">{row[0]}</td>
@@ -381,38 +406,30 @@ export default function ServicesPage() {
           </div>
         </motion.div>
 
-        {/* Contract comp */}
-        <motion.div variants={fadeUpItem} className="rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden">
-          <div className="bg-white dark:bg-[#0a0a0a] p-5 border-b border-slate-200 dark:border-white/10">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1 tracking-tight">5. The "Contract" Tier (Enterprise Migration)</h3>
-            <p className="text-xs text-slate-500 font-mono">Target: High-volume corporations replacing Shopify Plus.</p>
+        {/* Enterprise Contract */}
+        <motion.div
+          variants={fadeUpItem}
+          className="rounded-2xl border border-slate-200 dark:border-white/10 overflow-hidden flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6"
+        >
+          <div>
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1 tracking-tight">
+              5. Enterprise Contract (Full Migration)
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+              For high-volume operators replacing Shopify Plus or an equivalent enterprise platform. Every
+              engagement is scoped to your infrastructure and traffic, so pricing is discussed on a call rather
+              than listed here.
+            </p>
           </div>
-          <div className="bg-slate-50 dark:bg-[#050505] p-5 overflow-x-auto">
-            <table className="w-full text-left text-sm min-w-[500px]">
-              <thead>
-                <tr className="border-b border-slate-200 dark:border-white/5 text-xs uppercase tracking-wide text-slate-500">
-                  <th className="pb-3 w-1/3">Expense Category</th>
-                  <th className="pb-3 text-rose-600 dark:text-rose-400/80">Shopify Plus (Enterprise)</th>
-                  <th className="pb-3 text-emerald-600 dark:text-emerald-500">TYcodes Custom Infrastructure</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ["Base Subscription", "$27,600 ($2,300/mo)", "$30,000 ($2,500/mo Managed Fee)"],
-                  ["Transaction Tax", "0.5% ($100,000 on $20M Sales)", "0% (Direct Bank/Stripe API)"],
-                  ["Platform Revenue Share", "Variable % of GMV", "$0"],
-                  ["Database & Scaling", "Included (Locked)", "$1,200 (Dedicated Cloud Clusters)"],
-                  ["Year 1 Setup Fee", "$0", "$50,000 (Your Fee)"],
-                ].map((row, i) => (
-                  <tr key={i} className="border-b border-slate-100 dark:border-white/5 last:border-0 hover:bg-white dark:hover:bg-white/5 transition-colors">
-                    <td className="py-3 text-slate-700 dark:text-slate-300 font-medium">{row[0]}</td>
-                    <td className="py-3 text-slate-500 font-mono text-xs">{row[1]}</td>
-                    <td className="py-3 text-slate-700 dark:text-slate-300 font-mono text-xs">{row[2]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-analytics-id="services-enterprise-contract-comparison-cta"
+            className="inline-flex items-center justify-center gap-1.5 shrink-0 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wide bg-indigo-600 hover:bg-indigo-500 text-white transition-colors cursor-pointer whitespace-nowrap"
+          >
+            Book a Call
+          </a>
         </motion.div>
       </motion.div>
 
@@ -435,12 +452,13 @@ export default function ServicesPage() {
             {[
               ["Digital Presence", "$799", "$0", "Monthly Hosting Subscriptions"],
               ["Website Infrastructure", "$999", "$0", "AI Chatbot, Form-Builder & Site-Builder Subscriptions"],
-              ["Vite-com", "$1,500+", "$0", "App Fees & Third-Party Transaction Fees"],
-              ["High-Velocity E-com", "$3,500+", "$199", "High-SKU Management Fees & API Limits"],
-              ["Enterprise Contract", "$25k+", "$2,500", "Enterprise Revenue Sharing & Variable Fees"],
-              ["The Connector", "$2,500+", "$0", "Manual Data Entry & Duplicate Work"],
-              ["The Transfusion", "$5,000+", "$0", "Operational Bottlenecks & Support Overhead"],
-              ["The Architect", "$15,000+", "$500+", "SaaS Seat Taxes & Data Fragmentation"],
+              ["Vite-com", "$1,499", "$0", "App Fees & Third-Party Transaction Fees"],
+              ["High-Velocity E-com", "$3,499", "$199", "High-SKU Management Fees & API Limits"],
+              ["Enterprise Contract", "Book a Call", "Book a Call", "Enterprise Revenue Sharing & Variable Fees"],
+              ["Lead Capture & Booking", "$999", "$69", "Missed Leads & Manual Scheduling"],
+              ["Follow-Up & Reviews", "$999", "$69", "Lost Repeat Business & Review Gaps"],
+              ["Back-Office Sync", "$999", "$69", "Manual Data Entry & Duplicate Work"],
+              ["Full Ecosystem Access", "$1,999", "$99", "All Three, Managed as One System"],
             ].map((row, i) => (
               <tr key={i} className="border-b border-slate-100 dark:border-white/5 last:border-0 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                 <td className="py-4 text-slate-900 dark:text-white font-bold">{row[0]}</td>

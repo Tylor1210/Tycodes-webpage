@@ -17,28 +17,28 @@ const PLATFORMS: Record<Platform, { label: string; plans: Plan[] }> = {
   shopify: {
     label: "Shopify",
     plans: [
-      { label: "Basic — $39/mo", monthly: 39, penaltyRate: 0.02 },
-      { label: "Shopify — $105/mo", monthly: 105, penaltyRate: 0.01 },
-      { label: "Advanced — $399/mo", monthly: 399, penaltyRate: 0.006 },
+      { label: "Basic ($39/mo)", monthly: 39, penaltyRate: 0.02 },
+      { label: "Shopify ($105/mo)", monthly: 105, penaltyRate: 0.01 },
+      { label: "Advanced ($399/mo)", monthly: 399, penaltyRate: 0.006 },
     ],
   },
   wix: {
     label: "Wix",
     plans: [
-      { label: "Light — $17/mo", monthly: 17, penaltyRate: 0.02 },
-      { label: "Core — $29/mo", monthly: 29, penaltyRate: 0.02 },
-      { label: "Business — $36/mo", monthly: 36, penaltyRate: 0.02 },
-      { label: "Elite — $159/mo", monthly: 159, penaltyRate: 0.0 },
+      { label: "Light ($17/mo)", monthly: 17, penaltyRate: 0.02 },
+      { label: "Core ($29/mo)", monthly: 29, penaltyRate: 0.02 },
+      { label: "Business ($36/mo)", monthly: 36, penaltyRate: 0.02 },
+      { label: "Elite ($159/mo)", monthly: 159, penaltyRate: 0.0 },
     ],
   },
 };
 
-const STRIPE_RATE = 0.029;   // 2.9 % — identical pass-through on both sides
+const STRIPE_RATE = 0.029;   // 2.9 % - identical pass-through on both sides
 const STRIPE_FIXED = 0.30;    // $0.30 per transaction
 const AVG_ORDER = 75;      // assumed average order value for tx-count math
-const DOMAIN_ANNUAL = 15;      // $15/yr domain — pass-through
-const TY_VITECOM_FEE = 1500;  // Vite-com one-time fee (≤ $20k/mo revenue)
-const TY_HIGHVOL_FEE = 3500;  // High-volume one-time fee (> $20k/mo revenue)
+const DOMAIN_ANNUAL = 15;      // $15/yr domain - pass-through
+const TY_VITECOM_FEE = 1499;  // Vite-com one-time fee (≤ $20k/mo revenue)
+const TY_HIGHVOL_FEE = 3499;  // High-volume one-time fee (> $20k/mo revenue)
 
 const usd = (n: number, dec = 0) =>
   "$" + n.toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec });
@@ -52,7 +52,7 @@ export default function SavingsCalculator() {
   const [platform, setPlatform] = useState<Platform>("shopify");
   const [planIdx, setPlanIdx] = useState(0);
   const [revenue, setRevenue] = useState(5000);
-  // Mobile-only collapsible — details hidden by default on small screens
+  // Mobile-only collapsible - details hidden by default on small screens
   const [showDetails, setShowDetails] = useState(false);
 
   const cfg = PLATFORMS[platform];
@@ -61,7 +61,7 @@ export default function SavingsCalculator() {
   const switchPlatform = (p: Platform) => { setPlatform(p); setPlanIdx(0); };
 
   const c = useMemo(() => {
-    // Pass-through costs — identical on both sides
+    // Pass-through costs - identical on both sides
     const stripe = stripeMonth(revenue);
     const domainMo = DOMAIN_ANNUAL / 12;
 
@@ -80,7 +80,7 @@ export default function SavingsCalculator() {
     const savedPenalty = penalty * 12;
     const annualSaving = savedSub + savedPenalty;
 
-    // Flat one-time fee — $1,500 Vite-com (≤ $20k/mo) or $3,500 high-volume (> $20k/mo)
+    // Flat one-time fee: $1,499 Vite-com (≤ $20k/mo) or $3,499 high-volume (> $20k/mo)
     const proFee = revenue <= 20000 ? TY_VITECOM_FEE : TY_HIGHVOL_FEE;
     const yr1Net = annualSaving - proFee;
     const yr3Net = (annualSaving * 3) - proFee;
@@ -124,7 +124,7 @@ export default function SavingsCalculator() {
             <Info size={12} className="text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
             <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
               <span className="text-amber-600 dark:text-amber-400 font-semibold">What is the 2% Gateway Penalty?</span>{" "}
-              Platforms charge this specifically because you chose to use your own processor (Stripe) instead of theirs — it's a middleman tax. We eliminate it.
+              Platforms charge this specifically because you chose to use your own processor (Stripe) instead of theirs. It's a middleman tax, and we eliminate it.
             </p>
           </div>
         </div>
@@ -270,10 +270,10 @@ export default function SavingsCalculator() {
               </div>
             </div>
 
-            {/* Action CTA — secondary, subordinate to the page's primary Book Audit CTA */}
+            {/* Action CTA - secondary, subordinate to the page's primary Book Audit CTA */}
             <div className="space-y-2 pt-2">
               <a
-                href="mailto:contact@tycodes.dev?subject=Startup Package — Savings Calculator"
+                href="mailto:contact@tycodes.dev?subject=Startup Package Inquiry (Savings Calculator)"
                 className="flex items-center justify-center gap-2 w-full py-2.5 bg-transparent border border-indigo-500/30 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/10 text-xs font-bold uppercase tracking-wide rounded-xl transition-all cursor-pointer"
               >
                 <TrendingUp size={13} />

@@ -43,7 +43,7 @@ function App() {
               Websites and AI, built on infrastructure you actually own.
             </h1>
             <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8 max-w-xl">
-              We build new sites, or add AI automation to the one you already have &mdash; on lean
+              We build new sites, or add AI automation to the one you already have, on lean
               infrastructure you own outright. Most of what runs it costs nothing beyond your domain;
               a dedicated AI assistant is available as a simple add-on if you want one.
             </p>
@@ -79,9 +79,9 @@ function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5 relative z-10">
               {[
                 { name: "Digital Presence", tag: "$799", desc: "Conversion-optimized landing page. Loads in under 1 second. Ranks locally. Costs you nothing after launch." },
-                { name: "Vite-com", tag: "$1,500+", desc: "Custom checkout engine. Eliminate the 2% Shopify transaction fee and $600/yr in mandatory apps. You own the code." },
-                { name: "High-Velocity E-com", tag: "$3,500+", desc: "Built for brands doing $250k+ in GMV. Real-time inventory, massive SKU support, and a storefront that never throttles under load." },
-                { name: "Enterprise Contract", tag: "$25k+", desc: "Full infrastructure migration for high-volume operators. We replace every vendor dependency with infrastructure you own outright." },
+                { name: "Vite-com", tag: "$1,499", desc: "Custom checkout engine. Eliminate the 2% Shopify transaction fee and $600/yr in mandatory apps. You own the code." },
+                { name: "High-Velocity E-com", tag: "$3,499", desc: "Built for brands doing $250k+ in GMV. Real-time inventory, massive SKU support, and a storefront that never throttles under load." },
+                { name: "Enterprise Contract", tag: "Book a Call", desc: "Full infrastructure migration for high-volume operators. We replace every vendor dependency with infrastructure you own outright." },
               ].map((p) => (
                 <div key={p.name} className="flex flex-col py-1 pointer-events-none border-b border-slate-100 dark:border-white/5 last:border-0 pb-4 md:pb-1">
                   <div className="flex items-center justify-between mb-1 gap-2">
@@ -96,6 +96,11 @@ function App() {
             </div>
           </Link>
         </motion.div>
+
+        {/* ── AUTOMATION / HERO TILE ── */}
+        <div className="mt-6">
+          <HeroTile />
+        </div>
 
         {/* ── PORTFOLIO / DIGITAL PRESENCE / BRAND ── */}
         <motion.div {...fadeUp} className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -188,11 +193,6 @@ function App() {
           </Link>
         </motion.div>
 
-        {/* ── AUTOMATION / HERO TILE ── */}
-        <div className="mt-6">
-          <HeroTile />
-        </div>
-
         {/* ── LOGISTICS-TO-LOGIC PILLAR ── */}
         <motion.div {...fadeUp} className="mt-6 rounded-3xl bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/5 p-6 md:p-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -211,8 +211,8 @@ function App() {
               <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
                 That discipline comes in part from the founder&apos;s background as a{" "}
                 <strong className="text-slate-900 dark:text-white">U.S. Army National Guard 92-Y</strong> (Unit Supply
-                Specialist), managing supply chain operations where a dropped handoff had real consequences &mdash; the
-                same standard now applied to every site and workflow we ship.
+                Specialist), managing supply chain operations where a dropped handoff had real consequences.
+                That&apos;s the same standard now applied to every site and workflow we ship.
               </p>
             </div>
 
@@ -222,7 +222,7 @@ function App() {
                 {
                   icon: Target,
                   label: "Precision Architecture",
-                  body: "Every integration point is intentional. No redundant tools, no vanity features — only systems that directly increase revenue or reduce operational cost."
+                  body: "Every integration point is intentional. No redundant tools and no vanity features, only systems that directly increase revenue or reduce operational cost."
                 },
                 {
                   icon: BarChart3,
@@ -232,7 +232,7 @@ function App() {
                 {
                   icon: ShieldCheck,
                   label: "Zero Tolerance for Waste",
-                  body: "Platform fees, manual data entry, duplicate tools — we identify and eliminate every dollar of operational drag in your stack."
+                  body: "Platform fees, manual data entry, duplicate tools: we identify and eliminate every dollar of operational drag in your stack."
                 }
               ].map(({ icon: Icon, label, body }) => (
                 <div key={label} className="flex gap-3">

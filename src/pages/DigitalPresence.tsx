@@ -88,7 +88,7 @@ export default function DigitalPresence() {
             <p className="text-xs font-bold uppercase tracking-wide text-indigo-600 mb-1">Need more than one page?</p>
             <p className="text-sm text-slate-700 dark:text-slate-300">
               Check out <span className="font-semibold text-slate-900 dark:text-white">Website Infrastructure</span>{" "}
-              ($999) — a 5-page site with a built-in AI visitor concierge, the next step up from a single landing page.
+              ($999), a 5-page site with a built-in AI visitor concierge, the next step up from a single landing page.
             </p>
           </div>
           <ArrowRight size={18} className="text-indigo-600 shrink-0 group-hover:translate-x-1 transition-transform" />

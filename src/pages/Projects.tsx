@@ -94,13 +94,13 @@ export default function ProjectsPage() {
         ))}
       </motion.div>
 
-      {/* Coursework & learning — kept visible but clearly secondary */}
+      {/* Coursework & learning - kept visible but clearly secondary */}
       <div className="flex items-center gap-2 mb-3">
         <GraduationCap size={14} className="text-slate-400" />
         <h2 className="text-xs font-bold uppercase tracking-wide text-slate-500">Coursework &amp; Learning</h2>
       </div>
       <p className="text-xs text-slate-500 mb-4 leading-relaxed max-w-lg">
-        Ongoing computer science coursework — shared for transparency, not representative of client deliverables.
+        Ongoing computer science coursework, shared for transparency and not representative of client deliverables.
       </p>
       <div className="space-y-3 mb-10">
         {courseworkProjects.map((p) => (

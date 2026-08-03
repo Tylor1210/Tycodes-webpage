@@ -5,7 +5,7 @@ import { fadeUp } from "@/lib/motion";
 
 interface PricingTierCardProps {
   name: string;
-  price: string;
+  price?: string;
   priceLabel?: string;
   monthly?: string;
   description?: string;
@@ -65,12 +65,16 @@ export default function PricingTierCard({
         <p className="text-xs text-slate-500 mb-4 leading-relaxed">{description}</p>
       )}
 
-      <p className="text-2xl font-semibold text-indigo-600 dark:text-indigo-400 tracking-tight mb-1">
-        {price}
-      </p>
-      <p className="text-[11px] text-slate-500 uppercase tracking-wide font-semibold mb-4">
-        {priceLabel}
-      </p>
+      {price && (
+        <>
+          <p className="text-2xl font-semibold text-indigo-600 dark:text-indigo-400 tracking-tight mb-1">
+            {price}
+          </p>
+          <p className="text-[11px] text-slate-500 uppercase tracking-wide font-semibold mb-4">
+            {priceLabel}
+          </p>
+        </>
+      )}
 
       {features && features.length > 0 && (
         <ul className="space-y-2 mb-6 flex-1">

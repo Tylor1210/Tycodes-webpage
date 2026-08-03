@@ -27,8 +27,8 @@ interface AuditData {
   savings_1_yr: number;
   savings_3_yr: number;
   // Dynamic pricing flags
-  is_estimated: boolean;       // true when savings < $2k — show asterisk
-  needs_consultation: boolean; // true when savings > $10k — route to founder call
+  is_estimated: boolean;       // true when savings < $2k - show asterisk
+  needs_consultation: boolean; // true when savings > $10k - route to founder call
 
   // Value-Based Commission Fields
   base_setup_fee: number;
@@ -430,7 +430,7 @@ export default function AuditPage() {
                     <div>
                       <h4 className="text-xs font-bold uppercase tracking-wide text-indigo-600 dark:text-indigo-400 mb-1">Extra Fees You&apos;re Paying</h4>
                       <p className="text-xs text-indigo-900/80 dark:text-indigo-200/80 leading-relaxed">
-                        Platforms like <span className="capitalize">{platform}</span> add an extra fee on top of standard payment processing. Tycodes connects directly to Stripe, so you only pay standard, secure processing fees — no extra platform fee.
+                        Platforms like <span className="capitalize">{platform}</span> add an extra fee on top of standard payment processing. Tycodes connects directly to Stripe, so you only pay standard, secure processing fees and no extra platform fee.
                       </p>
                     </div>
                   </div>
@@ -530,7 +530,7 @@ export default function AuditPage() {
                       <span className="text-xl font-mono text-indigo-600 dark:text-indigo-400 font-bold">{usd(auditData.setup_fee)}</span>
                     </div>
                     <p className="text-xs text-slate-500 mt-2 italic leading-relaxed">
-                      The Success Fee is a one-time charge — 20% of your projected first-year savings. We only get paid when you save.
+                      The Success Fee is a one-time charge equal to 20% of your projected first-year savings. We only get paid when you save.
                     </p>
                   </div>
 
@@ -596,7 +596,7 @@ export default function AuditPage() {
                     <span className="text-sm text-slate-700 dark:text-slate-300">Estimated Annual Savings</span>
                     <span className="text-2xl font-mono font-bold text-emerald-600 dark:text-emerald-400">+{usd(stats.totalWasteYr)}</span>
                   </div>
-                  <p className="text-xs text-slate-500 leading-relaxed">With a custom-built site you own outright, you keep 100% of what you earn — no more platform fees eating into your margins.</p>
+                  <p className="text-xs text-slate-500 leading-relaxed">With a custom-built site you own outright, you keep 100% of what you earn, with no more platform fees eating into your margins.</p>
                 </div>
 
                 {renderLeadCapture()}

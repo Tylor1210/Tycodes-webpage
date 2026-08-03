@@ -11,7 +11,7 @@ export default function CalculatorPage() {
         eyebrow="Platform Tax Savings"
         accent="indigo"
         title="Calculate your platform tax."
-        subtitle="See how much you're losing to subscription fees and gateway penalties — and what switching to a custom stack would save you."
+        subtitle="See how much you're losing to subscription fees and gateway penalties, and what switching to a custom stack would save you."
       />
       <div className="h-[70vh] min-h-[560px] max-h-[820px]">
         <SavingsCalculator />

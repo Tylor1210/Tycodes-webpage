@@ -1,13 +1,13 @@
 # Tycodes
 
-> Tycodes designs and builds custom websites and integrates AI automation for small businesses and new LLCs in South Florida (Miami, Fort Lauderdale, West Palm Beach, and Broward, Miami-Dade, and Palm Beach counties), and remotely across the United States. The primary conversion action on every page is booking a free 15 minute website audit — not a direct purchase.
+> Tycodes designs and builds custom websites and integrates AI automation for small businesses and new LLCs in South Florida (Miami, Fort Lauderdale, West Palm Beach, and Broward, Miami-Dade, and Palm Beach counties), and remotely across the United States. The primary conversion action on every page is booking a free 15 minute website audit, not a direct purchase.
 
-Tycodes builds new websites on Vite + React, or integrates AI automation into a business's existing site. Infrastructure runs on free-tier Cloudflare hosting and pay-per-transaction Stripe billing, so a base site has no required monthly platform fee — clients own their code and data outright. An AI concierge/assistant is an optional paid add-on, not a default.
+Tycodes builds new websites on Vite + React, or integrates AI automation into a business's existing site. Infrastructure runs on free-tier Cloudflare hosting and pay-per-transaction Stripe billing, so a base site has no required monthly platform fee. Clients own their code and data outright. An AI concierge/assistant is an optional paid add-on, not a default.
 
 ## Services
 
-- [Free Website Audit](https://tycodes.dev/audit): AI-powered scan of a prospective client's existing site — detects tech stack, estimates platform fee leakage, and generates a savings/ROI proposal. This is the primary calls-to-action across the site.
-- [Services & Pricing](https://tycodes.dev/services): Full tier list — Digital Presence ($799), Website Infrastructure ($999, includes optional AI concierge), Vite-com Custom Storefront ($1,500+), High-Velocity E-com ($3,500+), and the Autonomous Systems automation tiers (The Connector, The Transfusion, The Architect).
+- [Free Website Audit](https://tycodes.dev/audit): AI-powered scan of a prospective client's existing site that detects tech stack, estimates platform fee leakage, and generates a savings/ROI proposal. This is the primary calls-to-action across the site.
+- [Services & Pricing](https://tycodes.dev/services): Full tier list, including Digital Presence ($799), Website Infrastructure ($999, includes optional AI concierge), Vite-com Custom Storefront ($1,499), High-Velocity E-com ($3,499), Enterprise Contract (custom pricing, book a call), and the workflow automation systems (Lead Capture & Booking, Follow-Up & Reviews, and Back-Office Sync at $999 + $69/mo each, or Full Ecosystem Access for $1,999 + $99/mo).
 - [Digital Presence](https://tycodes.dev/digital-presence): Landing-page-focused web design for small businesses that need a fast, professional presence.
 - [Shipping & Commerce](https://tycodes.dev/ship-com): Custom e-commerce and order/logistics infrastructure for businesses that sell physical goods.
 - [Automation](https://tycodes.dev/automation): AI automation agents and workflow integrations for existing businesses.

@@ -15,7 +15,7 @@ export const fadeUpMount = {
   transition: { duration: 0.45, ease: "easeOut" as const },
 };
 
-/** Parent wrapper for staggered children — pair with fadeUpItem on each child. */
+/** Parent wrapper for staggered children - pair with fadeUpItem on each child. */
 export const staggerContainer: Variants = {
   initial: {},
   whileInView: { transition: { staggerChildren: 0.08 } },
@@ -30,7 +30,7 @@ export const fadeUpItem: Variants = {
 
 export const staggerViewport = { once: true, margin: "-40px" } as const;
 
-/** Subtle lift for cards on hover — pairs with a shadow/border transition in CSS. */
+/** Subtle lift for cards on hover - pairs with a shadow/border transition in CSS. */
 export const cardHover = {
   whileHover: { y: -4 },
   transition: { duration: 0.2, ease: "easeOut" as const },

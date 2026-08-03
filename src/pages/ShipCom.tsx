@@ -11,7 +11,7 @@ const tiers = [
   {
     id: "tier1",
     name: "Tier 1: Small E-com",
-    description: '(Growth Focus) — For emerging brands replacing Shopify Basic.',
+    description: '(Growth Focus) For emerging brands replacing Shopify Basic.',
     price: "$2,500",
     priceLabel: "Setup",
     monthly: "$99/mo",
@@ -20,7 +20,7 @@ const tiers = [
   {
     id: "tier2",
     name: "Tier 2: Large E-com",
-    description: "(Scale Focus) — For established retailers replacing Shopify Pro/Growth.",
+    description: "(Scale Focus) For established retailers replacing Shopify Pro/Growth.",
     price: "$5,000",
     priceLabel: "Setup",
     monthly: "$199/mo",
@@ -30,7 +30,7 @@ const tiers = [
   {
     id: "tier3",
     name: 'Tier 3: The "Contract"',
-    description: "(Enterprise/Titan Focus) — For corporations replacing Shopify Plus ($2M+ revenue).",
+    description: "(Enterprise/Titan Focus) For corporations replacing Shopify Plus ($2M+ revenue).",
     price: "$25k–$50k",
     priceLabel: "Setup",
     monthly: "$2,500/mo",
@@ -94,7 +94,7 @@ export default function ShipComPage() {
         <Info size={16} className="text-indigo-600 dark:text-indigo-400 flex-shrink-0 mt-0.5" />
         <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
           Shipping &amp; Commerce packages include ongoing logistics and fulfillment management, which is why
-          pricing differs from our standalone storefront builds — see{" "}
+          pricing differs from our standalone storefront builds. See{" "}
           <Link to="/services" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
             Services
           </Link>{" "}
