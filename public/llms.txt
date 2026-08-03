@@ -11,7 +11,7 @@ Tycodes builds new websites on Vite + React, or integrates AI automation into a 
 - [Digital Presence](https://tycodes.dev/digital-presence): Landing-page-focused web design for small businesses that need a fast, professional presence.
 - [Shipping & Commerce](https://tycodes.dev/ship-com): Custom e-commerce and order/logistics infrastructure for businesses that sell physical goods.
 - [Automation](https://tycodes.dev/automation): AI automation agents and workflow integrations for existing businesses.
-- [Growth Operations](https://tycodes.dev/growth-operations): Setup and configuration of a client and lead management system (pipeline tracking, referral tracking, team task management), scoped to the business. Custom pricing, discussed on a call.
+- [Growth Operations](https://tycodes.dev/growth-operations): Setup and configuration of a branded link-in-bio hub with cross-platform social posting, comment/DM automation, built-in monetization (products, merch, courses), lead capture forms, and analytics. Custom pricing, discussed on a call.
 - [Savings Calculator](https://tycodes.dev/calculator): Manual pricing/ROI calculator (no scrape required).
 - [Brand Infrastructure](https://tycodes.dev/brand): Brand identity and design system work.
 - [Projects](https://tycodes.dev/projects): Portfolio of client and product work.

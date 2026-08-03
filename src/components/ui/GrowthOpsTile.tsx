@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { Users, GitBranch, Mail, Share2, ArrowRight } from "lucide-react";
+import { Link2, Share2, MessageSquare, ArrowRight } from "lucide-react";
 import { BOOKING_URL } from "@/lib/constants";
 
 export default function GrowthOpsTile() {
   const capabilities = [
-    { name: "Lead & Deal Pipeline", desc: "Track every prospect from first contact to close.", icon: GitBranch },
-    { name: "Inbox Integration", desc: "Reply to lead conversations without leaving the system.", icon: Mail },
-    { name: "Referral Tracking", desc: "Know exactly who referred which client, and reward it.", icon: Share2 },
+    { name: "Branded Link-in-Bio Page", desc: "One mobile-first landing page for every platform you're on.", icon: Link2 },
+    { name: "Cross-Platform Posting", desc: "Publish once, and it goes out to Instagram, TikTok, X, and more.", icon: Share2 },
+    { name: "Comment & DM Automation", desc: "Auto-reply with keyword triggers, so leads get answered fast.", icon: MessageSquare },
   ];
 
   return (
@@ -21,16 +21,16 @@ export default function GrowthOpsTile() {
       <div className="absolute -top-10 -right-10 w-40 h-40 bg-indigo-600/5 rounded-full blur-2xl pointer-events-none" />
 
       <div className="flex items-center gap-2 mb-4 relative z-10">
-        <Users size={14} className="text-indigo-500" />
+        <Link2 size={14} className="text-indigo-500" />
         <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Growth Operations</span>
       </div>
 
       <h3 className="text-xl md:text-2xl font-semibold text-slate-900 dark:text-white tracking-tight mb-2 relative z-10">
-        Run your leads and clients <span className="text-indigo-500">like a real business</span>
+        One page for every platform, <span className="text-indigo-500">every sale, and every lead</span>
       </h3>
       <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed max-w-2xl relative z-10">
-        We set up and configure a complete client and lead management system for your business, scoped to how
-        you actually sell. Pricing is discussed on a call.
+        We set up and configure a branded hub for your business: one link that consolidates your social
+        platforms, sells products or services, and captures leads. Pricing is discussed on a call.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-5 relative z-10 mb-8">

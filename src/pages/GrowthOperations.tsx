@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Users, GitBranch, Mail, Share2, ListChecks, BarChart3 } from "lucide-react";
+import { Link2, Share2, MessageSquare, ShoppingBag, Mail, BarChart3 } from "lucide-react";
 import PageHeader from "@/components/ui/PageHeader";
 import PricingTierCard from "@/components/ui/PricingTierCard";
 import { BookAuditBand } from "@/components/ui/BookAuditCTA";
@@ -8,55 +8,55 @@ import { fadeUp, staggerContainer, fadeUpItem } from "@/lib/motion";
 
 const capabilities = [
   {
-    icon: GitBranch,
-    label: "Lead & Deal Pipeline",
-    body: "Track every prospect from first contact to close, with clear stages so nothing slips through.",
-  },
-  {
-    icon: Mail,
-    label: "Inbox Integration",
-    body: "See and reply to lead conversations without leaving the system.",
+    icon: Link2,
+    label: "Branded Link-in-Bio Page",
+    body: "One mobile-first landing page for every platform you're on, fully branded and built to convert.",
   },
   {
     icon: Share2,
-    label: "Referral Tracking",
-    body: "Know exactly who referred which client, and reward it accordingly.",
+    label: "Cross-Platform Posting",
+    body: "Publish once, and it goes out across Instagram, TikTok, X, Facebook, YouTube, LinkedIn, and Threads.",
   },
   {
-    icon: ListChecks,
-    label: "Team Tasks & Follow-Ups",
-    body: "Assign and track follow-up tasks so leads get contacted on schedule, every time.",
+    icon: MessageSquare,
+    label: "Comment & DM Automation",
+    body: "Auto-reply to comments and DMs with keyword triggers, so leads get a response before they lose interest.",
+  },
+  {
+    icon: ShoppingBag,
+    label: "Built-In Monetization",
+    body: "Sell digital products, merch, or course access, and collect tips, directly from your page.",
+  },
+  {
+    icon: Mail,
+    label: "Lead Capture Forms",
+    body: "Custom signup forms that build a contact list you own and can export any time.",
   },
   {
     icon: BarChart3,
-    label: "Activity Dashboards",
-    body: "A real-time view of pipeline health, conversion rates, and team performance.",
-  },
-  {
-    icon: Users,
-    label: "Client Communication Log",
-    body: "Every call, email, and note tied to the client record, all in one place.",
+    label: "Real-Time Analytics",
+    body: "See exactly which links convert: views, clicks, geography, and traffic source, all in one dashboard.",
   },
 ];
 
 const steps = [
-  "We assess your current lead and client process, and identify what's falling through the cracks.",
-  "We configure the system for your business: pipelines, automations, and the integrations you actually use.",
-  "We train your team and hand off a fully working setup, ready to run.",
+  "We assess your current social platforms and online presence, and map out what should live on your page.",
+  "We configure and brand the page, connect your platforms, and set up posting and reply automations.",
+  "We train you on posting, monetization, and reading the analytics, then hand off a fully working setup.",
 ];
 
 export default function GrowthOperationsPage() {
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
       <PageHeader
-        icon={Users}
+        icon={Link2}
         eyebrow="Growth Operations Setup"
         title={
           <>
-            Run your leads and clients <span className="text-indigo-600 dark:text-indigo-400">like a real business.</span>
+            One page for every platform, <span className="text-indigo-600 dark:text-indigo-400">every sale, and every lead.</span>
           </>
         }
-        subtitle="We set up and configure a complete client and lead management system for your business: pipeline tracking, automated follow-up, referral tracking, and team task management, all in one place. Every setup is scoped to your business, so pricing is discussed on a call."
+        subtitle="We set up and configure a branded hub for your business: a single link that consolidates your social platforms, sells products or services, and captures leads automatically. Every setup is scoped to your business, so pricing is discussed on a call."
       />
 
       <motion.div
@@ -103,7 +103,7 @@ export default function GrowthOperationsPage() {
       <motion.div {...fadeUp} className="mb-12 max-w-md mx-auto">
         <PricingTierCard
           name="Growth Operations Setup"
-          description="Custom-scoped to your business size and sales process."
+          description="Custom-scoped to your business and the platforms you're already on."
           ctaLabel="Book a Call"
           ctaHref={BOOKING_URL}
           ctaAnalyticsId="growth-operations-cta"
