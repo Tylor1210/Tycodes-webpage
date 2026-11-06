@@ -16,7 +16,8 @@ Commands below must be run from the correct directory (`.` for the frontend, `Ty
 ### Frontend (root)
 ```bash
 npm run dev       # vite dev server
-npm run build     # tsc -b && vite build -> dist/
+npm run build     # client build + SSR build + prerender -> dist/
+npm run typecheck # tsc -b --noEmit
 npm run lint      # eslint .
 npm run preview   # build then `wrangler dev` against dist/
 npm run deploy    # build then `wrangler deploy` (publishes to tycodes.dev)
@@ -33,21 +34,22 @@ Secrets (`FIRECRAWL_API_KEY`, `OPENAI_API_KEY`, SMTP vars) are set via `wrangler
 
 ## Architecture
 
-### Frontend — single-page React app
-- Entry: [src/main.tsx](src/main.tsx) sets up `BrowserRouter` with all routes and wraps the app in `ThemeProvider` (dark by default, persisted to `localStorage` under `tycodes-ui-theme`).
-- Routes are flat, one component per marketing page under `src/pages/` (`/digital-presence`, `/brand`, `/projects`, `/services`, `/ship-com`, `/automation`, `/calculator`, `/audit`). [src/App.tsx](src/App.tsx) is the homepage and assembles the primary content grid from components in `src/components/ui/`.
-- `src/components/ui/` mixes hand-built marketing components (`Navbar`, `Footer`, `HeroTile`, `MainHeroFunnel`, `AuditForm`) with shadcn/radix primitives (`button.tsx`, `card.tsx`, `input.tsx`, `label.tsx`, `sheet.tsx`, `textarea.tsx`). New primitives should follow the shadcn conventions in [components.json](components.json) (`@/components/ui` alias, `cn()` helper from [src/lib/utils.ts](src/lib/utils.ts) for class merging).
-- Path alias `@/*` → `src/*` (configured in [vite.config.ts](vite.config.ts) and `tsconfig.app.json`).
-- Styling is Tailwind with CSS-variable-based theme tokens (`hsl(var(--*))`) defined in [tailwind.config.js](tailwind.config.js) / `src/index.css`, plus a lot of inline utility classes using very small font sizes (`text-[9px]`/`text-[10px]`) and a consistent blue-accent dark theme — match this style when adding UI.
-- The homepage grid order matters for mobile: components are placed with explicit `lg:col-start-*`/`lg:row-start-*` so the flat DOM order controls mobile stacking while desktop uses the grid overrides — keep both in sync when reordering sections (see the "fixed for correct mobile stacking order" comment in [src/App.tsx](src/App.tsx)).
+### Frontend: prerendered React site
+- Four prerendered pages (`/`, `/ai-visibility`, `/tech-partner`, `/3d-scroll-shop`) plus the client-only `/audit`. Route metadata (title, description) lives in [src/routes.ts](src/routes.ts); JSON-LD in [src/seo.ts](src/seo.ts). Add a page in both, in [src/AppRoutes.tsx](src/AppRoutes.tsx), and in `public/sitemap.xml`.
+- `npm run build` runs the client build, an SSR build of [src/entry-server.tsx](src/entry-server.tsx), then [scripts/prerender.mjs](scripts/prerender.mjs), which writes one HTML file per page into `dist/` (Workers serves `foo.html` at `/foo`). [src/main.tsx](src/main.tsx) hydrates only prerendered paths; other paths render client-side (the `html.spa` guard in `index.html` hides the home HTML there).
+- Site components live in `src/components/site/` (shared shell, `ServicePage` layout, `blocks.tsx`, `motion.tsx`). `src/components/ui/` holds shadcn primitives only. Animation uses `motion` (`LazyMotion`); reduced motion is handled in `src/index.css` and the `.motion-only` / `.reduced-only` dual renders.
+- The 3D scene ([src/components/site/ProductScene.tsx](src/components/site/ProductScene.tsx), three.js) loads by dynamic import and starts on first user interaction. Keep it that way for Lighthouse.
+- Style: one accent (`brand` = Tailwind teal, teal-700 `#0F766E`), self-hosted Inter, white space, rectangular buttons. Copy rules: plain language, no em dashes or dash connectors, never promise rankings or results.
+- Redirects and cache headers: `public/_redirects`, `public/_headers`.
+- Path alias `@/*` maps to `src/*`.
 
 ### The Audit tool — frontend/backend contract
 This is the most architecturally significant feature: an AI-powered "audit" that scrapes a prospective client's site and generates a pricing/savings proposal.
 
-- [src/pages/AuditPage.tsx](src/pages/AuditPage.tsx) calls the deployed `Tycodes-brain` worker directly via `fetch`, using `VITE_API_URL` (falls back to `https://tycodes-auditor.tclont11.workers.dev`) from `.env`/`.env.production`.
+- The hero form on the home page does a plain GET to `/audit?domain=&platform=`. [src/pages/AuditPage.tsx](src/pages/AuditPage.tsx) calls the deployed `Tycodes-brain` worker directly via `fetch`, using `VITE_API_URL` (falls back to `https://tycodes-auditor.tclont11.workers.dev`) from `.env`/`.env.production`.
 - Three API routes, defined in [Tycodes-brain/src/index.ts](Tycodes-brain/src/index.ts):
   - `POST /audit` — full pipeline: scrape (`scraper.ts`, via Firecrawl) → analyze (`analyst.ts`, via OpenAI structured output) → price (`generateAuditPricing`).
-  - `POST /calculate` — pricing-only, used by the manual savings calculator ([src/components/SavingsCalculator.tsx](src/components/SavingsCalculator.tsx) / `/calculator` page) without re-scraping.
+  - `POST /calculate` — pricing-only, used by the manual savings calculator (no UI calls it now; `/calculator` redirects to `/audit`) without re-scraping.
   - `POST /claim` — lead capture; sends an email via MailChannels (requires DKIM/SPF on `tycodes.dev`).
 - Pricing logic (`generateAuditPricing` in `index.ts`) is the source of truth for tiers/margins: it buckets prospects into one of four `TYCODES_TIERS` by detected/estimated revenue, computes "platform tax" leakage (2% Shopify / 2.9% Wix), and derives a performance-based setup fee (20% of projected annual savings) plus payback period. The `AuditData`/`FlatAuditData` shape must stay in sync between [src/pages/AuditPage.tsx](src/pages/AuditPage.tsx) and `Tycodes-brain/src/index.ts` when changing fields.
 - CORS in the worker is locked to `http://localhost:5173` and `https://tycodes.dev` — update `app.use('*', cors({...}))` in `index.ts` if adding another frontend origin.

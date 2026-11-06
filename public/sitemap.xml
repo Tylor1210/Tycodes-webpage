@@ -1,87 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-  <!-- Home -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tycodes.dev/</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-11-06</lastmod>
     <priority>1.0</priority>
   </url>
-
-  <!-- Services / Web Architecture -->
   <url>
-    <loc>https://tycodes.dev/services</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Digital Presence -->
-  <url>
-    <loc>https://tycodes.dev/digital-presence</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://tycodes.dev/ai-visibility</loc>
+    <lastmod>2026-11-06</lastmod>
     <priority>0.8</priority>
   </url>
-
-  <!-- Shipping & Commerce -->
   <url>
-    <loc>https://tycodes.dev/ship-com</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://tycodes.dev/tech-partner</loc>
+    <lastmod>2026-11-06</lastmod>
     <priority>0.8</priority>
   </url>
-
-  <!-- Automation -->
   <url>
-    <loc>https://tycodes.dev/automation</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://tycodes.dev/3d-scroll-shop</loc>
+    <lastmod>2026-11-06</lastmod>
     <priority>0.8</priority>
   </url>
-
-  <!-- Growth Operations -->
-  <url>
-    <loc>https://tycodes.dev/growth-operations</loc>
-    <lastmod>2026-08-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Brand Infrastructure -->
-  <url>
-    <loc>https://tycodes.dev/brand</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Savings Calculator -->
-  <url>
-    <loc>https://tycodes.dev/calculator</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- Projects / Portfolio -->
-  <url>
-    <loc>https://tycodes.dev/projects</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- Audit Tool -->
-  <url>
-    <loc>https://tycodes.dev/audit</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
 </urlset>

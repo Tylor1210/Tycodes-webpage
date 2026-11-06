@@ -1,36 +1,29 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './index.css'
-import App from './App.tsx'
-import DigitalPresence from './pages/DigitalPresence.tsx'
-import Brand from './pages/Brand.tsx'
-import Projects from './pages/Projects.tsx'
-import Services from './pages/Services.tsx'
-import ShipComPage from './pages/ShipCom.tsx'
-import Automation from './pages/Automation.tsx'
-import GrowthOperations from './pages/GrowthOperations.tsx'
-import CalculatorPage from './pages/CalculatorPage.tsx'
-import AuditPage from './pages/AuditPage.tsx'
-import { ThemeProvider } from './components/theme-provider.tsx'
+import { StrictMode } from "react";
+import { createRoot, hydrateRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import "./index.css";
+import AppRoutes from "./AppRoutes";
+import { prerenderedPaths } from "./routes";
 
-createRoot(document.getElementById('root')!).render(
+const root = document.getElementById("root")!;
+const app = (
   <StrictMode>
-    <ThemeProvider defaultTheme="light">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/digital-presence" element={<DigitalPresence />} />
-          <Route path="/brand" element={<Brand />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/ship-com" element={<ShipComPage />} />
-          <Route path="/automation" element={<Automation />} />
-          <Route path="/growth-operations" element={<GrowthOperations />} />
-          <Route path="/calculator" element={<CalculatorPage />} />
-          <Route path="/audit" element={<AuditPage />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
-  </StrictMode>,
-)
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  </StrictMode>
+);
+
+/*
+ * GOTCHA: production HTML for the four marketing pages ships prerendered inside #root. That markup
+ * is only valid for its own path, so hydrate there and wipe it for every other path (like /audit,
+ * which is served the home page file as the single page app fallback).
+ */
+const path = location.pathname.replace(/\/+$/, "") || "/";
+if (prerenderedPaths.includes(path) && root.hasChildNodes()) {
+  hydrateRoot(root, app);
+} else {
+  root.textContent = "";
+  createRoot(root).render(app);
+}
+document.documentElement.classList.remove("spa");
