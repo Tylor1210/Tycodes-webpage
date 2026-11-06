@@ -1,37 +1,33 @@
 User-agent: *
 Allow: /
-
-# Disallow internal/functional paths
 Disallow: /audit?*
-Disallow: /api/
 
-# Sitemaps
-Sitemap: https://tycodes.dev/sitemap.xml
-
-# LLM-readable site summary (see llmstxt.org)
-# https://tycodes.dev/llms.txt
-
-# Crawl hints for AI search & agent crawlers (Perplexity, OpenAI, Anthropic, Google, Meta)
-User-agent: GPTBot
+# AI search crawlers: allowed so customers can find Tycodes when they ask AI tools for a recommendation.
+User-agent: OAI-SearchBot
 Allow: /
+Disallow: /audit?*
 
-User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
 Allow: /
+Disallow: /audit?*
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /audit?*
 
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: ClaudeBot
+User-agent: ChatGPT-User
 Allow: /
 
 User-agent: Claude-User
 Allow: /
 
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
 User-agent: Google-Extended
 Allow: /
 
-User-agent: Meta-ExternalAgent
-Allow: /
+Sitemap: https://tycodes.dev/sitemap.xml
